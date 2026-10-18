@@ -1,0 +1,375 @@
+{
+  "issues": {
+    "example/project#1": {
+      "source": "issues",
+      "identity": "example/project#1",
+      "observed_at": "2026-10-14T06:24:01.548527+00:00",
+      "source_time": "2026-10-14T06:24:01.548527+00:00",
+      "availability": "complete",
+      "value": {
+        "id": "example/project#1",
+        "title": "Plan Session Status initial build",
+        "body": "## What to build\nPlan Session Status initial build\n\n## Acceptance criteria\n- [ ] Verify the described behavior.\n",
+        "state": "closed",
+        "close_reason": "completed",
+        "url": "https://github.com/example/project/issues/1",
+        "labels": [
+          "spec/tbd",
+          "type/enhancement",
+          "llm/default",
+          "priority/p2",
+          "model/default",
+          "dispatch/tbd",
+          "platform/runtime",
+          "project/session-status",
+          "area/read-model"
+        ],
+        "milestone": null
+      }
+    },
+    "example/project#2": {
+      "source": "issues",
+      "identity": "example/project#2",
+      "observed_at": "2026-10-14T06:24:01.548527+00:00",
+      "source_time": "2026-10-14T06:24:01.548527+00:00",
+      "availability": "complete",
+      "value": {
+        "id": "example/project#2",
+        "title": "Build Session Status initial slices",
+        "body": "## Summary\nBuild Session Status initial slices\n",
+        "state": "open",
+        "close_reason": null,
+        "url": "https://github.com/example/project/issues/2",
+        "labels": [
+          "spec/thorough",
+          "status/backlog",
+          "type/enhancement",
+          "llm/default",
+          "priority/p2",
+          "model/default",
+          "dispatch/tbd",
+          "platform/runtime",
+          "project/session-status",
+          "area/read-model"
+        ],
+        "milestone": "example/project@milestone/1"
+      }
+    },
+    "example/project#3": {
+      "source": "issues",
+      "identity": "example/project#3",
+      "observed_at": "2026-10-14T06:24:01.548527+00:00",
+      "source_time": "2026-10-14T06:24:01.548527+00:00",
+      "availability": "complete",
+      "value": {
+        "id": "example/project#3",
+        "title": "Build read module header and progress bars",
+        "body": "## What to build\nBuild read module header and progress bars\n\n## Acceptance criteria\n- [ ] Verify the described behavior.\n",
+        "state": "open",
+        "close_reason": null,
+        "url": "https://github.com/example/project/issues/3",
+        "labels": [
+          "spec/thorough",
+          "status/next",
+          "type/enhancement",
+          "llm/default",
+          "priority/p2",
+          "model/default",
+          "dispatch/tbd",
+          "platform/runtime",
+          "project/session-status",
+          "area/read-model"
+        ],
+        "milestone": "example/project@milestone/1"
+      }
+    },
+    "example/project#4": {
+      "source": "issues",
+      "identity": "example/project#4",
+      "observed_at": "2026-10-14T06:24:01.548527+00:00",
+      "source_time": "2026-10-14T06:24:01.548527+00:00",
+      "availability": "complete",
+      "value": {
+        "id": "example/project#4",
+        "title": "Add in-progress rows to the read module",
+        "body": "## What to build\nAdd in-progress rows to the read module\n\n## Acceptance criteria\n- [ ] Verify the described behavior.\n",
+        "state": "open",
+        "close_reason": null,
+        "url": "https://github.com/example/project/issues/4",
+        "labels": [
+          "spec/thorough",
+          "status/next",
+          "type/enhancement",
+          "llm/default",
+          "priority/p2",
+          "model/default",
+          "dispatch/tbd",
+          "platform/runtime",
+          "project/session-status",
+          "area/read-model"
+        ],
+        "milestone": "example/project@milestone/1"
+      }
+    },
+    "example/project#5": {
+      "source": "issues",
+      "identity": "example/project#5",
+      "observed_at": "2026-10-14T06:24:01.548527+00:00",
+      "source_time": "2026-10-14T06:24:01.548527+00:00",
+      "availability": "complete",
+      "value": {
+        "id": "example/project#5",
+        "title": "Build the Session Status pane",
+        "body": "## What to build\nBuild the Session Status pane\n\n## Acceptance criteria\n- [ ] Verify the described behavior.\n",
+        "state": "open",
+        "close_reason": null,
+        "url": "https://github.com/example/project/issues/5",
+        "labels": [
+          "spec/thorough",
+          "status/next",
+          "type/enhancement",
+          "llm/default",
+          "priority/p2",
+          "model/default",
+          "dispatch/tbd",
+          "platform/runtime",
+          "project/session-status",
+          "area/presentation"
+        ],
+        "milestone": "example/project@milestone/1"
+      }
+    }
+  },
+  "children": {
+    "example/project#1": {
+      "source": "children",
+      "identity": "example/project#1",
+      "observed_at": "2026-10-14T06:24:01.548527+00:00",
+      "source_time": "2026-10-14T06:24:01.548527+00:00",
+      "availability": "complete",
+      "value": []
+    },
+    "example/project#2": {
+      "source": "children",
+      "identity": "example/project#2",
+      "observed_at": "2026-10-14T06:24:01.548527+00:00",
+      "source_time": "2026-10-14T06:24:01.548527+00:00",
+      "availability": "complete",
+      "value": [
+        "example/project#3",
+        "example/project#4",
+        "example/project#5"
+      ]
+    },
+    "example/project#3": {
+      "source": "children",
+      "identity": "example/project#3",
+      "observed_at": "2026-10-14T06:24:01.548527+00:00",
+      "source_time": "2026-10-14T06:24:01.548527+00:00",
+      "availability": "complete",
+      "value": []
+    },
+    "example/project#4": {
+      "source": "children",
+      "identity": "example/project#4",
+      "observed_at": "2026-10-14T06:24:01.548527+00:00",
+      "source_time": "2026-10-14T06:24:01.548527+00:00",
+      "availability": "complete",
+      "value": []
+    },
+    "example/project#5": {
+      "source": "children",
+      "identity": "example/project#5",
+      "observed_at": "2026-10-14T06:24:01.548527+00:00",
+      "source_time": "2026-10-14T06:24:01.548527+00:00",
+      "availability": "complete",
+      "value": []
+    }
+  },
+  "parents": {
+    "example/project#1": {
+      "source": "parents",
+      "identity": "example/project#1",
+      "observed_at": "2026-10-14T06:24:01.548527+00:00",
+      "source_time": "2026-10-14T06:24:01.548527+00:00",
+      "availability": "complete",
+      "value": [
+        "example/project#2"
+      ]
+    },
+    "example/project#2": {
+      "source": "parents",
+      "identity": "example/project#2",
+      "observed_at": "2026-10-14T06:24:01.548527+00:00",
+      "source_time": "2026-10-14T06:24:01.548527+00:00",
+      "availability": "complete",
+      "value": []
+    },
+    "example/project#3": {
+      "source": "parents",
+      "identity": "example/project#3",
+      "observed_at": "2026-10-14T06:24:01.548527+00:00",
+      "source_time": "2026-10-14T06:24:01.548527+00:00",
+      "availability": "complete",
+      "value": [
+        "example/project#2"
+      ]
+    },
+    "example/project#4": {
+      "source": "parents",
+      "identity": "example/project#4",
+      "observed_at": "2026-10-14T06:24:01.548527+00:00",
+      "source_time": "2026-10-14T06:24:01.548527+00:00",
+      "availability": "complete",
+      "value": [
+        "example/project#2"
+      ]
+    },
+    "example/project#5": {
+      "source": "parents",
+      "identity": "example/project#5",
+      "observed_at": "2026-10-14T06:24:01.548527+00:00",
+      "source_time": "2026-10-14T06:24:01.548527+00:00",
+      "availability": "complete",
+      "value": [
+        "example/project#2"
+      ]
+    }
+  },
+  "blockers": {
+    "example/project#1": {
+      "source": "blockers",
+      "identity": "example/project#1",
+      "observed_at": "2026-10-14T06:24:01.548527+00:00",
+      "source_time": "2026-10-14T06:24:01.548527+00:00",
+      "availability": "complete",
+      "value": []
+    },
+    "example/project#2": {
+      "source": "blockers",
+      "identity": "example/project#2",
+      "observed_at": "2026-10-14T06:24:01.548527+00:00",
+      "source_time": "2026-10-14T06:24:01.548527+00:00",
+      "availability": "complete",
+      "value": []
+    },
+    "example/project#3": {
+      "source": "blockers",
+      "identity": "example/project#3",
+      "observed_at": "2026-10-14T06:24:01.548527+00:00",
+      "source_time": "2026-10-14T06:24:01.548527+00:00",
+      "availability": "complete",
+      "value": []
+    },
+    "example/project#4": {
+      "source": "blockers",
+      "identity": "example/project#4",
+      "observed_at": "2026-10-14T06:24:01.548527+00:00",
+      "source_time": "2026-10-14T06:24:01.548527+00:00",
+      "availability": "complete",
+      "value": []
+    },
+    "example/project#5": {
+      "source": "blockers",
+      "identity": "example/project#5",
+      "observed_at": "2026-10-14T06:24:01.548527+00:00",
+      "source_time": "2026-10-14T06:24:01.548527+00:00",
+      "availability": "complete",
+      "value": []
+    },
+    "example/project@milestone/1": {
+      "source": "blockers",
+      "identity": "example/project@milestone/1",
+      "observed_at": "2026-10-14T06:24:01.548527+00:00",
+      "source_time": "2026-10-14T06:24:01.548527+00:00",
+      "availability": "complete",
+      "value": []
+    }
+  },
+  "milestones": {
+    "example/project@milestone/1": {
+      "source": "milestones",
+      "identity": "example/project@milestone/1",
+      "observed_at": "2026-10-14T06:24:01.548527+00:00",
+      "source_time": "2026-10-14T06:24:01.548527+00:00",
+      "availability": "complete",
+      "value": {
+        "id": "example/project@milestone/1",
+        "name": "Initial build",
+        "objective": "Exit criterion: the example release is verified.",
+        "url": "https://github.com/example/project/milestone/1"
+      }
+    }
+  },
+  "members": {
+    "example/project@milestone/1": {
+      "source": "members",
+      "identity": "example/project@milestone/1",
+      "observed_at": "2026-10-14T06:24:01.548527+00:00",
+      "source_time": "2026-10-14T06:24:01.548527+00:00",
+      "availability": "complete",
+      "value": [
+        "example/project#5",
+        "example/project#4",
+        "example/project#3",
+        "example/project#2"
+      ]
+    }
+  },
+  "naming": {
+    "codex:00000000-0000-4000-8000-000000000001": {
+      "source": "naming",
+      "identity": "codex:00000000-0000-4000-8000-000000000001",
+      "observed_at": "2026-10-14T06:24:01.548527+00:00",
+      "source_time": "2026-10-14T06:24:01.548527+00:00",
+      "availability": "complete",
+      "value": {
+        "text": "Build Session Status initial slices",
+        "kind": "ticket",
+        "reference": "example/project#3",
+        "set_by": "ticket",
+        "repository": "example/project",
+        "tickets": [
+          "example/project#3",
+          "example/project#4"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "example/project": {
+      "source": "projects",
+      "identity": "example/project",
+      "observed_at": "2026-10-14T06:33:18.293903+00:00",
+      "source_time": "2026-10-12T19:35:47.865Z",
+      "availability": "complete",
+      "value": {
+        "id": "session-status",
+        "name": "Session Status",
+        "slug": "session-status"
+      }
+    }
+  },
+  "slates": {
+    "codex:00000000-0000-4000-8000-000000000001": {
+      "source": "slates",
+      "identity": "codex:00000000-0000-4000-8000-000000000001",
+      "observed_at": "2026-10-14T06:24:01.548527+00:00",
+      "source_time": "2026-10-14T06:24:01.548527+00:00",
+      "availability": "complete",
+      "value": {
+        "id": "derived-read-module-slate",
+        "revision": 1,
+        "approved": true,
+        "session": {
+          "provider": "codex",
+          "session_id": "00000000-0000-4000-8000-000000000001"
+        },
+        "tickets": [
+          "example/project#3",
+          "example/project#4"
+        ]
+      }
+    }
+  }
+}

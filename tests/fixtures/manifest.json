@@ -1,0 +1,5239 @@
+[
+  {
+    "file": "github-capture.json",
+    "kind": "capture",
+    "source": "Sanitized GitHub REST capture: selected issue definitions and paginated sub-issue, milestone and membership responses.",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "changes": "Identifiers, owners, URLs, opaque node IDs and issue/milestone prose replaced with neutral stand-ins; API structure and membership topology retained. These are replay data, not live example repository facts."
+  },
+  {
+    "file": "context-capture.json",
+    "kind": "capture",
+    "source": "Sanitized project and empty naming capture for an explicit session.",
+    "captured_at": "2026-10-14T06:33:18.293903+00:00",
+    "changes": "Selected canonical project fields only; session identity replaced with a neutral stand-in."
+  },
+  {
+    "file": "baseline.json",
+    "kind": "derived",
+    "parent": "github-capture.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Normalized API captures; canonical project normalized from context-capture.json; illustrative naming/slate adapter records added for replay, not claims of real operational state. Empty child/parent/blocker facts outside the captured epic are derived.",
+    "changes": [
+      {
+        "op": "add",
+        "path": "/blockers",
+        "value": {
+          "example/project#1": {
+            "source": "blockers",
+            "identity": "example/project#1",
+            "observed_at": "2026-10-14T06:24:01.548527+00:00",
+            "source_time": "2026-10-14T06:24:01.548527+00:00",
+            "availability": "complete",
+            "value": []
+          },
+          "example/project#2": {
+            "source": "blockers",
+            "identity": "example/project#2",
+            "observed_at": "2026-10-14T06:24:01.548527+00:00",
+            "source_time": "2026-10-14T06:24:01.548527+00:00",
+            "availability": "complete",
+            "value": []
+          },
+          "example/project#3": {
+            "source": "blockers",
+            "identity": "example/project#3",
+            "observed_at": "2026-10-14T06:24:01.548527+00:00",
+            "source_time": "2026-10-14T06:24:01.548527+00:00",
+            "availability": "complete",
+            "value": []
+          },
+          "example/project#4": {
+            "source": "blockers",
+            "identity": "example/project#4",
+            "observed_at": "2026-10-14T06:24:01.548527+00:00",
+            "source_time": "2026-10-14T06:24:01.548527+00:00",
+            "availability": "complete",
+            "value": []
+          },
+          "example/project#5": {
+            "source": "blockers",
+            "identity": "example/project#5",
+            "observed_at": "2026-10-14T06:24:01.548527+00:00",
+            "source_time": "2026-10-14T06:24:01.548527+00:00",
+            "availability": "complete",
+            "value": []
+          },
+          "example/project@milestone/1": {
+            "source": "blockers",
+            "identity": "example/project@milestone/1",
+            "observed_at": "2026-10-14T06:24:01.548527+00:00",
+            "source_time": "2026-10-14T06:24:01.548527+00:00",
+            "availability": "complete",
+            "value": []
+          }
+        }
+      },
+      {
+        "op": "add",
+        "path": "/children",
+        "value": {
+          "example/project#1": {
+            "source": "children",
+            "identity": "example/project#1",
+            "observed_at": "2026-10-14T06:24:01.548527+00:00",
+            "source_time": "2026-10-14T06:24:01.548527+00:00",
+            "availability": "complete",
+            "value": []
+          },
+          "example/project#2": {
+            "source": "children",
+            "identity": "example/project#2",
+            "observed_at": "2026-10-14T06:24:01.548527+00:00",
+            "source_time": "2026-10-14T06:24:01.548527+00:00",
+            "availability": "complete",
+            "value": [
+              "example/project#3",
+              "example/project#4",
+              "example/project#5"
+            ]
+          },
+          "example/project#3": {
+            "source": "children",
+            "identity": "example/project#3",
+            "observed_at": "2026-10-14T06:24:01.548527+00:00",
+            "source_time": "2026-10-14T06:24:01.548527+00:00",
+            "availability": "complete",
+            "value": []
+          },
+          "example/project#4": {
+            "source": "children",
+            "identity": "example/project#4",
+            "observed_at": "2026-10-14T06:24:01.548527+00:00",
+            "source_time": "2026-10-14T06:24:01.548527+00:00",
+            "availability": "complete",
+            "value": []
+          },
+          "example/project#5": {
+            "source": "children",
+            "identity": "example/project#5",
+            "observed_at": "2026-10-14T06:24:01.548527+00:00",
+            "source_time": "2026-10-14T06:24:01.548527+00:00",
+            "availability": "complete",
+            "value": []
+          }
+        }
+      },
+      {
+        "op": "remove",
+        "path": "/example~1project#1"
+      },
+      {
+        "op": "remove",
+        "path": "/example~1project#2"
+      },
+      {
+        "op": "remove",
+        "path": "/example~1project#3"
+      },
+      {
+        "op": "remove",
+        "path": "/example~1project#4"
+      },
+      {
+        "op": "remove",
+        "path": "/example~1project#5"
+      },
+      {
+        "op": "add",
+        "path": "/issues",
+        "value": {
+          "example/project#1": {
+            "source": "issues",
+            "identity": "example/project#1",
+            "observed_at": "2026-10-14T06:24:01.548527+00:00",
+            "source_time": "2026-10-14T06:24:01.548527+00:00",
+            "availability": "complete",
+            "value": {
+              "id": "example/project#1",
+              "title": "Plan Session Status initial build",
+              "body": "## What to build\nPlan Session Status initial build\n\n## Acceptance criteria\n- [ ] Verify the described behavior.\n",
+              "state": "closed",
+              "close_reason": "completed",
+              "url": "https://github.com/example/project/issues/1",
+              "labels": [
+                "spec/tbd",
+                "type/enhancement",
+                "llm/default",
+                "priority/p2",
+                "model/default",
+                "dispatch/tbd",
+                "platform/runtime",
+                "project/session-status",
+                "area/read-model"
+              ],
+              "milestone": null
+            }
+          },
+          "example/project#2": {
+            "source": "issues",
+            "identity": "example/project#2",
+            "observed_at": "2026-10-14T06:24:01.548527+00:00",
+            "source_time": "2026-10-14T06:24:01.548527+00:00",
+            "availability": "complete",
+            "value": {
+              "id": "example/project#2",
+              "title": "Build Session Status initial slices",
+              "body": "## Summary\nBuild Session Status initial slices\n",
+              "state": "open",
+              "close_reason": null,
+              "url": "https://github.com/example/project/issues/2",
+              "labels": [
+                "spec/thorough",
+                "status/backlog",
+                "type/enhancement",
+                "llm/default",
+                "priority/p2",
+                "model/default",
+                "dispatch/tbd",
+                "platform/runtime",
+                "project/session-status",
+                "area/read-model"
+              ],
+              "milestone": "example/project@milestone/1"
+            }
+          },
+          "example/project#3": {
+            "source": "issues",
+            "identity": "example/project#3",
+            "observed_at": "2026-10-14T06:24:01.548527+00:00",
+            "source_time": "2026-10-14T06:24:01.548527+00:00",
+            "availability": "complete",
+            "value": {
+              "id": "example/project#3",
+              "title": "Build read module header and progress bars",
+              "body": "## What to build\nBuild read module header and progress bars\n\n## Acceptance criteria\n- [ ] Verify the described behavior.\n",
+              "state": "open",
+              "close_reason": null,
+              "url": "https://github.com/example/project/issues/3",
+              "labels": [
+                "spec/thorough",
+                "status/next",
+                "type/enhancement",
+                "llm/default",
+                "priority/p2",
+                "model/default",
+                "dispatch/tbd",
+                "platform/runtime",
+                "project/session-status",
+                "area/read-model"
+              ],
+              "milestone": "example/project@milestone/1"
+            }
+          },
+          "example/project#4": {
+            "source": "issues",
+            "identity": "example/project#4",
+            "observed_at": "2026-10-14T06:24:01.548527+00:00",
+            "source_time": "2026-10-14T06:24:01.548527+00:00",
+            "availability": "complete",
+            "value": {
+              "id": "example/project#4",
+              "title": "Add in-progress rows to the read module",
+              "body": "## What to build\nAdd in-progress rows to the read module\n\n## Acceptance criteria\n- [ ] Verify the described behavior.\n",
+              "state": "open",
+              "close_reason": null,
+              "url": "https://github.com/example/project/issues/4",
+              "labels": [
+                "spec/thorough",
+                "status/next",
+                "type/enhancement",
+                "llm/default",
+                "priority/p2",
+                "model/default",
+                "dispatch/tbd",
+                "platform/runtime",
+                "project/session-status",
+                "area/read-model"
+              ],
+              "milestone": "example/project@milestone/1"
+            }
+          },
+          "example/project#5": {
+            "source": "issues",
+            "identity": "example/project#5",
+            "observed_at": "2026-10-14T06:24:01.548527+00:00",
+            "source_time": "2026-10-14T06:24:01.548527+00:00",
+            "availability": "complete",
+            "value": {
+              "id": "example/project#5",
+              "title": "Build the Session Status pane",
+              "body": "## What to build\nBuild the Session Status pane\n\n## Acceptance criteria\n- [ ] Verify the described behavior.\n",
+              "state": "open",
+              "close_reason": null,
+              "url": "https://github.com/example/project/issues/5",
+              "labels": [
+                "spec/thorough",
+                "status/next",
+                "type/enhancement",
+                "llm/default",
+                "priority/p2",
+                "model/default",
+                "dispatch/tbd",
+                "platform/runtime",
+                "project/session-status",
+                "area/presentation"
+              ],
+              "milestone": "example/project@milestone/1"
+            }
+          }
+        }
+      },
+      {
+        "op": "add",
+        "path": "/members",
+        "value": {
+          "example/project@milestone/1": {
+            "source": "members",
+            "identity": "example/project@milestone/1",
+            "observed_at": "2026-10-14T06:24:01.548527+00:00",
+            "source_time": "2026-10-14T06:24:01.548527+00:00",
+            "availability": "complete",
+            "value": [
+              "example/project#5",
+              "example/project#4",
+              "example/project#3",
+              "example/project#2"
+            ]
+          }
+        }
+      },
+      {
+        "op": "remove",
+        "path": "/milestone_members"
+      },
+      {
+        "op": "replace",
+        "path": "/milestones",
+        "value": {
+          "example/project@milestone/1": {
+            "source": "milestones",
+            "identity": "example/project@milestone/1",
+            "observed_at": "2026-10-14T06:24:01.548527+00:00",
+            "source_time": "2026-10-14T06:24:01.548527+00:00",
+            "availability": "complete",
+            "value": {
+              "id": "example/project@milestone/1",
+              "name": "Initial build",
+              "objective": "Exit criterion: the example release is verified.",
+              "url": "https://github.com/example/project/milestone/1"
+            }
+          }
+        }
+      },
+      {
+        "op": "add",
+        "path": "/naming",
+        "value": {
+          "codex:00000000-0000-4000-8000-000000000001": {
+            "source": "naming",
+            "identity": "codex:00000000-0000-4000-8000-000000000001",
+            "observed_at": "2026-10-14T06:24:01.548527+00:00",
+            "source_time": "2026-10-14T06:24:01.548527+00:00",
+            "availability": "complete",
+            "value": {
+              "text": "Build Session Status initial slices",
+              "kind": "epic",
+              "reference": "example/project#2",
+              "set_by": "ticket",
+              "repository": "example/project"
+            }
+          }
+        }
+      },
+      {
+        "op": "add",
+        "path": "/parents",
+        "value": {
+          "example/project#1": {
+            "source": "parents",
+            "identity": "example/project#1",
+            "observed_at": "2026-10-14T06:24:01.548527+00:00",
+            "source_time": "2026-10-14T06:24:01.548527+00:00",
+            "availability": "complete",
+            "value": [
+              "example/project#2"
+            ]
+          },
+          "example/project#2": {
+            "source": "parents",
+            "identity": "example/project#2",
+            "observed_at": "2026-10-14T06:24:01.548527+00:00",
+            "source_time": "2026-10-14T06:24:01.548527+00:00",
+            "availability": "complete",
+            "value": []
+          },
+          "example/project#3": {
+            "source": "parents",
+            "identity": "example/project#3",
+            "observed_at": "2026-10-14T06:24:01.548527+00:00",
+            "source_time": "2026-10-14T06:24:01.548527+00:00",
+            "availability": "complete",
+            "value": [
+              "example/project#2"
+            ]
+          },
+          "example/project#4": {
+            "source": "parents",
+            "identity": "example/project#4",
+            "observed_at": "2026-10-14T06:24:01.548527+00:00",
+            "source_time": "2026-10-14T06:24:01.548527+00:00",
+            "availability": "complete",
+            "value": [
+              "example/project#2"
+            ]
+          },
+          "example/project#5": {
+            "source": "parents",
+            "identity": "example/project#5",
+            "observed_at": "2026-10-14T06:24:01.548527+00:00",
+            "source_time": "2026-10-14T06:24:01.548527+00:00",
+            "availability": "complete",
+            "value": [
+              "example/project#2"
+            ]
+          }
+        }
+      },
+      {
+        "op": "add",
+        "path": "/projects",
+        "value": {
+          "example/project": {
+            "source": "projects",
+            "identity": "example/project",
+            "observed_at": "2026-10-14T06:33:18.293903+00:00",
+            "source_time": "2026-10-12T19:35:47.865Z",
+            "availability": "complete",
+            "value": {
+              "id": "session-status",
+              "name": "Session Status",
+              "slug": "session-status"
+            }
+          }
+        }
+      },
+      {
+        "op": "add",
+        "path": "/slates",
+        "value": {
+          "codex:00000000-0000-4000-8000-000000000001": {
+            "source": "slates",
+            "identity": "codex:00000000-0000-4000-8000-000000000001",
+            "observed_at": "2026-10-14T06:24:01.548527+00:00",
+            "source_time": "2026-10-14T06:24:01.548527+00:00",
+            "availability": "complete",
+            "value": {
+              "id": "derived-read-module-slate",
+              "revision": 1,
+              "approved": true,
+              "session": {
+                "provider": "codex",
+                "session_id": "00000000-0000-4000-8000-000000000001"
+              },
+              "tickets": [
+                "example/project#3",
+                "example/project#4"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "op": "remove",
+        "path": "/sub_issues"
+      }
+    ],
+    "sources": [
+      "github-capture.json",
+      "context-capture.json"
+    ]
+  },
+  {
+    "file": "recursive.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Nested grouping issues, cross-repository leaf reached twice, all three close reasons.",
+    "changes": [
+      {
+        "op": "add",
+        "path": "/blockers/example~1other-project#3",
+        "value": {
+          "source": "blockers",
+          "identity": "example/other-project#3",
+          "observed_at": "2026-10-14T06:24:01.548527+00:00",
+          "source_time": "2026-10-14T06:24:01.548527+00:00",
+          "availability": "complete",
+          "value": []
+        }
+      },
+      {
+        "op": "add",
+        "path": "/children/example~1other-project#3",
+        "value": {
+          "source": "children",
+          "identity": "example/other-project#3",
+          "observed_at": "2026-10-14T06:24:01.548527+00:00",
+          "source_time": "2026-10-14T06:24:01.548527+00:00",
+          "availability": "complete",
+          "value": []
+        }
+      },
+      {
+        "op": "replace",
+        "path": "/children/example~1project#3/value",
+        "value": [
+          "example/other-project#3",
+          "example/project#1"
+        ]
+      },
+      {
+        "op": "replace",
+        "path": "/children/example~1project#4/value",
+        "value": [
+          "example/other-project#3"
+        ]
+      },
+      {
+        "op": "add",
+        "path": "/issues/example~1other-project#3",
+        "value": {
+          "source": "issues",
+          "identity": "example/other-project#3",
+          "observed_at": "2026-10-14T06:24:01.548527+00:00",
+          "source_time": "2026-10-14T06:24:01.548527+00:00",
+          "availability": "complete",
+          "value": {
+            "id": "example/other-project#3",
+            "title": "Build read module header and progress bars",
+            "body": "## What to build\nBuild read module header and progress bars\n\n## Acceptance criteria\n- [ ] Verify the described behavior.\n",
+            "state": "closed",
+            "close_reason": "completed",
+            "url": null,
+            "labels": [
+              "spec/thorough",
+              "status/next",
+              "type/enhancement",
+              "llm/default",
+              "priority/p2",
+              "model/default",
+              "dispatch/tbd",
+              "platform/runtime",
+              "project/session-status",
+              "area/read-model"
+            ],
+            "milestone": null
+          }
+        }
+      },
+      {
+        "op": "replace",
+        "path": "/issues/example~1project#1/value/close_reason",
+        "value": "not_planned"
+      },
+      {
+        "op": "replace",
+        "path": "/issues/example~1project#5/value/close_reason",
+        "value": "duplicate"
+      },
+      {
+        "op": "replace",
+        "path": "/issues/example~1project#5/value/state",
+        "value": "closed"
+      }
+    ]
+  },
+  {
+    "file": "no-scope.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Verified no naming scope; slate remains.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value",
+        "value": null
+      }
+    ]
+  },
+  {
+    "file": "no-project.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Verified no canonical project record.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/projects/example~1project/value",
+        "value": null
+      }
+    ]
+  },
+  {
+    "file": "no-sets.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Objective with no assigned milestone/epic/slate.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/issues/example~1project#2/value/milestone",
+        "value": null
+      },
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/kind",
+        "value": "stated_objective"
+      },
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/reference",
+        "value": null
+      },
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/set_by",
+        "value": "user"
+      },
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/text",
+        "value": "Read module"
+      },
+      {
+        "op": "replace",
+        "path": "/slates/codex:00000000-0000-4000-8000-000000000001/value",
+        "value": null
+      }
+    ]
+  },
+  {
+    "file": "empty.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Complete empty progress memberships.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/children/example~1project#2/value",
+        "value": []
+      },
+      {
+        "op": "replace",
+        "path": "/members/example~1project@milestone~11/value",
+        "value": []
+      },
+      {
+        "op": "replace",
+        "path": "/slates/codex:00000000-0000-4000-8000-000000000001/value/tickets",
+        "value": []
+      }
+    ]
+  },
+  {
+    "file": "children-partial.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Explicit partial children read.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/children/example~1project#2/availability",
+        "value": "partial"
+      }
+    ]
+  },
+  {
+    "file": "children-failed.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Explicit failed children read.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/children/example~1project#2/availability",
+        "value": "failed"
+      }
+    ]
+  },
+  {
+    "file": "children-unsupported.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Explicit unsupported children read.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/children/example~1project#2/availability",
+        "value": "unsupported"
+      }
+    ]
+  },
+  {
+    "file": "children-corrupt.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Explicit corrupt children read.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/children/example~1project#2/availability",
+        "value": "corrupt"
+      }
+    ]
+  },
+  {
+    "file": "members-partial.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Explicit partial members read.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/members/example~1project@milestone~11/availability",
+        "value": "partial"
+      }
+    ]
+  },
+  {
+    "file": "members-failed.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Explicit failed members read.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/members/example~1project@milestone~11/availability",
+        "value": "failed"
+      }
+    ]
+  },
+  {
+    "file": "members-unsupported.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Explicit unsupported members read.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/members/example~1project@milestone~11/availability",
+        "value": "unsupported"
+      }
+    ]
+  },
+  {
+    "file": "members-corrupt.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Explicit corrupt members read.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/members/example~1project@milestone~11/availability",
+        "value": "corrupt"
+      }
+    ]
+  },
+  {
+    "file": "slates-partial.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Explicit partial slates read.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/slates/codex:00000000-0000-4000-8000-000000000001/availability",
+        "value": "partial"
+      }
+    ]
+  },
+  {
+    "file": "slates-failed.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Explicit failed slates read.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/slates/codex:00000000-0000-4000-8000-000000000001/availability",
+        "value": "failed"
+      }
+    ]
+  },
+  {
+    "file": "slates-unsupported.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Explicit unsupported slates read.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/slates/codex:00000000-0000-4000-8000-000000000001/availability",
+        "value": "unsupported"
+      }
+    ]
+  },
+  {
+    "file": "slates-corrupt.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Explicit corrupt slates read.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/slates/codex:00000000-0000-4000-8000-000000000001/availability",
+        "value": "corrupt"
+      }
+    ]
+  },
+  {
+    "file": "naming-partial.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Explicit partial naming read.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/availability",
+        "value": "partial"
+      }
+    ]
+  },
+  {
+    "file": "naming-failed.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Explicit failed naming read.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/availability",
+        "value": "failed"
+      }
+    ]
+  },
+  {
+    "file": "naming-unsupported.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Explicit unsupported naming read.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/availability",
+        "value": "unsupported"
+      }
+    ]
+  },
+  {
+    "file": "naming-corrupt.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Explicit corrupt naming read.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/availability",
+        "value": "corrupt"
+      }
+    ]
+  },
+  {
+    "file": "projects-partial.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Explicit partial projects read.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/projects/example~1project/availability",
+        "value": "partial"
+      }
+    ]
+  },
+  {
+    "file": "projects-failed.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Explicit failed projects read.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/projects/example~1project/availability",
+        "value": "failed"
+      }
+    ]
+  },
+  {
+    "file": "projects-unsupported.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Explicit unsupported projects read.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/projects/example~1project/availability",
+        "value": "unsupported"
+      }
+    ]
+  },
+  {
+    "file": "projects-corrupt.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Explicit corrupt projects read.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/projects/example~1project/availability",
+        "value": "corrupt"
+      }
+    ]
+  },
+  {
+    "file": "scope-ticket.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Scope authority ticket.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/kind",
+        "value": "ticket"
+      },
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/reference",
+        "value": "example/project#3"
+      },
+      {
+        "op": "add",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/tickets",
+        "value": [
+          "example/project#3",
+          "example/project#4"
+        ]
+      }
+    ]
+  },
+  {
+    "file": "scope-milestone.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Scope authority milestone.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/kind",
+        "value": "milestone"
+      },
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/reference",
+        "value": "example/project@milestone/1"
+      },
+      {
+        "op": "add",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/tickets",
+        "value": [
+          "example/project#3",
+          "example/project#4"
+        ]
+      }
+    ]
+  },
+  {
+    "file": "scope-project.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Scope authority project.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/kind",
+        "value": "project"
+      },
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/reference",
+        "value": "session-status"
+      },
+      {
+        "op": "add",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/tickets",
+        "value": [
+          "example/project#3",
+          "example/project#4"
+        ]
+      }
+    ]
+  },
+  {
+    "file": "scope-stated_objective.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Scope authority stated_objective.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/kind",
+        "value": "stated_objective"
+      },
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/reference",
+        "value": null
+      },
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/set_by",
+        "value": "user"
+      },
+      {
+        "op": "add",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/tickets",
+        "value": [
+          "example/project#3",
+          "example/project#4"
+        ]
+      }
+    ]
+  },
+  {
+    "file": "scope-ticket_set.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Scope authority ticket_set.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/kind",
+        "value": "ticket_set"
+      },
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/reference",
+        "value": null
+      },
+      {
+        "op": "add",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/tickets",
+        "value": [
+          "example/project#3",
+          "example/project#4"
+        ]
+      }
+    ]
+  },
+  {
+    "file": "scope-automatic.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Objective set by automatic.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/kind",
+        "value": "stated_objective"
+      },
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/reference",
+        "value": null
+      },
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/set_by",
+        "value": "automatic"
+      }
+    ]
+  },
+  {
+    "file": "scope-launch_name.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Objective set by launch_name.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/kind",
+        "value": "stated_objective"
+      },
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/reference",
+        "value": null
+      },
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/set_by",
+        "value": "launch_name"
+      }
+    ]
+  },
+  {
+    "file": "cross-ticket-set.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Cross-repository scope ticket list; no shared project.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/kind",
+        "value": "ticket_set"
+      },
+      {
+        "op": "add",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/tickets",
+        "value": [
+          "example/project#3",
+          "example/other-project#3"
+        ]
+      }
+    ]
+  },
+  {
+    "file": "multiple-milestones.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Scope resolves to multiple milestone identities; hide milestone.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/kind",
+        "value": "project"
+      },
+      {
+        "op": "add",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/milestones",
+        "value": [
+          "example/project@milestone/1",
+          "example/project@milestone/2"
+        ]
+      },
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/reference",
+        "value": "session-status"
+      }
+    ]
+  },
+  {
+    "file": "slate-revised.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Current approved revision 2 removes withdrawn ticket 3.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/slates/codex:00000000-0000-4000-8000-000000000001/value/revision",
+        "value": 2
+      },
+      {
+        "op": "replace",
+        "path": "/slates/codex:00000000-0000-4000-8000-000000000001/value/tickets",
+        "value": [
+          "example/project#4"
+        ]
+      }
+    ]
+  },
+  {
+    "file": "unapproved-slate.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Unapproved slate is not a progress set.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/slates/codex:00000000-0000-4000-8000-000000000001/value/approved",
+        "value": false
+      }
+    ]
+  },
+  {
+    "file": "foreign-slate.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Slate belongs to another provider.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/slates/codex:00000000-0000-4000-8000-000000000001/value/session/provider",
+        "value": "claude"
+      },
+      {
+        "op": "replace",
+        "path": "/slates/codex:00000000-0000-4000-8000-000000000001/value/session/session_id",
+        "value": "codex:00000000-0000-4000-8000-000000000001"
+      }
+    ]
+  },
+  {
+    "file": "cycle.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Corrupt cycle in sub-issue membership.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/children/example~1project#3/value",
+        "value": [
+          "example/project#2"
+        ]
+      }
+    ]
+  },
+  {
+    "file": "malformed-issue.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Corrupt issue state cannot become an open count.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/issues/example~1project#3/value/state",
+        "value": "unknown"
+      }
+    ]
+  },
+  {
+    "file": "blocked.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Open and closed native blockers; only open blocker is shown.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/blockers/example~1project#2/value",
+        "value": [
+          "example/project#3",
+          "example/project#1"
+        ]
+      }
+    ]
+  },
+  {
+    "file": "missing-members.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Missing replay record is unsupported, not an empty membership.",
+    "changes": [
+      {
+        "op": "remove",
+        "path": "/members/example~1project@milestone~11"
+      }
+    ]
+  },
+  {
+    "file": "mismatched-identity.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Issue identity does not match the requested source key.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/issues/example~1project#3/value/id",
+        "value": "example/project#4"
+      }
+    ]
+  },
+  {
+    "file": "parent-failure.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Nearest-parent read failed; directly recorded milestone remains available.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/kind",
+        "value": "ticket"
+      },
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/reference",
+        "value": "example/project#3"
+      },
+      {
+        "op": "replace",
+        "path": "/parents/example~1project#3/availability",
+        "value": "failed"
+      }
+    ]
+  },
+  {
+    "file": "project-reference.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Project-only scope resolves the explicit project reference without a repository.",
+    "changes": [
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/kind",
+        "value": "project"
+      },
+      {
+        "op": "replace",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/reference",
+        "value": "session-status"
+      },
+      {
+        "op": "remove",
+        "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/repository"
+      },
+      {
+        "op": "add",
+        "path": "/projects/session-status",
+        "value": {
+          "source": "projects",
+          "identity": "session-status",
+          "observed_at": "2026-10-14T06:33:18.293903+00:00",
+          "source_time": "2026-10-12T19:35:47.865Z",
+          "availability": "complete",
+          "value": {
+            "id": "session-status",
+            "name": "Session Status",
+            "slug": "session-status"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "file": "destination-cases.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T06:24:01.548527+00:00",
+    "purpose": "Case matrix derived from captured epic/milestone URLs. Each case names its exact one-field patch; absent/malformed destinations must be null and valid absolute HTTP(S) destinations must be preserved.",
+    "changes": [
+      {
+        "op": "remove",
+        "path": "/blockers"
+      },
+      {
+        "op": "add",
+        "path": "/cases",
+        "value": [
+          {
+            "name": "issues-missing",
+            "source": "issues",
+            "identity": "example/project#2",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "remove",
+                "path": "/issues/example~1project#2/value/url"
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "issues-null",
+            "source": "issues",
+            "identity": "example/project#2",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#2/value/url",
+                "value": null
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "issues-list",
+            "source": "issues",
+            "identity": "example/project#2",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#2/value/url",
+                "value": [
+                  "https://github.com/example/project/issues/2"
+                ]
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "issues-object",
+            "source": "issues",
+            "identity": "example/project#2",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#2/value/url",
+                "value": {
+                  "url": "https://github.com/example/project/issues/2"
+                }
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "issues-number",
+            "source": "issues",
+            "identity": "example/project#2",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#2/value/url",
+                "value": 2
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "issues-boolean",
+            "source": "issues",
+            "identity": "example/project#2",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#2/value/url",
+                "value": true
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "issues-empty",
+            "source": "issues",
+            "identity": "example/project#2",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#2/value/url",
+                "value": ""
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "issues-relative",
+            "source": "issues",
+            "identity": "example/project#2",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#2/value/url",
+                "value": "/example/project/issues/2"
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "issues-protocol-relative",
+            "source": "issues",
+            "identity": "example/project#2",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#2/value/url",
+                "value": "//github.com/example/project/issues/2"
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "issues-script-scheme",
+            "source": "issues",
+            "identity": "example/project#2",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#2/value/url",
+                "value": "javascript:/example/project/issues/2"
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "issues-file-scheme",
+            "source": "issues",
+            "identity": "example/project#2",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#2/value/url",
+                "value": "file:///example/project/issues/2"
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "issues-missing-host",
+            "source": "issues",
+            "identity": "example/project#2",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#2/value/url",
+                "value": "https:///example/project/issues/2"
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "issues-userinfo",
+            "source": "issues",
+            "identity": "example/project#2",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#2/value/url",
+                "value": "https://example@github.com/example/project/issues/2"
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "issues-bad-port",
+            "source": "issues",
+            "identity": "example/project#2",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#2/value/url",
+                "value": "https://github.com:bad/example/project/issues/2"
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "issues-port-range",
+            "source": "issues",
+            "identity": "example/project#2",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#2/value/url",
+                "value": "https://github.com:65536/example/project/issues/2"
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "issues-bad-brackets",
+            "source": "issues",
+            "identity": "example/project#2",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#2/value/url",
+                "value": "https://[github.com]/example/project/issues/2"
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "issues-whitespace",
+            "source": "issues",
+            "identity": "example/project#2",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#2/value/url",
+                "value": "https://github.com/example/project/issues/2 "
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "issues-control",
+            "source": "issues",
+            "identity": "example/project#2",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#2/value/url",
+                "value": "https://github.com/example/project/issues/2\n"
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "issues-delete-control",
+            "source": "issues",
+            "identity": "example/project#2",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#2/value/url",
+                "value": "https://github.com/example/project/issues/2\u007f"
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "issues-backslash",
+            "source": "issues",
+            "identity": "example/project#2",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#2/value/url",
+                "value": "https://github.com\\/example/project/issues/2"
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "issues-https",
+            "source": "issues",
+            "identity": "example/project#2",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#2/value/url",
+                "value": "https://github.com/example/project/issues/2"
+              }
+            ],
+            "expected_page": "https://github.com/example/project/issues/2"
+          },
+          {
+            "name": "issues-http",
+            "source": "issues",
+            "identity": "example/project#2",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#2/value/url",
+                "value": "http://github.com/example/project/issues/2"
+              }
+            ],
+            "expected_page": "http://github.com/example/project/issues/2"
+          },
+          {
+            "name": "issues-port",
+            "source": "issues",
+            "identity": "example/project#2",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#2/value/url",
+                "value": "https://github.com:443/example/project/issues/2"
+              }
+            ],
+            "expected_page": "https://github.com:443/example/project/issues/2"
+          },
+          {
+            "name": "issues-query-fragment",
+            "source": "issues",
+            "identity": "example/project#2",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#2/value/url",
+                "value": "https://github.com/example/project/issues/2?from=read#details"
+              }
+            ],
+            "expected_page": "https://github.com/example/project/issues/2?from=read#details"
+          },
+          {
+            "name": "milestones-missing",
+            "source": "milestones",
+            "identity": "example/project@milestone/1",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "remove",
+                "path": "/milestones/example~1project@milestone~11/value/url"
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "milestones-null",
+            "source": "milestones",
+            "identity": "example/project@milestone/1",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/milestones/example~1project@milestone~11/value/url",
+                "value": null
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "milestones-list",
+            "source": "milestones",
+            "identity": "example/project@milestone/1",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/milestones/example~1project@milestone~11/value/url",
+                "value": [
+                  "https://github.com/example/project/milestone/1"
+                ]
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "milestones-object",
+            "source": "milestones",
+            "identity": "example/project@milestone/1",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/milestones/example~1project@milestone~11/value/url",
+                "value": {
+                  "url": "https://github.com/example/project/milestone/1"
+                }
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "milestones-number",
+            "source": "milestones",
+            "identity": "example/project@milestone/1",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/milestones/example~1project@milestone~11/value/url",
+                "value": 2
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "milestones-boolean",
+            "source": "milestones",
+            "identity": "example/project@milestone/1",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/milestones/example~1project@milestone~11/value/url",
+                "value": true
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "milestones-empty",
+            "source": "milestones",
+            "identity": "example/project@milestone/1",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/milestones/example~1project@milestone~11/value/url",
+                "value": ""
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "milestones-relative",
+            "source": "milestones",
+            "identity": "example/project@milestone/1",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/milestones/example~1project@milestone~11/value/url",
+                "value": "/example/project/milestone/1"
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "milestones-protocol-relative",
+            "source": "milestones",
+            "identity": "example/project@milestone/1",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/milestones/example~1project@milestone~11/value/url",
+                "value": "//github.com/example/project/milestone/1"
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "milestones-script-scheme",
+            "source": "milestones",
+            "identity": "example/project@milestone/1",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/milestones/example~1project@milestone~11/value/url",
+                "value": "javascript:/example/project/milestone/1"
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "milestones-file-scheme",
+            "source": "milestones",
+            "identity": "example/project@milestone/1",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/milestones/example~1project@milestone~11/value/url",
+                "value": "file:///example/project/milestone/1"
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "milestones-missing-host",
+            "source": "milestones",
+            "identity": "example/project@milestone/1",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/milestones/example~1project@milestone~11/value/url",
+                "value": "https:///example/project/milestone/1"
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "milestones-userinfo",
+            "source": "milestones",
+            "identity": "example/project@milestone/1",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/milestones/example~1project@milestone~11/value/url",
+                "value": "https://example@github.com/example/project/milestone/1"
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "milestones-bad-port",
+            "source": "milestones",
+            "identity": "example/project@milestone/1",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/milestones/example~1project@milestone~11/value/url",
+                "value": "https://github.com:bad/example/project/milestone/1"
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "milestones-port-range",
+            "source": "milestones",
+            "identity": "example/project@milestone/1",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/milestones/example~1project@milestone~11/value/url",
+                "value": "https://github.com:65536/example/project/milestone/1"
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "milestones-bad-brackets",
+            "source": "milestones",
+            "identity": "example/project@milestone/1",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/milestones/example~1project@milestone~11/value/url",
+                "value": "https://[github.com]/example/project/milestone/1"
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "milestones-whitespace",
+            "source": "milestones",
+            "identity": "example/project@milestone/1",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/milestones/example~1project@milestone~11/value/url",
+                "value": "https://github.com/example/project/milestone/1 "
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "milestones-control",
+            "source": "milestones",
+            "identity": "example/project@milestone/1",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/milestones/example~1project@milestone~11/value/url",
+                "value": "https://github.com/example/project/milestone/1\n"
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "milestones-delete-control",
+            "source": "milestones",
+            "identity": "example/project@milestone/1",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/milestones/example~1project@milestone~11/value/url",
+                "value": "https://github.com/example/project/milestone/1\u007f"
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "milestones-backslash",
+            "source": "milestones",
+            "identity": "example/project@milestone/1",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/milestones/example~1project@milestone~11/value/url",
+                "value": "https://github.com\\/example/project/milestone/1"
+              }
+            ],
+            "expected_page": null
+          },
+          {
+            "name": "milestones-https",
+            "source": "milestones",
+            "identity": "example/project@milestone/1",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/milestones/example~1project@milestone~11/value/url",
+                "value": "https://github.com/example/project/milestone/1"
+              }
+            ],
+            "expected_page": "https://github.com/example/project/milestone/1"
+          },
+          {
+            "name": "milestones-http",
+            "source": "milestones",
+            "identity": "example/project@milestone/1",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/milestones/example~1project@milestone~11/value/url",
+                "value": "http://github.com/example/project/milestone/1"
+              }
+            ],
+            "expected_page": "http://github.com/example/project/milestone/1"
+          },
+          {
+            "name": "milestones-port",
+            "source": "milestones",
+            "identity": "example/project@milestone/1",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/milestones/example~1project@milestone~11/value/url",
+                "value": "https://github.com:443/example/project/milestone/1"
+              }
+            ],
+            "expected_page": "https://github.com:443/example/project/milestone/1"
+          },
+          {
+            "name": "milestones-query-fragment",
+            "source": "milestones",
+            "identity": "example/project@milestone/1",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/milestones/example~1project@milestone~11/value/url",
+                "value": "https://github.com/example/project/milestone/1?from=read#details"
+              }
+            ],
+            "expected_page": "https://github.com/example/project/milestone/1?from=read#details"
+          }
+        ]
+      },
+      {
+        "op": "remove",
+        "path": "/children"
+      },
+      {
+        "op": "remove",
+        "path": "/issues"
+      },
+      {
+        "op": "remove",
+        "path": "/members"
+      },
+      {
+        "op": "remove",
+        "path": "/milestones"
+      },
+      {
+        "op": "remove",
+        "path": "/naming"
+      },
+      {
+        "op": "add",
+        "path": "/parent",
+        "value": "baseline.json"
+      },
+      {
+        "op": "remove",
+        "path": "/parents"
+      },
+      {
+        "op": "remove",
+        "path": "/projects"
+      },
+      {
+        "op": "remove",
+        "path": "/slates"
+      }
+    ]
+  },
+  {
+    "file": "in-progress-cases.json",
+    "kind": "derived",
+    "parent": "baseline.json",
+    "captured_at": "2026-10-14T12:00:00Z",
+    "purpose": "Each case carries its exact patch from recorded baseline data. All run/claim scenarios are derived, not operational captures.",
+    "changes": [
+      {
+        "op": "remove",
+        "path": "/blockers"
+      },
+      {
+        "op": "add",
+        "path": "/cases",
+        "value": [
+          {
+            "name": "empty",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "empty; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "executing",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "executing; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": [
+                        {
+                          "ticket": "example/project#4",
+                          "role": "generator",
+                          "dispatched_at": "2026-10-14T12:00:00Z",
+                          "finished_at": null
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "queued",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "queued; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": [
+                        {
+                          "ticket": "example/project#4",
+                          "role": "generator",
+                          "dispatched_at": null,
+                          "finished_at": null
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "finished",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "finished; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": [
+                        {
+                          "ticket": "example/project#4",
+                          "role": "generator",
+                          "dispatched_at": "2026-10-14T12:00:00Z",
+                          "finished_at": "2026-10-14T12:00:00Z"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "evaluator",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "evaluator; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": [
+                        {
+                          "ticket": "example/project#4",
+                          "role": "evaluator",
+                          "dispatched_at": "2026-10-14T12:00:00Z",
+                          "finished_at": null
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "review",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "review; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": [
+                        {
+                          "ticket": "example/project#4",
+                          "role": "review",
+                          "dispatched_at": "2026-10-14T12:00:00Z",
+                          "finished_at": null
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "claimed",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "claimed; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": [
+                      {
+                        "ticket": "example/project#4",
+                        "session": "00000000-000",
+                        "heartbeat_at": "2026-10-14T12:00:00Z"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "stale",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "stale; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": [
+                      {
+                        "ticket": "example/project#4",
+                        "session": "00000000-000",
+                        "heartbeat_at": "2026-10-12T11:59:59Z"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "boundary",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "boundary; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": [
+                      {
+                        "ticket": "example/project#4",
+                        "session": "00000000-000",
+                        "heartbeat_at": "2026-10-12T12:00:00Z"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "offset-boundary",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "offset boundary; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": [
+                      {
+                        "ticket": "example/project#4",
+                        "session": "00000000-000",
+                        "heartbeat_at": "2026-10-12T06:00:00-06:00"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "other-session",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "other session; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": [
+                      {
+                        "ticket": "example/project#4",
+                        "session": "0000000-0000",
+                        "heartbeat_at": "2026-10-14T12:00:00Z"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "full-session",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "full session; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": [
+                      {
+                        "ticket": "example/project#4",
+                        "session": "00000000-0000-4000-8000-000000000001",
+                        "heartbeat_at": "2026-10-14T12:00:00Z"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "future",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "future; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": [
+                      {
+                        "ticket": "example/project#4",
+                        "session": "00000000-000",
+                        "heartbeat_at": "2026-10-14T12:00:01Z"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "both",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "both; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": [
+                      {
+                        "ticket": "example/project#4",
+                        "session": "00000000-000",
+                        "heartbeat_at": "2026-10-14T12:00:00Z"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": [
+                        {
+                          "ticket": "example/project#4",
+                          "role": "generator",
+                          "dispatched_at": "2026-10-14T12:00:00Z",
+                          "finished_at": null
+                        },
+                        {
+                          "ticket": "example/project#4",
+                          "role": "evaluator",
+                          "dispatched_at": "2026-10-14T12:00:00Z",
+                          "finished_at": null
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "several",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "several; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": [
+                      {
+                        "ticket": "example/project#3",
+                        "session": "00000000-000",
+                        "heartbeat_at": "2026-10-14T12:00:00Z"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#3/value/body",
+                "value": "## Goal\nBuild read module header and progress bars\n\n## Acceptance criteria\n- [ ] Plan Session Status initial build\n- [ ] Build Session Status initial slices\n- [ ] Build read module header and progress bars\n- [ ] Add in-progress rows to the read module\n- [ ] Build the Session Status pane"
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": [
+                        {
+                          "ticket": "example/project#4",
+                          "role": "generator",
+                          "dispatched_at": "2026-10-14T12:00:00Z",
+                          "finished_at": null
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "closed",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "closed; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": [
+                      {
+                        "ticket": "example/project#4",
+                        "session": "00000000-000",
+                        "heartbeat_at": "2026-10-14T12:00:00Z"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#4/value/labels",
+                "value": [
+                  "status/deployed"
+                ]
+              },
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#4/value/state",
+                "value": "closed"
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "no-scope",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "no scope; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value",
+                "value": null
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": [
+                        {
+                          "ticket": "example/project#4",
+                          "role": "generator",
+                          "dispatched_at": "2026-10-14T12:00:00Z",
+                          "finished_at": null
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "failed-naming",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "failed naming; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/availability",
+                "value": "failed"
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": [
+                        {
+                          "ticket": "example/project#4",
+                          "role": "generator",
+                          "dispatched_at": "2026-10-14T12:00:00Z",
+                          "finished_at": null
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "withdrawn",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "withdrawn; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": [
+                        {
+                          "ticket": "example/project#4",
+                          "role": "generator",
+                          "dispatched_at": "2026-10-14T12:00:00Z",
+                          "finished_at": null
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/slates/codex:00000000-0000-4000-8000-000000000001/value/tickets",
+                "value": [
+                  "example/project#3"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "unapproved",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "unapproved; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": [
+                        {
+                          "ticket": "example/project#4",
+                          "role": "generator",
+                          "dispatched_at": "2026-10-14T12:00:00Z",
+                          "finished_at": null
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/slates/codex:00000000-0000-4000-8000-000000000001/value/approved",
+                "value": false
+              }
+            ]
+          },
+          {
+            "name": "foreign-slate",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "foreign slate; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": [
+                        {
+                          "ticket": "example/project#4",
+                          "role": "generator",
+                          "dispatched_at": "2026-10-14T12:00:00Z",
+                          "finished_at": null
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/slates/codex:00000000-0000-4000-8000-000000000001/value/session/provider",
+                "value": "claude"
+              }
+            ]
+          },
+          {
+            "name": "no-slate-claim",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "no slate claim; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": [
+                      {
+                        "ticket": "example/project#4",
+                        "session": "00000000-000",
+                        "heartbeat_at": "2026-10-14T12:00:00Z"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/slates/codex:00000000-0000-4000-8000-000000000001/value",
+                "value": null
+              }
+            ]
+          },
+          {
+            "name": "wrong-revision",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "wrong revision; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 2,
+                      "runs": [
+                        {
+                          "ticket": "example/project#4",
+                          "role": "generator",
+                          "dispatched_at": "2026-10-14T12:00:00Z",
+                          "finished_at": null
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "bad-heartbeat",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "bad heartbeat; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": [
+                      {
+                        "ticket": "example/project#4",
+                        "session": "00000000-000",
+                        "heartbeat_at": "unparseable"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "naive-heartbeat",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "naive heartbeat; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": [
+                      {
+                        "ticket": "example/project#4",
+                        "session": "00000000-000",
+                        "heartbeat_at": "2026-10-14T12:00:00"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "missing-issue",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "missing issue; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": [
+                      {
+                        "ticket": "example/project#4",
+                        "session": "00000000-000",
+                        "heartbeat_at": "2026-10-14T12:00:00Z"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "op": "remove",
+                "path": "/issues/example~1project#4"
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "missing-card",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "missing card; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/blockers/example~1project#4/value",
+                "value": null
+              },
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": [
+                      {
+                        "ticket": "example/project#4",
+                        "session": "00000000-000",
+                        "heartbeat_at": "2026-10-14T12:00:00Z"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#4/value/body",
+                "value": null
+              },
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#4/value/labels",
+                "value": null
+              },
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#4/value/url",
+                "value": null
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "card",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "card; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/blockers/example~1project#4/value",
+                "value": [
+                  "example/project#3",
+                  "example/project#1"
+                ]
+              },
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": [
+                      {
+                        "ticket": "example/project#4",
+                        "session": "00000000-000",
+                        "heartbeat_at": "2026-10-14T12:00:00Z"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#4/value/body",
+                "value": "## Goal\nAdd in-progress rows to the read module\n\n## Acceptance criteria\n- [ ] Build read module header and progress bars\n\n## Notes\nBuild Session Status initial slices"
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "failed-blockers",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "failed blockers; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "replace",
+                "path": "/blockers/example~1project#4/availability",
+                "value": "failed"
+              },
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": [
+                      {
+                        "ticket": "example/project#4",
+                        "session": "00000000-000",
+                        "heartbeat_at": "2026-10-14T12:00:00Z"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "bad-body",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "bad body; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": [
+                      {
+                        "ticket": "example/project#4",
+                        "session": "00000000-000",
+                        "heartbeat_at": "2026-10-14T12:00:00Z"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#4/value/body",
+                "value": []
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "wrapped-checklist",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "wrapped checklist; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": [
+                      {
+                        "ticket": "example/project#4",
+                        "session": "00000000-000",
+                        "heartbeat_at": "2026-10-14T12:00:00Z"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/issues/example~1project#4/value/body",
+                "value": "## Outcome\nAdd in-progress rows to the read module\n\n## Acceptance criteria\n- [x] Build read module header and progress bars\n  Build Session Status initial slices\n\n- [ ] Add in-progress rows to the read module"
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "cross-repository",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "cross repository; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/blockers/example~1other-project#3",
+                "value": {
+                  "source": "blockers",
+                  "identity": "example/other-project#3",
+                  "observed_at": "2026-10-14T12:00:00Z",
+                  "source_time": "2026-10-14T12:00:00Z",
+                  "availability": "complete",
+                  "value": []
+                }
+              },
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": [
+                      {
+                        "ticket": "example/other-project#3",
+                        "session": "00000000-000",
+                        "heartbeat_at": "2026-10-14T12:00:00Z"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/issues/example~1other-project#3",
+                "value": {
+                  "source": "issues",
+                  "identity": "example/other-project#3",
+                  "observed_at": "2026-10-14T06:24:01.548527+00:00",
+                  "source_time": "2026-10-14T06:24:01.548527+00:00",
+                  "availability": "complete",
+                  "value": {
+                    "id": "example/other-project#3",
+                    "title": "Build read module header and progress bars",
+                    "body": "## What to build\nBuild read module header and progress bars\n\n## Acceptance criteria\n- [ ] Verify the described behavior.\n",
+                    "state": "open",
+                    "close_reason": null,
+                    "url": null,
+                    "labels": [
+                      "spec/thorough",
+                      "status/next",
+                      "type/enhancement",
+                      "llm/default",
+                      "priority/p2",
+                      "model/default",
+                      "dispatch/tbd",
+                      "platform/runtime",
+                      "project/session-status",
+                      "area/read-model"
+                    ],
+                    "milestone": "example/project@milestone/1"
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "claims-failed",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "claims failed; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "failed",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "claims-partial",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "claims partial; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "partial",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "claims-unsupported",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "claims unsupported; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "unsupported",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "claims-corrupt",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "claims corrupt; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "corrupt",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "runs-failed",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "runs failed; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "failed",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "runs-partial",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "runs partial; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "partial",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "runs-unsupported",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "runs unsupported; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "unsupported",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "runs-corrupt",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "runs corrupt; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "corrupt",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "slates-failed",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "slates failed; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/slates/codex:00000000-0000-4000-8000-000000000001/availability",
+                "value": "failed"
+              }
+            ]
+          },
+          {
+            "name": "slates-partial",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "slates partial; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/slates/codex:00000000-0000-4000-8000-000000000001/availability",
+                "value": "partial"
+              }
+            ]
+          },
+          {
+            "name": "slates-unsupported",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "slates unsupported; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/slates/codex:00000000-0000-4000-8000-000000000001/availability",
+                "value": "unsupported"
+              }
+            ]
+          },
+          {
+            "name": "slates-corrupt",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "slates corrupt; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/slates/codex:00000000-0000-4000-8000-000000000001/availability",
+                "value": "corrupt"
+              }
+            ]
+          },
+          {
+            "name": "project-reference-list",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "project reference list; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/kind",
+                "value": "project"
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/reference",
+                "value": [
+                  "example/project"
+                ]
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "project-reference-object",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "project reference object; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/kind",
+                "value": "project"
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/reference",
+                "value": {
+                  "project": "example/project"
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "project-reference-number",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "project reference number; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/kind",
+                "value": "project"
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/reference",
+                "value": 4
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "project-reference-boolean",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "project reference boolean; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/kind",
+                "value": "project"
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/reference",
+                "value": true
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "project-reference-null",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "project reference null; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/kind",
+                "value": "project"
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/reference",
+                "value": null
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "project-reference-empty",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "project reference empty; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/kind",
+                "value": "project"
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/reference",
+                "value": ""
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "project-reference-blank",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "project reference blank; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/kind",
+                "value": "project"
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/reference",
+                "value": " "
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "project-repository-list",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "project repository list; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/kind",
+                "value": "project"
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/reference",
+                "value": "session-status"
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/repository",
+                "value": [
+                  "example/project"
+                ]
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "project-repository-object",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "project repository object; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/kind",
+                "value": "project"
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/reference",
+                "value": "session-status"
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/repository",
+                "value": {
+                  "repository": "example/project"
+                }
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "project-repository-number",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "project repository number; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/kind",
+                "value": "project"
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/reference",
+                "value": "session-status"
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/repository",
+                "value": 4
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "project-repository-boolean",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "project repository boolean; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/kind",
+                "value": "project"
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/reference",
+                "value": "session-status"
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/repository",
+                "value": true
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "project-repository-empty",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "project repository empty; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/kind",
+                "value": "project"
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/reference",
+                "value": "session-status"
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/repository",
+                "value": ""
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "project-repository-missing-owner",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "project repository missing owner; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/kind",
+                "value": "project"
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/reference",
+                "value": "session-status"
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/repository",
+                "value": "/session-status"
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "project-repository-missing-repository",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "project repository missing repository; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/kind",
+                "value": "project"
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/reference",
+                "value": "session-status"
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/repository",
+                "value": "example/"
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "project-repository-name-only",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "project repository name only; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/kind",
+                "value": "project"
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/reference",
+                "value": "session-status"
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/repository",
+                "value": "session-status"
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "project-repository-extra-path",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "project repository extra path; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/kind",
+                "value": "project"
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/reference",
+                "value": "session-status"
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/repository",
+                "value": "example/project/extra"
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "project-repository-whitespace",
+            "kind": "derived",
+            "parent": "baseline.json",
+            "purpose": "project repository whitespace; hypothetical normalized adapter facts, not real operational work.",
+            "changes": [
+              {
+                "op": "add",
+                "path": "/claims",
+                "value": {
+                  "codex:00000000-0000-4000-8000-000000000001": {
+                    "source": "claims",
+                    "identity": "codex:00000000-0000-4000-8000-000000000001",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": []
+                  }
+                }
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/kind",
+                "value": "project"
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/reference",
+                "value": "session-status"
+              },
+              {
+                "op": "replace",
+                "path": "/naming/codex:00000000-0000-4000-8000-000000000001/value/repository",
+                "value": "example/ session-status"
+              },
+              {
+                "op": "add",
+                "path": "/runs",
+                "value": {
+                  "derived-read-module-slate@revision/1": {
+                    "source": "runs",
+                    "identity": "derived-read-module-slate@revision/1",
+                    "observed_at": "2026-10-14T12:00:00Z",
+                    "source_time": "2026-10-14T12:00:00Z",
+                    "availability": "complete",
+                    "value": {
+                      "slate_id": "derived-read-module-slate",
+                      "revision": 1,
+                      "runs": []
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "op": "remove",
+        "path": "/children"
+      },
+      {
+        "op": "remove",
+        "path": "/issues"
+      },
+      {
+        "op": "remove",
+        "path": "/members"
+      },
+      {
+        "op": "remove",
+        "path": "/milestones"
+      },
+      {
+        "op": "remove",
+        "path": "/naming"
+      },
+      {
+        "op": "remove",
+        "path": "/parents"
+      },
+      {
+        "op": "remove",
+        "path": "/projects"
+      },
+      {
+        "op": "remove",
+        "path": "/slates"
+      }
+    ]
+  }
+]

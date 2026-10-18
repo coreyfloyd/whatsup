@@ -1,0 +1,42 @@
+{
+  "name": "whatsup",
+  "version": "0.1.0",
+  "description": "Agent-reported session scope and progress sections",
+  "types": "./types/index.d.ts",
+  "userConfig": {
+    "snapshot": {
+      "type": "string",
+      "title": "Recorded snapshot",
+      "description": "Developer-only recorded snapshot override; live uses this session\u2019s context report.",
+      "default": "live",
+      "options": [
+        "live",
+        "several-rows",
+        "nothing-in-progress",
+        "no-scope",
+        "hidden-bars",
+        "no-slate",
+        "couldnt-load-scope",
+        "couldnt-load-epic",
+        "couldnt-load-in-progress",
+        "couldnt-load-card",
+        "empty-sets",
+        "no-project",
+        "automatic-scope",
+        "ticket-set",
+        "cross-repository",
+        "missing-card"
+      ]
+    },
+    "githubIssueKinds": {
+      "type": "string",
+      "title": "GitHub issue item kinds",
+      "description": "Comma-separated template item kinds whose section identity counts native GitHub issue membership. Empty disables membership counts.",
+      "default": "tickets,issues,epics"
+    }
+  },
+  "author": {
+    "name": "Corey Floyd"
+  },
+  "license": "Apache-2.0"
+}

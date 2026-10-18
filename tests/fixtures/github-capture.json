@@ -1,0 +1,1360 @@
+{
+  "example/project#1": {
+    "number": 1,
+    "title": "Plan Session Status initial build",
+    "body": "## What to build\nPlan Session Status initial build\n\n## Acceptance criteria\n- [ ] Verify the described behavior.\n",
+    "state": "closed",
+    "state_reason": "completed",
+    "html_url": "https://github.com/example/project/issues/1",
+    "milestone": null,
+    "updated_at": "2026-10-14T05:41:54Z",
+    "labels": [
+      {
+        "name": "spec/tbd"
+      },
+      {
+        "name": "type/enhancement"
+      },
+      {
+        "name": "llm/default"
+      },
+      {
+        "name": "priority/p2"
+      },
+      {
+        "name": "model/default"
+      },
+      {
+        "name": "dispatch/tbd"
+      },
+      {
+        "name": "platform/runtime"
+      },
+      {
+        "name": "project/session-status"
+      },
+      {
+        "name": "area/read-model"
+      }
+    ]
+  },
+  "example/project#2": {
+    "number": 2,
+    "title": "Build Session Status initial slices",
+    "body": "## Summary\nBuild Session Status initial slices\n",
+    "state": "open",
+    "state_reason": null,
+    "html_url": "https://github.com/example/project/issues/2",
+    "milestone": {
+      "url": "https://api.github.com/repos/example/project/milestones/1",
+      "html_url": "https://github.com/example/project/milestone/1",
+      "labels_url": "https://api.github.com/repos/example/project/milestones/1/labels",
+      "id": 18562656,
+      "node_id": "neutral-node",
+      "number": 1,
+      "title": "Initial build",
+      "description": "Exit criterion: the example release is verified.",
+      "creator": {
+        "login": "example",
+        "type": "User"
+      },
+      "open_issues": 4,
+      "closed_issues": 0,
+      "state": "open",
+      "created_at": "2026-10-14T05:27:29Z",
+      "updated_at": "2026-10-14T05:41:16Z",
+      "due_on": null,
+      "closed_at": null
+    },
+    "updated_at": "2026-10-14T05:27:44Z",
+    "labels": [
+      {
+        "name": "spec/thorough"
+      },
+      {
+        "name": "status/backlog"
+      },
+      {
+        "name": "type/enhancement"
+      },
+      {
+        "name": "llm/default"
+      },
+      {
+        "name": "priority/p2"
+      },
+      {
+        "name": "model/default"
+      },
+      {
+        "name": "dispatch/tbd"
+      },
+      {
+        "name": "platform/runtime"
+      },
+      {
+        "name": "project/session-status"
+      },
+      {
+        "name": "area/read-model"
+      }
+    ]
+  },
+  "example/project#3": {
+    "number": 3,
+    "title": "Build read module header and progress bars",
+    "body": "## What to build\nBuild read module header and progress bars\n\n## Acceptance criteria\n- [ ] Verify the described behavior.\n",
+    "state": "open",
+    "state_reason": null,
+    "html_url": "https://github.com/example/project/issues/3",
+    "milestone": {
+      "url": "https://api.github.com/repos/example/project/milestones/1",
+      "html_url": "https://github.com/example/project/milestone/1",
+      "labels_url": "https://api.github.com/repos/example/project/milestones/1/labels",
+      "id": 18562656,
+      "node_id": "neutral-node",
+      "number": 1,
+      "title": "Initial build",
+      "description": "Exit criterion: the example release is verified.",
+      "creator": {
+        "login": "example",
+        "type": "User"
+      },
+      "open_issues": 4,
+      "closed_issues": 0,
+      "state": "open",
+      "created_at": "2026-10-14T05:27:29Z",
+      "updated_at": "2026-10-14T05:41:16Z",
+      "due_on": null,
+      "closed_at": null
+    },
+    "updated_at": "2026-10-14T05:40:42Z",
+    "labels": [
+      {
+        "name": "spec/thorough"
+      },
+      {
+        "name": "status/next"
+      },
+      {
+        "name": "type/enhancement"
+      },
+      {
+        "name": "llm/default"
+      },
+      {
+        "name": "priority/p2"
+      },
+      {
+        "name": "model/default"
+      },
+      {
+        "name": "dispatch/tbd"
+      },
+      {
+        "name": "platform/runtime"
+      },
+      {
+        "name": "project/session-status"
+      },
+      {
+        "name": "area/read-model"
+      }
+    ]
+  },
+  "example/project#4": {
+    "number": 4,
+    "title": "Add in-progress rows to the read module",
+    "body": "## What to build\nAdd in-progress rows to the read module\n\n## Acceptance criteria\n- [ ] Verify the described behavior.\n",
+    "state": "open",
+    "state_reason": null,
+    "html_url": "https://github.com/example/project/issues/4",
+    "milestone": {
+      "url": "https://api.github.com/repos/example/project/milestones/1",
+      "html_url": "https://github.com/example/project/milestone/1",
+      "labels_url": "https://api.github.com/repos/example/project/milestones/1/labels",
+      "id": 18562656,
+      "node_id": "neutral-node",
+      "number": 1,
+      "title": "Initial build",
+      "description": "Exit criterion: the example release is verified.",
+      "creator": {
+        "login": "example",
+        "type": "User"
+      },
+      "open_issues": 4,
+      "closed_issues": 0,
+      "state": "open",
+      "created_at": "2026-10-14T05:27:29Z",
+      "updated_at": "2026-10-14T05:41:16Z",
+      "due_on": null,
+      "closed_at": null
+    },
+    "updated_at": "2026-10-14T05:40:57Z",
+    "labels": [
+      {
+        "name": "spec/thorough"
+      },
+      {
+        "name": "status/next"
+      },
+      {
+        "name": "type/enhancement"
+      },
+      {
+        "name": "llm/default"
+      },
+      {
+        "name": "priority/p2"
+      },
+      {
+        "name": "model/default"
+      },
+      {
+        "name": "dispatch/tbd"
+      },
+      {
+        "name": "platform/runtime"
+      },
+      {
+        "name": "project/session-status"
+      },
+      {
+        "name": "area/read-model"
+      }
+    ]
+  },
+  "example/project#5": {
+    "number": 5,
+    "title": "Build the Session Status pane",
+    "body": "## What to build\nBuild the Session Status pane\n\n## Acceptance criteria\n- [ ] Verify the described behavior.\n",
+    "state": "open",
+    "state_reason": null,
+    "html_url": "https://github.com/example/project/issues/5",
+    "milestone": {
+      "url": "https://api.github.com/repos/example/project/milestones/1",
+      "html_url": "https://github.com/example/project/milestone/1",
+      "labels_url": "https://api.github.com/repos/example/project/milestones/1/labels",
+      "id": 18562656,
+      "node_id": "neutral-node",
+      "number": 1,
+      "title": "Initial build",
+      "description": "Exit criterion: the example release is verified.",
+      "creator": {
+        "login": "example",
+        "type": "User"
+      },
+      "open_issues": 4,
+      "closed_issues": 0,
+      "state": "open",
+      "created_at": "2026-10-14T05:27:29Z",
+      "updated_at": "2026-10-14T05:41:16Z",
+      "due_on": null,
+      "closed_at": null
+    },
+    "updated_at": "2026-10-14T05:41:15Z",
+    "labels": [
+      {
+        "name": "spec/thorough"
+      },
+      {
+        "name": "status/next"
+      },
+      {
+        "name": "type/enhancement"
+      },
+      {
+        "name": "llm/default"
+      },
+      {
+        "name": "priority/p2"
+      },
+      {
+        "name": "model/default"
+      },
+      {
+        "name": "dispatch/tbd"
+      },
+      {
+        "name": "platform/runtime"
+      },
+      {
+        "name": "project/session-status"
+      },
+      {
+        "name": "area/presentation"
+      }
+    ]
+  },
+  "sub_issues": [
+    [
+      {
+        "url": "https://api.github.com/repos/example/project/issues/3",
+        "repository_url": "https://api.github.com/repos/example/project",
+        "labels_url": "https://api.github.com/repos/example/project/issues/3/labels{/name}",
+        "comments_url": "https://api.github.com/repos/example/project/issues/3/comments",
+        "events_url": "https://api.github.com/repos/example/project/issues/3/events",
+        "html_url": "https://github.com/example/project/issues/3",
+        "id": 5842590035,
+        "node_id": "neutral-node",
+        "number": 3,
+        "title": "Build read module header and progress bars",
+        "user": {
+          "login": "example",
+          "type": "User"
+        },
+        "labels": [
+          {
+            "name": "spec/thorough"
+          },
+          {
+            "name": "status/next"
+          },
+          {
+            "name": "type/enhancement"
+          },
+          {
+            "name": "llm/default"
+          },
+          {
+            "name": "priority/p2"
+          },
+          {
+            "name": "model/default"
+          },
+          {
+            "name": "dispatch/tbd"
+          },
+          {
+            "name": "platform/runtime"
+          },
+          {
+            "name": "project/session-status"
+          },
+          {
+            "name": "area/read-model"
+          }
+        ],
+        "state": "open",
+        "locked": false,
+        "assignees": [],
+        "milestone": {
+          "url": "https://api.github.com/repos/example/project/milestones/1",
+          "html_url": "https://github.com/example/project/milestone/1",
+          "labels_url": "https://api.github.com/repos/example/project/milestones/1/labels",
+          "id": 18562656,
+          "node_id": "neutral-node",
+          "number": 1,
+          "title": "Initial build",
+          "description": "Exit criterion: the example release is verified.",
+          "creator": {
+            "login": "example",
+            "type": "User"
+          },
+          "open_issues": 4,
+          "closed_issues": 0,
+          "state": "open",
+          "created_at": "2026-10-14T05:27:29Z",
+          "updated_at": "2026-10-14T05:41:16Z",
+          "due_on": null,
+          "closed_at": null
+        },
+        "comments": 0,
+        "created_at": "2026-10-14T05:40:41Z",
+        "updated_at": "2026-10-14T05:40:42Z",
+        "closed_at": null,
+        "assignee": null,
+        "author_association": "OWNER",
+        "active_lock_reason": null,
+        "sub_issues_summary": {
+          "total": 0,
+          "completed": 0,
+          "percent_completed": 0
+        },
+        "parent_issue_url": "https://api.github.com/repos/example/project/issues/2",
+        "issue_dependencies_summary": {
+          "blocked_by": 0,
+          "total_blocked_by": 0,
+          "blocking": 2,
+          "total_blocking": 2
+        },
+        "repository": {
+          "id": 1415911056,
+          "node_id": "neutral-node",
+          "name": "session-status",
+          "full_name": "example/project",
+          "private": true,
+          "owner": {
+            "login": "example",
+            "type": "User"
+          },
+          "html_url": "https://github.com/example/project",
+          "description": "Exit criterion: the example release is verified.",
+          "fork": false,
+          "url": "https://api.github.com/repos/example/project",
+          "forks_url": "https://api.github.com/repos/example/project/forks",
+          "keys_url": "https://api.github.com/repos/example/project/keys{/key_id}",
+          "collaborators_url": "https://api.github.com/repos/example/project/collaborators{/collaborator}",
+          "teams_url": "https://api.github.com/repos/example/project/teams",
+          "hooks_url": "https://api.github.com/repos/example/project/hooks",
+          "issue_events_url": "https://api.github.com/repos/example/project/issues/events{/number}",
+          "events_url": "https://api.github.com/repos/example/project/events",
+          "assignees_url": "https://api.github.com/repos/example/project/assignees{/user}",
+          "branches_url": "https://api.github.com/repos/example/project/branches{/branch}",
+          "tags_url": "https://api.github.com/repos/example/project/tags",
+          "blobs_url": "https://api.github.com/repos/example/project/git/blobs{/sha}",
+          "git_tags_url": "https://api.github.com/repos/example/project/git/tags{/sha}",
+          "git_refs_url": "https://api.github.com/repos/example/project/git/refs{/sha}",
+          "trees_url": "https://api.github.com/repos/example/project/git/trees{/sha}",
+          "statuses_url": "https://api.github.com/repos/example/project/statuses/{sha}",
+          "languages_url": "https://api.github.com/repos/example/project/languages",
+          "stargazers_url": "https://api.github.com/repos/example/project/stargazers",
+          "contributors_url": "https://api.github.com/repos/example/project/contributors",
+          "subscribers_url": "https://api.github.com/repos/example/project/subscribers",
+          "subscription_url": "https://api.github.com/repos/example/project/subscription",
+          "commits_url": "https://api.github.com/repos/example/project/commits{/sha}",
+          "git_commits_url": "https://api.github.com/repos/example/project/git/commits{/sha}",
+          "comments_url": "https://api.github.com/repos/example/project/comments{/number}",
+          "issue_comment_url": "https://api.github.com/repos/example/project/issues/comments{/number}",
+          "contents_url": "https://api.github.com/repos/example/project/contents/{+path}",
+          "compare_url": "https://api.github.com/repos/example/project/compare/{base}...{head}",
+          "merges_url": "https://api.github.com/repos/example/project/merges",
+          "archive_url": "https://api.github.com/repos/example/project/{archive_format}{/ref}",
+          "downloads_url": "https://api.github.com/repos/example/project/downloads",
+          "issues_url": "https://api.github.com/repos/example/project/issues{/number}",
+          "pulls_url": "https://api.github.com/repos/example/project/pulls{/number}",
+          "milestones_url": "https://api.github.com/repos/example/project/milestones{/number}",
+          "notifications_url": "https://api.github.com/repos/example/project/notifications{?since,all,participating}",
+          "labels_url": "https://api.github.com/repos/example/project/labels{/name}",
+          "releases_url": "https://api.github.com/repos/example/project/releases{/id}",
+          "deployments_url": "https://api.github.com/repos/example/project/deployments",
+          "created_at": "2026-10-12T17:17:12Z",
+          "updated_at": "2026-10-14T06:11:31Z",
+          "pushed_at": "2026-10-14T06:11:27Z",
+          "git_url": "git://github.com/example/project.git",
+          "ssh_url": "git@github.com:example/project.git",
+          "clone_url": "https://github.com/example/project.git",
+          "svn_url": "https://github.com/example/project",
+          "homepage": null,
+          "size": 38,
+          "stargazers_count": 0,
+          "watchers_count": 0,
+          "language": null,
+          "has_issues": true,
+          "has_projects": true,
+          "has_downloads": false,
+          "has_wiki": false,
+          "has_pages": false,
+          "has_discussions": false,
+          "forks_count": 0,
+          "mirror_url": null,
+          "archived": false,
+          "disabled": false,
+          "open_issues_count": 4,
+          "license": null,
+          "allow_forking": true,
+          "is_template": false,
+          "web_commit_signoff_required": false,
+          "has_pull_requests": true,
+          "pull_request_creation_policy": "all",
+          "topics": [],
+          "visibility": "private",
+          "forks": 0,
+          "open_issues": 4,
+          "watchers": 0,
+          "default_branch": "main",
+          "permissions": {
+            "admin": true,
+            "maintain": true,
+            "push": true,
+            "triage": true,
+            "pull": true
+          }
+        },
+        "body": "## What to build\nBuild read module header and progress bars\n\n## Acceptance criteria\n- [ ] Verify the described behavior.\n",
+        "reactions": {
+          "url": "https://api.github.com/repos/example/project/issues/3/reactions",
+          "total_count": 0,
+          "+1": 0,
+          "-1": 0,
+          "laugh": 0,
+          "hooray": 0,
+          "confused": 0,
+          "heart": 0,
+          "rocket": 0,
+          "eyes": 0
+        },
+        "timeline_url": "https://api.github.com/repos/example/project/issues/3/timeline",
+        "performed_via_github_app": null,
+        "state_reason": null,
+        "pinned_comment": null
+      },
+      {
+        "url": "https://api.github.com/repos/example/project/issues/4",
+        "repository_url": "https://api.github.com/repos/example/project",
+        "labels_url": "https://api.github.com/repos/example/project/issues/4/labels{/name}",
+        "comments_url": "https://api.github.com/repos/example/project/issues/4/comments",
+        "events_url": "https://api.github.com/repos/example/project/issues/4/events",
+        "html_url": "https://github.com/example/project/issues/4",
+        "id": 5842592309,
+        "node_id": "neutral-node",
+        "number": 4,
+        "title": "Add in-progress rows to the read module",
+        "user": {
+          "login": "example",
+          "type": "User"
+        },
+        "labels": [
+          {
+            "name": "spec/thorough"
+          },
+          {
+            "name": "status/next"
+          },
+          {
+            "name": "type/enhancement"
+          },
+          {
+            "name": "llm/default"
+          },
+          {
+            "name": "priority/p2"
+          },
+          {
+            "name": "model/default"
+          },
+          {
+            "name": "dispatch/tbd"
+          },
+          {
+            "name": "platform/runtime"
+          },
+          {
+            "name": "project/session-status"
+          },
+          {
+            "name": "area/read-model"
+          }
+        ],
+        "state": "open",
+        "locked": false,
+        "assignees": [],
+        "milestone": {
+          "url": "https://api.github.com/repos/example/project/milestones/1",
+          "html_url": "https://github.com/example/project/milestone/1",
+          "labels_url": "https://api.github.com/repos/example/project/milestones/1/labels",
+          "id": 18562656,
+          "node_id": "neutral-node",
+          "number": 1,
+          "title": "Initial build",
+          "description": "Exit criterion: the example release is verified.",
+          "creator": {
+            "login": "example",
+            "type": "User"
+          },
+          "open_issues": 4,
+          "closed_issues": 0,
+          "state": "open",
+          "created_at": "2026-10-14T05:27:29Z",
+          "updated_at": "2026-10-14T05:41:16Z",
+          "due_on": null,
+          "closed_at": null
+        },
+        "comments": 0,
+        "created_at": "2026-10-14T05:40:56Z",
+        "updated_at": "2026-10-14T05:40:57Z",
+        "closed_at": null,
+        "assignee": null,
+        "author_association": "OWNER",
+        "active_lock_reason": null,
+        "sub_issues_summary": {
+          "total": 0,
+          "completed": 0,
+          "percent_completed": 0
+        },
+        "parent_issue_url": "https://api.github.com/repos/example/project/issues/2",
+        "issue_dependencies_summary": {
+          "blocked_by": 1,
+          "total_blocked_by": 1,
+          "blocking": 1,
+          "total_blocking": 1
+        },
+        "repository": {
+          "id": 1415911056,
+          "node_id": "neutral-node",
+          "name": "session-status",
+          "full_name": "example/project",
+          "private": true,
+          "owner": {
+            "login": "example",
+            "type": "User"
+          },
+          "html_url": "https://github.com/example/project",
+          "description": "Exit criterion: the example release is verified.",
+          "fork": false,
+          "url": "https://api.github.com/repos/example/project",
+          "forks_url": "https://api.github.com/repos/example/project/forks",
+          "keys_url": "https://api.github.com/repos/example/project/keys{/key_id}",
+          "collaborators_url": "https://api.github.com/repos/example/project/collaborators{/collaborator}",
+          "teams_url": "https://api.github.com/repos/example/project/teams",
+          "hooks_url": "https://api.github.com/repos/example/project/hooks",
+          "issue_events_url": "https://api.github.com/repos/example/project/issues/events{/number}",
+          "events_url": "https://api.github.com/repos/example/project/events",
+          "assignees_url": "https://api.github.com/repos/example/project/assignees{/user}",
+          "branches_url": "https://api.github.com/repos/example/project/branches{/branch}",
+          "tags_url": "https://api.github.com/repos/example/project/tags",
+          "blobs_url": "https://api.github.com/repos/example/project/git/blobs{/sha}",
+          "git_tags_url": "https://api.github.com/repos/example/project/git/tags{/sha}",
+          "git_refs_url": "https://api.github.com/repos/example/project/git/refs{/sha}",
+          "trees_url": "https://api.github.com/repos/example/project/git/trees{/sha}",
+          "statuses_url": "https://api.github.com/repos/example/project/statuses/{sha}",
+          "languages_url": "https://api.github.com/repos/example/project/languages",
+          "stargazers_url": "https://api.github.com/repos/example/project/stargazers",
+          "contributors_url": "https://api.github.com/repos/example/project/contributors",
+          "subscribers_url": "https://api.github.com/repos/example/project/subscribers",
+          "subscription_url": "https://api.github.com/repos/example/project/subscription",
+          "commits_url": "https://api.github.com/repos/example/project/commits{/sha}",
+          "git_commits_url": "https://api.github.com/repos/example/project/git/commits{/sha}",
+          "comments_url": "https://api.github.com/repos/example/project/comments{/number}",
+          "issue_comment_url": "https://api.github.com/repos/example/project/issues/comments{/number}",
+          "contents_url": "https://api.github.com/repos/example/project/contents/{+path}",
+          "compare_url": "https://api.github.com/repos/example/project/compare/{base}...{head}",
+          "merges_url": "https://api.github.com/repos/example/project/merges",
+          "archive_url": "https://api.github.com/repos/example/project/{archive_format}{/ref}",
+          "downloads_url": "https://api.github.com/repos/example/project/downloads",
+          "issues_url": "https://api.github.com/repos/example/project/issues{/number}",
+          "pulls_url": "https://api.github.com/repos/example/project/pulls{/number}",
+          "milestones_url": "https://api.github.com/repos/example/project/milestones{/number}",
+          "notifications_url": "https://api.github.com/repos/example/project/notifications{?since,all,participating}",
+          "labels_url": "https://api.github.com/repos/example/project/labels{/name}",
+          "releases_url": "https://api.github.com/repos/example/project/releases{/id}",
+          "deployments_url": "https://api.github.com/repos/example/project/deployments",
+          "created_at": "2026-10-12T17:17:12Z",
+          "updated_at": "2026-10-14T06:11:31Z",
+          "pushed_at": "2026-10-14T06:11:27Z",
+          "git_url": "git://github.com/example/project.git",
+          "ssh_url": "git@github.com:example/project.git",
+          "clone_url": "https://github.com/example/project.git",
+          "svn_url": "https://github.com/example/project",
+          "homepage": null,
+          "size": 38,
+          "stargazers_count": 0,
+          "watchers_count": 0,
+          "language": null,
+          "has_issues": true,
+          "has_projects": true,
+          "has_downloads": false,
+          "has_wiki": false,
+          "has_pages": false,
+          "has_discussions": false,
+          "forks_count": 0,
+          "mirror_url": null,
+          "archived": false,
+          "disabled": false,
+          "open_issues_count": 4,
+          "license": null,
+          "allow_forking": true,
+          "is_template": false,
+          "web_commit_signoff_required": false,
+          "has_pull_requests": true,
+          "pull_request_creation_policy": "all",
+          "topics": [],
+          "visibility": "private",
+          "forks": 0,
+          "open_issues": 4,
+          "watchers": 0,
+          "default_branch": "main",
+          "permissions": {
+            "admin": true,
+            "maintain": true,
+            "push": true,
+            "triage": true,
+            "pull": true
+          }
+        },
+        "body": "## What to build\nAdd in-progress rows to the read module\n\n## Acceptance criteria\n- [ ] Verify the described behavior.\n",
+        "reactions": {
+          "url": "https://api.github.com/repos/example/project/issues/4/reactions",
+          "total_count": 0,
+          "+1": 0,
+          "-1": 0,
+          "laugh": 0,
+          "hooray": 0,
+          "confused": 0,
+          "heart": 0,
+          "rocket": 0,
+          "eyes": 0
+        },
+        "timeline_url": "https://api.github.com/repos/example/project/issues/4/timeline",
+        "performed_via_github_app": null,
+        "state_reason": null,
+        "pinned_comment": null
+      },
+      {
+        "url": "https://api.github.com/repos/example/project/issues/5",
+        "repository_url": "https://api.github.com/repos/example/project",
+        "labels_url": "https://api.github.com/repos/example/project/issues/5/labels{/name}",
+        "comments_url": "https://api.github.com/repos/example/project/issues/5/comments",
+        "events_url": "https://api.github.com/repos/example/project/issues/5/events",
+        "html_url": "https://github.com/example/project/issues/5",
+        "id": 5842595098,
+        "node_id": "neutral-node",
+        "number": 5,
+        "title": "Build the Session Status pane",
+        "user": {
+          "login": "example",
+          "type": "User"
+        },
+        "labels": [
+          {
+            "name": "spec/thorough"
+          },
+          {
+            "name": "status/next"
+          },
+          {
+            "name": "type/enhancement"
+          },
+          {
+            "name": "llm/default"
+          },
+          {
+            "name": "priority/p2"
+          },
+          {
+            "name": "model/default"
+          },
+          {
+            "name": "dispatch/tbd"
+          },
+          {
+            "name": "platform/runtime"
+          },
+          {
+            "name": "project/session-status"
+          },
+          {
+            "name": "area/presentation"
+          }
+        ],
+        "state": "open",
+        "locked": false,
+        "assignees": [],
+        "milestone": {
+          "url": "https://api.github.com/repos/example/project/milestones/1",
+          "html_url": "https://github.com/example/project/milestone/1",
+          "labels_url": "https://api.github.com/repos/example/project/milestones/1/labels",
+          "id": 18562656,
+          "node_id": "neutral-node",
+          "number": 1,
+          "title": "Initial build",
+          "description": "Exit criterion: the example release is verified.",
+          "creator": {
+            "login": "example",
+            "type": "User"
+          },
+          "open_issues": 4,
+          "closed_issues": 0,
+          "state": "open",
+          "created_at": "2026-10-14T05:27:29Z",
+          "updated_at": "2026-10-14T05:41:16Z",
+          "due_on": null,
+          "closed_at": null
+        },
+        "comments": 0,
+        "created_at": "2026-10-14T05:41:15Z",
+        "updated_at": "2026-10-14T05:41:15Z",
+        "closed_at": null,
+        "assignee": null,
+        "author_association": "OWNER",
+        "active_lock_reason": null,
+        "sub_issues_summary": {
+          "total": 0,
+          "completed": 0,
+          "percent_completed": 0
+        },
+        "parent_issue_url": "https://api.github.com/repos/example/project/issues/2",
+        "issue_dependencies_summary": {
+          "blocked_by": 2,
+          "total_blocked_by": 2,
+          "blocking": 0,
+          "total_blocking": 0
+        },
+        "repository": {
+          "id": 1415911056,
+          "node_id": "neutral-node",
+          "name": "session-status",
+          "full_name": "example/project",
+          "private": true,
+          "owner": {
+            "login": "example",
+            "type": "User"
+          },
+          "html_url": "https://github.com/example/project",
+          "description": "Exit criterion: the example release is verified.",
+          "fork": false,
+          "url": "https://api.github.com/repos/example/project",
+          "forks_url": "https://api.github.com/repos/example/project/forks",
+          "keys_url": "https://api.github.com/repos/example/project/keys{/key_id}",
+          "collaborators_url": "https://api.github.com/repos/example/project/collaborators{/collaborator}",
+          "teams_url": "https://api.github.com/repos/example/project/teams",
+          "hooks_url": "https://api.github.com/repos/example/project/hooks",
+          "issue_events_url": "https://api.github.com/repos/example/project/issues/events{/number}",
+          "events_url": "https://api.github.com/repos/example/project/events",
+          "assignees_url": "https://api.github.com/repos/example/project/assignees{/user}",
+          "branches_url": "https://api.github.com/repos/example/project/branches{/branch}",
+          "tags_url": "https://api.github.com/repos/example/project/tags",
+          "blobs_url": "https://api.github.com/repos/example/project/git/blobs{/sha}",
+          "git_tags_url": "https://api.github.com/repos/example/project/git/tags{/sha}",
+          "git_refs_url": "https://api.github.com/repos/example/project/git/refs{/sha}",
+          "trees_url": "https://api.github.com/repos/example/project/git/trees{/sha}",
+          "statuses_url": "https://api.github.com/repos/example/project/statuses/{sha}",
+          "languages_url": "https://api.github.com/repos/example/project/languages",
+          "stargazers_url": "https://api.github.com/repos/example/project/stargazers",
+          "contributors_url": "https://api.github.com/repos/example/project/contributors",
+          "subscribers_url": "https://api.github.com/repos/example/project/subscribers",
+          "subscription_url": "https://api.github.com/repos/example/project/subscription",
+          "commits_url": "https://api.github.com/repos/example/project/commits{/sha}",
+          "git_commits_url": "https://api.github.com/repos/example/project/git/commits{/sha}",
+          "comments_url": "https://api.github.com/repos/example/project/comments{/number}",
+          "issue_comment_url": "https://api.github.com/repos/example/project/issues/comments{/number}",
+          "contents_url": "https://api.github.com/repos/example/project/contents/{+path}",
+          "compare_url": "https://api.github.com/repos/example/project/compare/{base}...{head}",
+          "merges_url": "https://api.github.com/repos/example/project/merges",
+          "archive_url": "https://api.github.com/repos/example/project/{archive_format}{/ref}",
+          "downloads_url": "https://api.github.com/repos/example/project/downloads",
+          "issues_url": "https://api.github.com/repos/example/project/issues{/number}",
+          "pulls_url": "https://api.github.com/repos/example/project/pulls{/number}",
+          "milestones_url": "https://api.github.com/repos/example/project/milestones{/number}",
+          "notifications_url": "https://api.github.com/repos/example/project/notifications{?since,all,participating}",
+          "labels_url": "https://api.github.com/repos/example/project/labels{/name}",
+          "releases_url": "https://api.github.com/repos/example/project/releases{/id}",
+          "deployments_url": "https://api.github.com/repos/example/project/deployments",
+          "created_at": "2026-10-12T17:17:12Z",
+          "updated_at": "2026-10-14T06:11:31Z",
+          "pushed_at": "2026-10-14T06:11:27Z",
+          "git_url": "git://github.com/example/project.git",
+          "ssh_url": "git@github.com:example/project.git",
+          "clone_url": "https://github.com/example/project.git",
+          "svn_url": "https://github.com/example/project",
+          "homepage": null,
+          "size": 38,
+          "stargazers_count": 0,
+          "watchers_count": 0,
+          "language": null,
+          "has_issues": true,
+          "has_projects": true,
+          "has_downloads": false,
+          "has_wiki": false,
+          "has_pages": false,
+          "has_discussions": false,
+          "forks_count": 0,
+          "mirror_url": null,
+          "archived": false,
+          "disabled": false,
+          "open_issues_count": 4,
+          "license": null,
+          "allow_forking": true,
+          "is_template": false,
+          "web_commit_signoff_required": false,
+          "has_pull_requests": true,
+          "pull_request_creation_policy": "all",
+          "topics": [],
+          "visibility": "private",
+          "forks": 0,
+          "open_issues": 4,
+          "watchers": 0,
+          "default_branch": "main",
+          "permissions": {
+            "admin": true,
+            "maintain": true,
+            "push": true,
+            "triage": true,
+            "pull": true
+          }
+        },
+        "body": "## What to build\nBuild the Session Status pane\n\n## Acceptance criteria\n- [ ] Verify the described behavior.\n",
+        "reactions": {
+          "url": "https://api.github.com/repos/example/project/issues/5/reactions",
+          "total_count": 0,
+          "+1": 0,
+          "-1": 0,
+          "laugh": 0,
+          "hooray": 0,
+          "confused": 0,
+          "heart": 0,
+          "rocket": 0,
+          "eyes": 0
+        },
+        "timeline_url": "https://api.github.com/repos/example/project/issues/5/timeline",
+        "performed_via_github_app": null,
+        "state_reason": null,
+        "pinned_comment": null
+      }
+    ]
+  ],
+  "milestones": [
+    [
+      {
+        "url": "https://api.github.com/repos/example/project/milestones/1",
+        "html_url": "https://github.com/example/project/milestone/1",
+        "labels_url": "https://api.github.com/repos/example/project/milestones/1/labels",
+        "id": 18562656,
+        "node_id": "neutral-node",
+        "number": 1,
+        "title": "Initial build",
+        "description": "Exit criterion: the example release is verified.",
+        "creator": {
+          "login": "example",
+          "type": "User"
+        },
+        "open_issues": 4,
+        "closed_issues": 0,
+        "state": "open",
+        "created_at": "2026-10-14T05:27:29Z",
+        "updated_at": "2026-10-14T05:41:16Z",
+        "due_on": null,
+        "closed_at": null
+      }
+    ]
+  ],
+  "milestone_members": [
+    [
+      {
+        "url": "https://api.github.com/repos/example/project/issues/5",
+        "repository_url": "https://api.github.com/repos/example/project",
+        "labels_url": "https://api.github.com/repos/example/project/issues/5/labels{/name}",
+        "comments_url": "https://api.github.com/repos/example/project/issues/5/comments",
+        "events_url": "https://api.github.com/repos/example/project/issues/5/events",
+        "html_url": "https://github.com/example/project/issues/5",
+        "id": 5842595098,
+        "node_id": "neutral-node",
+        "number": 5,
+        "title": "Build the Session Status pane",
+        "user": {
+          "login": "example",
+          "type": "User"
+        },
+        "labels": [
+          {
+            "name": "spec/thorough"
+          },
+          {
+            "name": "status/next"
+          },
+          {
+            "name": "type/enhancement"
+          },
+          {
+            "name": "llm/default"
+          },
+          {
+            "name": "priority/p2"
+          },
+          {
+            "name": "model/default"
+          },
+          {
+            "name": "dispatch/tbd"
+          },
+          {
+            "name": "platform/runtime"
+          },
+          {
+            "name": "project/session-status"
+          },
+          {
+            "name": "area/presentation"
+          }
+        ],
+        "state": "open",
+        "locked": false,
+        "assignees": [],
+        "milestone": {
+          "url": "https://api.github.com/repos/example/project/milestones/1",
+          "html_url": "https://github.com/example/project/milestone/1",
+          "labels_url": "https://api.github.com/repos/example/project/milestones/1/labels",
+          "id": 18562656,
+          "node_id": "neutral-node",
+          "number": 1,
+          "title": "Initial build",
+          "description": "Exit criterion: the example release is verified.",
+          "creator": {
+            "login": "example",
+            "type": "User"
+          },
+          "open_issues": 4,
+          "closed_issues": 0,
+          "state": "open",
+          "created_at": "2026-10-14T05:27:29Z",
+          "updated_at": "2026-10-14T05:41:16Z",
+          "due_on": null,
+          "closed_at": null
+        },
+        "comments": 0,
+        "created_at": "2026-10-14T05:41:15Z",
+        "updated_at": "2026-10-14T05:41:15Z",
+        "closed_at": null,
+        "assignee": null,
+        "author_association": "OWNER",
+        "active_lock_reason": null,
+        "sub_issues_summary": {
+          "total": 0,
+          "completed": 0,
+          "percent_completed": 0
+        },
+        "parent_issue_url": "https://api.github.com/repos/example/project/issues/2",
+        "issue_dependencies_summary": {
+          "blocked_by": 2,
+          "total_blocked_by": 2,
+          "blocking": 0,
+          "total_blocking": 0
+        },
+        "body": "## What to build\nBuild the Session Status pane\n\n## Acceptance criteria\n- [ ] Verify the described behavior.\n",
+        "closed_by": null,
+        "reactions": {
+          "url": "https://api.github.com/repos/example/project/issues/5/reactions",
+          "total_count": 0,
+          "+1": 0,
+          "-1": 0,
+          "laugh": 0,
+          "hooray": 0,
+          "confused": 0,
+          "heart": 0,
+          "rocket": 0,
+          "eyes": 0
+        },
+        "timeline_url": "https://api.github.com/repos/example/project/issues/5/timeline",
+        "performed_via_github_app": null,
+        "state_reason": null,
+        "pinned_comment": null
+      },
+      {
+        "url": "https://api.github.com/repos/example/project/issues/4",
+        "repository_url": "https://api.github.com/repos/example/project",
+        "labels_url": "https://api.github.com/repos/example/project/issues/4/labels{/name}",
+        "comments_url": "https://api.github.com/repos/example/project/issues/4/comments",
+        "events_url": "https://api.github.com/repos/example/project/issues/4/events",
+        "html_url": "https://github.com/example/project/issues/4",
+        "id": 5842592309,
+        "node_id": "neutral-node",
+        "number": 4,
+        "title": "Add in-progress rows to the read module",
+        "user": {
+          "login": "example",
+          "type": "User"
+        },
+        "labels": [
+          {
+            "name": "spec/thorough"
+          },
+          {
+            "name": "status/next"
+          },
+          {
+            "name": "type/enhancement"
+          },
+          {
+            "name": "llm/default"
+          },
+          {
+            "name": "priority/p2"
+          },
+          {
+            "name": "model/default"
+          },
+          {
+            "name": "dispatch/tbd"
+          },
+          {
+            "name": "platform/runtime"
+          },
+          {
+            "name": "project/session-status"
+          },
+          {
+            "name": "area/read-model"
+          }
+        ],
+        "state": "open",
+        "locked": false,
+        "assignees": [],
+        "milestone": {
+          "url": "https://api.github.com/repos/example/project/milestones/1",
+          "html_url": "https://github.com/example/project/milestone/1",
+          "labels_url": "https://api.github.com/repos/example/project/milestones/1/labels",
+          "id": 18562656,
+          "node_id": "neutral-node",
+          "number": 1,
+          "title": "Initial build",
+          "description": "Exit criterion: the example release is verified.",
+          "creator": {
+            "login": "example",
+            "type": "User"
+          },
+          "open_issues": 4,
+          "closed_issues": 0,
+          "state": "open",
+          "created_at": "2026-10-14T05:27:29Z",
+          "updated_at": "2026-10-14T05:41:16Z",
+          "due_on": null,
+          "closed_at": null
+        },
+        "comments": 0,
+        "created_at": "2026-10-14T05:40:56Z",
+        "updated_at": "2026-10-14T05:40:57Z",
+        "closed_at": null,
+        "assignee": null,
+        "author_association": "OWNER",
+        "active_lock_reason": null,
+        "sub_issues_summary": {
+          "total": 0,
+          "completed": 0,
+          "percent_completed": 0
+        },
+        "parent_issue_url": "https://api.github.com/repos/example/project/issues/2",
+        "issue_dependencies_summary": {
+          "blocked_by": 1,
+          "total_blocked_by": 1,
+          "blocking": 1,
+          "total_blocking": 1
+        },
+        "body": "## What to build\nAdd in-progress rows to the read module\n\n## Acceptance criteria\n- [ ] Verify the described behavior.\n",
+        "closed_by": null,
+        "reactions": {
+          "url": "https://api.github.com/repos/example/project/issues/4/reactions",
+          "total_count": 0,
+          "+1": 0,
+          "-1": 0,
+          "laugh": 0,
+          "hooray": 0,
+          "confused": 0,
+          "heart": 0,
+          "rocket": 0,
+          "eyes": 0
+        },
+        "timeline_url": "https://api.github.com/repos/example/project/issues/4/timeline",
+        "performed_via_github_app": null,
+        "state_reason": null,
+        "pinned_comment": null
+      },
+      {
+        "url": "https://api.github.com/repos/example/project/issues/3",
+        "repository_url": "https://api.github.com/repos/example/project",
+        "labels_url": "https://api.github.com/repos/example/project/issues/3/labels{/name}",
+        "comments_url": "https://api.github.com/repos/example/project/issues/3/comments",
+        "events_url": "https://api.github.com/repos/example/project/issues/3/events",
+        "html_url": "https://github.com/example/project/issues/3",
+        "id": 5842590035,
+        "node_id": "neutral-node",
+        "number": 3,
+        "title": "Build read module header and progress bars",
+        "user": {
+          "login": "example",
+          "type": "User"
+        },
+        "labels": [
+          {
+            "name": "spec/thorough"
+          },
+          {
+            "name": "status/next"
+          },
+          {
+            "name": "type/enhancement"
+          },
+          {
+            "name": "llm/default"
+          },
+          {
+            "name": "priority/p2"
+          },
+          {
+            "name": "model/default"
+          },
+          {
+            "name": "dispatch/tbd"
+          },
+          {
+            "name": "platform/runtime"
+          },
+          {
+            "name": "project/session-status"
+          },
+          {
+            "name": "area/read-model"
+          }
+        ],
+        "state": "open",
+        "locked": false,
+        "assignees": [],
+        "milestone": {
+          "url": "https://api.github.com/repos/example/project/milestones/1",
+          "html_url": "https://github.com/example/project/milestone/1",
+          "labels_url": "https://api.github.com/repos/example/project/milestones/1/labels",
+          "id": 18562656,
+          "node_id": "neutral-node",
+          "number": 1,
+          "title": "Initial build",
+          "description": "Exit criterion: the example release is verified.",
+          "creator": {
+            "login": "example",
+            "type": "User"
+          },
+          "open_issues": 4,
+          "closed_issues": 0,
+          "state": "open",
+          "created_at": "2026-10-14T05:27:29Z",
+          "updated_at": "2026-10-14T05:41:16Z",
+          "due_on": null,
+          "closed_at": null
+        },
+        "comments": 0,
+        "created_at": "2026-10-14T05:40:41Z",
+        "updated_at": "2026-10-14T05:40:42Z",
+        "closed_at": null,
+        "assignee": null,
+        "author_association": "OWNER",
+        "active_lock_reason": null,
+        "sub_issues_summary": {
+          "total": 0,
+          "completed": 0,
+          "percent_completed": 0
+        },
+        "parent_issue_url": "https://api.github.com/repos/example/project/issues/2",
+        "issue_dependencies_summary": {
+          "blocked_by": 0,
+          "total_blocked_by": 0,
+          "blocking": 2,
+          "total_blocking": 2
+        },
+        "body": "## What to build\nBuild read module header and progress bars\n\n## Acceptance criteria\n- [ ] Verify the described behavior.\n",
+        "closed_by": null,
+        "reactions": {
+          "url": "https://api.github.com/repos/example/project/issues/3/reactions",
+          "total_count": 0,
+          "+1": 0,
+          "-1": 0,
+          "laugh": 0,
+          "hooray": 0,
+          "confused": 0,
+          "heart": 0,
+          "rocket": 0,
+          "eyes": 0
+        },
+        "timeline_url": "https://api.github.com/repos/example/project/issues/3/timeline",
+        "performed_via_github_app": null,
+        "state_reason": null,
+        "pinned_comment": null
+      },
+      {
+        "url": "https://api.github.com/repos/example/project/issues/2",
+        "repository_url": "https://api.github.com/repos/example/project",
+        "labels_url": "https://api.github.com/repos/example/project/issues/2/labels{/name}",
+        "comments_url": "https://api.github.com/repos/example/project/issues/2/comments",
+        "events_url": "https://api.github.com/repos/example/project/issues/2/events",
+        "html_url": "https://github.com/example/project/issues/2",
+        "id": 5821376707,
+        "node_id": "neutral-node",
+        "number": 2,
+        "title": "Build Session Status initial slices",
+        "user": {
+          "login": "example",
+          "type": "User"
+        },
+        "labels": [
+          {
+            "name": "spec/thorough"
+          },
+          {
+            "name": "status/backlog"
+          },
+          {
+            "name": "type/enhancement"
+          },
+          {
+            "name": "llm/default"
+          },
+          {
+            "name": "priority/p2"
+          },
+          {
+            "name": "model/default"
+          },
+          {
+            "name": "dispatch/tbd"
+          },
+          {
+            "name": "platform/runtime"
+          },
+          {
+            "name": "project/session-status"
+          },
+          {
+            "name": "area/read-model"
+          }
+        ],
+        "state": "open",
+        "locked": false,
+        "assignees": [],
+        "milestone": {
+          "url": "https://api.github.com/repos/example/project/milestones/1",
+          "html_url": "https://github.com/example/project/milestone/1",
+          "labels_url": "https://api.github.com/repos/example/project/milestones/1/labels",
+          "id": 18562656,
+          "node_id": "neutral-node",
+          "number": 1,
+          "title": "Initial build",
+          "description": "Exit criterion: the example release is verified.",
+          "creator": {
+            "login": "example",
+            "type": "User"
+          },
+          "open_issues": 4,
+          "closed_issues": 0,
+          "state": "open",
+          "created_at": "2026-10-14T05:27:29Z",
+          "updated_at": "2026-10-14T05:41:16Z",
+          "due_on": null,
+          "closed_at": null
+        },
+        "comments": 3,
+        "created_at": "2026-10-12T22:33:19Z",
+        "updated_at": "2026-10-14T05:27:44Z",
+        "closed_at": null,
+        "assignee": null,
+        "author_association": "OWNER",
+        "active_lock_reason": null,
+        "sub_issues_summary": {
+          "total": 3,
+          "completed": 0,
+          "percent_completed": 0
+        },
+        "issue_dependencies_summary": {
+          "blocked_by": 0,
+          "total_blocked_by": 0,
+          "blocking": 0,
+          "total_blocking": 0
+        },
+        "body": "## Summary\nBuild Session Status initial slices\n",
+        "closed_by": null,
+        "reactions": {
+          "url": "https://api.github.com/repos/example/project/issues/2/reactions",
+          "total_count": 0,
+          "+1": 0,
+          "-1": 0,
+          "laugh": 0,
+          "hooray": 0,
+          "confused": 0,
+          "heart": 0,
+          "rocket": 0,
+          "eyes": 0
+        },
+        "timeline_url": "https://api.github.com/repos/example/project/issues/2/timeline",
+        "performed_via_github_app": null,
+        "state_reason": null,
+        "pinned_comment": null
+      }
+    ]
+  ]
+}

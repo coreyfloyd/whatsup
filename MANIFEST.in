@@ -1,0 +1,8 @@
+include LICENSE README.md INSTALLATION.md INTERFACE.md RELEASING.md CONTRIBUTING.md CONTEXT.md
+include .claude-plugin/marketplace.json
+recursive-include contracts *.md
+recursive-include docs *.md *.png
+recursive-include tests *.py *.json
+graft mod
+prune mod/.claude-plugin/types
+global-exclude *.pyc *.pyo
