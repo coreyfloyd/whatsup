@@ -1,4 +1,4 @@
-import { paneTree } from './pane-tree'
+import { paneTree, desktopPane } from './pane-tree'
 import { describe, expect, test, mock } from 'claude-code/testing'
 import { reportError } from '../hooks/report'
 import { cells } from '../hooks/session-facts'
@@ -144,7 +144,7 @@ describe('workers', () => {
     const report = { scope: 'Show workers', workers: [{ name: 'remote', role: 'testing', status: 'done', state: 'done', task: { title: 'Show workers', number: 13, state: 'done', link: 'https://github.com/example/project/issues/13' } }] }
     await $.tool.call({ tool: 'mcp__whatsup__report', ...report })
     await h.clock.advance(599999)
-    const ui = await $.ui.mount({ plugin: 'whatsup', surface: 'desktop', component: 'Pane', requestId: 'session-status', props: { title: 'whatsup', bodyColumns: 40, isFocused: false, placement: 'dock', scroll: { offset: 0, bodyRows: 40 }, view: {} }, viewport: { columns: 80, rows: 46, isFullscreen: true } })
+    const ui = desktopPane(await $.ui.mount({ plugin: 'whatsup', surface: 'desktop', component: 'Pane', requestId: 'session-status', props: { title: 'whatsup', bodyColumns: 40, isFocused: false, placement: 'dock', scroll: { offset: 0, bodyRows: 40 }, view: {} }, viewport: { columns: 80, rows: 46, isFullscreen: true } }))
     const tree = await paneTree(ui)
     expect(text(tree)).toContain('testing · remote')
     expect(nodes(nodes(tree).find(n => n.props?.key === 'hide-worker-1-task-rest')).some(n => n.props?.dimColor)).toBe(true)

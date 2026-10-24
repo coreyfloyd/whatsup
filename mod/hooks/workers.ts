@@ -4,7 +4,7 @@ import type { Worker, ContextReport } from './report'
 import { reportKey } from './report'
 import { factsKey } from './session-facts'
 import type { SessionFacts } from './session-facts'
-import { cells, fit } from './session-facts'
+import { cells, fit as terminalFit } from './session-facts'
 import type { ReportLine } from './report-layout'
 import type { Part } from './layout'
 
@@ -52,21 +52,22 @@ export function tokenGraph(worker: LiveWorker, width: number, now: number, reduc
 }
 const compact = (n: number) => n >= 1000 ? `${Math.round(n / 100) / 10}k` : String(n)
 const emoji: Record<string, string> = { generating: '🐝', reviewing: '🧐', evaluating: '🔬', testing: '🧪', waiting: '🪑', done: '✅', failed: '❌' }
-export function workerLines(workers: LiveWorker[], columns: number, now: number, reduced: boolean, statusEmoji: Record<string, string> = emoji): ReportLine[] {
-  if (!workers.length || columns < 12) return []
+export function workerLines(workers: LiveWorker[], columns: number, now: number, reduced: boolean, statusEmoji: Record<string, string> = emoji, native = false): ReportLine[] {
+  const fit = native ? (text: string, _width: number) => text : terminalFit
+  if (!workers.length || columns < 2 || !native && columns < 12) return []
   const lines: ReportLine[] = [{ key: 'agents', parts: [{ text: '   🤖 Agents', color: CHOSEN.agents, bold: true }, { text: fit(` · ${workers.filter(w => w.state === 'running').length} running`, Math.max(0, columns - 12)), dim: true, color: CHOSEN.muted }] }]
   const width = columns - 4
   for (const [index, worker] of workers.entries()) {
-    // Failure freezes activity, but only completed work loses its role emphasis.
+    // Failure freezes activity; only completed work is dimmed.
     const key = `worker-${index}`, dim = worker.state === 'done'
-    const role = workerStyle(worker.role, worker.id === 'main')
-    const accent = dim ? CHOSEN.grey : role.accent
+    const palette = workerStyle(worker.state)
+    const accent = palette.accent
     const style = (parts: Part[]) => parts.map(p => ({ color: accent, ...p, dim }))
     const badge = fit(columns < 56 ? (worker.model ?? '—').replace(/^claude-/, '') : worker.model ?? '—', Math.max(1, width - 6))
     const title = fit(`▾ ${worker.role} · ${worker.name}`, Math.max(1, columns - cells(badge) - 11))
     const suffix = ' ' + '─'.repeat(Math.max(0, columns - cells(title) - cells(badge) - 10)) + ` [${badge}] ─┐`
     lines.push({ key, prefix: '┌─ ', parts: style([{ text: title, bold: true }]), suffix, badge, dim, accent })
-    const boxed = (id: string, parts: Part[], item?: ReportLine['item']) => lines.push({ key: `${key}-${id}`, prefix: '│ ', parts: style(parts), background: dim ? undefined : role.tint, suffix: ' '.repeat(Math.max(0, width - parts.reduce((n, p) => n + cells(p.text), 0))) + ' │', item, dim, accent })
+    const boxed = (id: string, parts: Part[], item?: ReportLine['item']) => lines.push({ key: `${key}-${id}`, prefix: '│ ', parts: style(parts), background: palette.tint, suffix: ' '.repeat(Math.max(0, width - parts.reduce((n, p) => n + cells(p.text), 0))) + ' │', item, dim, accent })
     boxed('top-space', [])
     const minutes = Math.max(0, Math.floor(((terminal(worker) ? worker.changed : now) - worker.started) / 60000))
     const elapsed = minutes >= 60 ? `${Math.floor(minutes / 60)}h ${minutes % 60}m` : `${minutes}m`

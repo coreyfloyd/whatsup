@@ -1,5 +1,5 @@
 import { decision } from './fixtures/decision'
-import { paneTree } from './pane-tree'
+import { paneTree, desktopPane } from './pane-tree'
 import { describe, expect, test, mock } from 'claude-code/testing'
 import type { Engine, Mounted } from 'claude-code/testing'
 import { cells } from '../hooks/session-facts'
@@ -42,9 +42,10 @@ const section = {
 }
 async function start($: Engine) { await $.session.start({ cwd: '/tmp', surface: 'terminal', isInteractive: true }) }
 async function mount($: Engine, surface: RenderSurface = 'terminal', columns = 80) {
-  return $.ui.mount({ plugin: 'whatsup', surface, component: 'Pane', requestId: 'session-status',
+  const ui = await $.ui.mount({ plugin: 'whatsup', surface, component: 'Pane', requestId: 'session-status',
     props: { title: 'whatsup', bodyColumns: columns, isFocused: false, placement: 'dock', scroll: { offset: 0, bodyRows: 40 }, view: {} },
     viewport: { columns: columns + 40, rows: 46, isFullscreen: true } })
+  return surface === 'desktop' ? desktopPane(ui) : ui
 }
 type Node = { props?: Record<string, unknown>; children?: unknown[]; hover?: unknown }
 function text(node: unknown): string {
@@ -202,7 +203,7 @@ describe('context report', () => {
     test(`decision reading, paging and previews at ${columns}, ${placement}`, async ($, on) => {
       const h = host(on); await start($)
       const input = { scope: 'Design pending decisions in the pane', decisions: [decision, { ...decision, identity: 'second' }], sections: [section] }
-      for (const surface of ['terminal', 'desktop'] as const) {
+      for (const surface of ['terminal'] as const) {
         await report($, input)
         const props = { title: 'whatsup', bodyColumns: columns, isFocused: true, placement, scroll: { offset: 0, bodyRows: 14 }, view: {} }
         const ui = await $.ui.mount({ plugin: 'whatsup', surface, component: 'Pane', requestId: 'session-status', props,
@@ -299,7 +300,7 @@ describe('context report', () => {
       expect(await drawn(ui)).toContain('Sent — awaiting agent')
       expect(await drawn(ui)).toContain(decision.options[0].label)
       expect(await ui.find({ key: 'send-decision-0' })).toBeUndefined()
-      for (const row of (await paneTree(ui)).children.filter((n: Node) => n.props?.position !== 'absolute')) expect(cells(text(row)) <= columns, text(row)).toBe(true)
+      if (surface === 'terminal') for (const row of (await paneTree(ui)).children.filter((n: Node) => n.props?.position !== 'absolute')) expect(cells(text(row)) <= columns, text(row)).toBe(true)
       await report($, input)
       await ui.unmount()
       await $.command.run({ command: 'whatsup', args: '', origin: { kind: 'composer' }, presentation: { isFullscreen: true, columns: 140 } })
@@ -515,7 +516,7 @@ describe('context report', () => {
   test('section boxes, expansion, three states and click-only floating cards at 40 and 80 columns', async ($, on) => {
     const h = host(on); await start($)
     await report($, { scope: 'Public release', sections: [section, { label: 'Notes', verb: 'read', item_kind: 'notes' }] })
-    for (const surface of ['terminal', 'desktop'] as const) for (const columns of [40, 80]) {
+    for (const surface of ['terminal'] as const) for (const columns of [40, 80]) {
       const ui = await mount($, surface, columns)
       expect(await drawn(ui)).toContain(columns < 56 ? '1/3' : '1/3 closed')
       expect(nodes(await paneTree(ui)).some(n => n.props?.backgroundColor && text(n).includes(columns < 56 ? '1/3' : '1/3 closed'))).toBe(true)
@@ -559,7 +560,7 @@ describe('context report', () => {
       const named = { ...empty, name: section.name, items: [] }
       const described = { ...empty, description: section.description }
       await start($)
-      for (const surface of ['terminal', 'desktop'] as const) {
+      for (const surface of ['terminal'] as const) {
         await report($, { scope: 'Public release', sections: [empty, named, { ...empty, name: '', description: '', items: [] }, section, empty, described] })
         const props = { title: 'whatsup', bodyColumns: columns, isFocused: true, placement, scroll: { offset: 0, bodyRows: 14 }, view: {} }
         const ui = await $.ui.mount({ plugin: 'whatsup', surface, component: 'Pane', requestId: 'session-status', props,
@@ -623,7 +624,7 @@ describe('context report', () => {
         { name: 'adapter', role: 'gen-runtime', status: 'generating', state: 'running' },
         { name: 'reviewer', role: 'eval-web', status: 'done', state: 'done' },
       ] })
-    for (const surface of ['terminal', 'desktop'] as const) {
+    for (const surface of ['terminal'] as const) {
       const props = { title: 'whatsup', bodyColumns: 58, isFocused: true, placement: 'inline' as const, scroll: { offset: 0, bodyRows: 14 }, view: {} }
       const ui = await $.ui.mount({ plugin: 'whatsup', surface, component: 'Pane', requestId: 'session-status', props,
         viewport: { columns: 60, rows: 51, isFullscreen: true } })
@@ -656,7 +657,7 @@ describe('context report', () => {
     host(on); await start($)
     // Long-description boundary variant of the existing section fixture.
     await report($, { scope: 'Public release', sections: [{ ...section, description: section.description.repeat(100) }] })
-    for (const surface of ['terminal', 'desktop'] as const) {
+    for (const surface of ['terminal'] as const) {
       const props = { title: 'whatsup', bodyColumns: 58, isFocused: true, placement: 'inline' as const, scroll: { offset: 0, bodyRows: 14 }, view: {} }
       const ui = await $.ui.mount({ plugin: 'whatsup', surface, component: 'Pane', requestId: 'session-status', props,
         viewport: { columns: 60, rows: 51, isFullscreen: true } })

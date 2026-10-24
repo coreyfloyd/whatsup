@@ -84,8 +84,9 @@ This is a Claude Code Mod, requiring a build that exposes the Mods API. The loca
 contract suite is exercised with Claude Code 2.1.302. On organization-managed
 installations, automatic reporting instructions require the plugin to be listed
 in managed settings; the report tool remains available. Link opening currently
-uses the macOS `open` command. Desktop rendering is covered by engine tests;
-manual Desktop integration remains unverified. There is no Codex pane adapter.
+uses the macOS `open` command. In Claude Desktop the pane draws native boxes and
+scrolls without More/Back; its layout, card dismissal, and decision answers and
+discussion requests have been checked by hand there. There is no Codex pane adapter.
 
 ## License
 

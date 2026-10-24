@@ -21,13 +21,13 @@ describe('chosen design', () => {
     const lines = reportLines({ scope: 'Build Session Status initial slices', sections: [section] }, columns, [0], undefined, TEMPLATES.github)
     expect(output(lines[1])).toContain('▾ 🎯 Project')
     expect(output(lines[1])).toContain(columns === 40 ? '[2/4]' : '[2/4 achieved]')
-    expect(lines[1].accent).toBe('#ffab91')
+    expect(lines[1].accent).toBe('#6ad4a8')
     const bar = lines.find(l => l.key.endsWith('-bar'))!
     expect(output(bar)).toContain('░')
     expect(output(bar)).toContain('·')
     expect(output(bar)).toContain('50%')
     expect(new Set(bar.parts.filter(p => p.text === '█').map(p => p.color)).size > 1).toBe(true)
-    expect(bar.parts.find(p => p.text.includes('░'))?.color).toBe('#ffab91')
+    expect(bar.parts.find(p => p.text.includes('░'))?.color).toBe('#6ad4a8')
     for (const l of lines.filter(l => l.key.startsWith('section-'))) expect(cells(output(l))).toBe(columns)
     const full = reportLines({ scope: 'Build', sections: [{ ...section, items: section.items.map(i => ({ ...i, state: 'done' as const })) }] }, columns, [], undefined, TEMPLATES.github)
     expect(output(full[1])).toContain('] 🎉')
@@ -38,8 +38,8 @@ describe('chosen design', () => {
     expect(failed.map(output).join('\n')).toContain('┄')
     expect(failed.map(output).join('\n')).not.toContain('50%')
   })
-  test('template emoji overrides and all section role colors', () => {
-    const palette = ['#ffab91', '#c9a7ff', '#8ecbff', '#ff9ecb']
+  test('template emoji overrides and all section position colors', () => {
+    const palette = ['#6ad4a8', '#5aa9ff', '#b6e05a', '#58c8d8']
     const config = structuredClone(TEMPLATES.github)
     config.sections.project.emoji = '📑'
     const sections = config.section_order.map(k => ({ ...section, label: config.sections[k].label }))
@@ -52,7 +52,7 @@ describe('chosen design', () => {
       const rows = workerLines([{ name: 'orchestrator', role: 'main', status, state: status === 'done' ? 'done' : status === 'waiting' ? 'waiting' : status === 'failed' ? 'failed' : 'running', started: 0, changed: 60000, minutes: { 0: 4000 }, total: 128000, context: { tokens: 83000, window: 100000 }, model: 'claude-opus-5-5' }], columns, 60000, true)
       expect(output(rows[0])).toContain('   🤖 Agents')
       expect(rows[0].parts.some(p => p.dim)).toBe(true)
-      expect(rows[1].accent).toBe(status === 'done' ? '#808080' : '#7fe0c8')
+      expect(rows[1].accent).toBe(({ done: '#808080', waiting: '#ececec', failed: '#ff7b86' }[status] ?? '#f2b84b'))
       expect(rows.map(output).join('\n')).toContain(`${emoji} ${status}`)
       expect(rows.some(l => l.parts.some(p => p.color === '#ffcf5a'))).toBe(true)
       for (const l of rows.slice(1)) expect(cells(output(l))).toBe(columns)
@@ -160,8 +160,8 @@ function compareChosenState(still: string, columns: number) {
   expect(output(rows[0])).toContain(`🤖 Agents · ${workers.filter(w => w.state === 'running').length} running`)
   workers.forEach((worker, i) => {
     const a = source.agents[i]
-    const palette = { ag1: ['#7fe0c8', '#1e302b'], ag2: ['#a8b4ff', '#23263a'], ag3: ['#9fe3f0', '#1e2d31'] }
-    const [accent, tint] = palette[a.color as keyof typeof palette]
+    const palette = { running: ['#f2b84b', '#302a1a'], waiting: ['#ececec', undefined], failed: ['#ff7b86', '#33222a'], done: ['#808080', undefined] }
+    const [accent, tint] = palette[worker.state as keyof typeof palette]
     const done = a.status === 'done'
     const box = rows.filter(r => r.key === `worker-${i}` || r.key.startsWith(`worker-${i}-`))
     expect(box.length).toBe(7)
@@ -225,20 +225,20 @@ function compareChosenState(still: string, columns: number) {
   }
 }
 
-for (const columns of [40, 58, 80]) test(`worker execution transitions preserve role emphasis at ${columns}`, () => {
+for (const columns of [40, 58, 80]) test(`worker execution transitions change state colors at ${columns}`, () => {
   const sample = states['agents-states-80.png'].agents
   for (const a of [...sample, ...states['agents-status-a-80.png'].agents]) {
-    const expected = { ag1: '#7fe0c8', ag2: '#a8b4ff', ag3: '#9fe3f0' }[a.color]
+    const palette = { running: '#f2b84b', waiting: '#ececec', failed: '#ff7b86', done: '#808080' }
     // A free-text status does not own execution state or completion styling.
     for (const state of ['running', 'failed', 'running', 'waiting', 'done'] as const) {
       const worker = { name: a.name, role: a.role, model: a.model, status: 'reviewing', state,
         started: 0, changed: 60000, minutes: { 0: 4000, 1: 3000 }, inFlight: true }
       const first = workerLines([worker], columns, 60000, false)
       const later = workerLines([worker], columns, 120000, false)
-      expect(first[1].accent).toBe(state === 'done' ? '#808080' : expected)
+      expect(first[1].accent).toBe(palette[state])
       expect(first[1].dim).toBe(state === 'done')
-      expect(first[2].background === undefined).toBe(state === 'done')
-      expect(first.find(r => r.key === 'worker-0-status')!.parts[0].color).toBe(state === 'done' ? '#808080' : expected)
+      expect(first[2].background === undefined).toBe(state === 'done' || state === 'waiting')
+      expect(first.find(r => r.key === 'worker-0-status')!.parts[0].color).toBe(palette[state])
       if (state === 'failed' || state === 'done') {
         expect(output(later.find(r => r.key === 'worker-0-task'))).toBe(output(first.find(r => r.key === 'worker-0-task'))) // elapsed time freezes
         expect(output(later.find(r => r.key === 'worker-0-graph'))).toBe(output(first.find(r => r.key === 'worker-0-graph'))) // terminal graph freezes
@@ -246,4 +246,15 @@ for (const columns of [40, 58, 80]) test(`worker execution transitions preserve 
       if (state === 'waiting') expect(output(later.find(r => r.key === 'worker-0-graph'))).toBe(output(first.find(r => r.key === 'worker-0-graph')))
     }
   }
+})
+
+
+test('a full report with every worker state contains no shipped pastel colors', () => {
+  const source = states['agents-states-80.png'].agents[0]
+  const workers = (['running', 'waiting', 'failed', 'done'] as const).map(state => ({
+    name: source.name, role: source.role, model: source.model, status: source.status, state,
+    started: 0, changed: 60000, minutes: { 0: 4000 },
+  }))
+  const lines = [...reportLines({ scope: 'Build', sections: [section] }, 80, [0]), ...workerLines(workers, 80, 60000, true)]
+  expect(JSON.stringify(lines)).not.toMatch(/#(?:ffab91|f2c79b|c9a7ff|8ecbff|ff9ecb|7fe0c8|a8b4ff|9fe3f0)/i)
 })

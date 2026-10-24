@@ -7,7 +7,7 @@
     {
       "name": "whatsup",
       "source": "./mod",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "description": "Session scope, progress and worker activity in a Claude Code pane."
     }
   ],

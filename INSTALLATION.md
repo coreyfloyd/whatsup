@@ -24,7 +24,26 @@ claude plugin install whatsup@whatsup
 ```
 
 Restart Claude Code after installation. The commands apply after the maintainer
-publishes the repository using [RELEASING.md](RELEASING.md).
+publishes the repository using [RELEASING.md](RELEASING.md). This route installs
+from the repository, not from verified release bytes.
+
+## Install from a verified release
+
+Signed releases start with 0.2.0. Download the five assets of a release from the
+repository's Releases page into one directory, then verify the archive before
+extracting it:
+
+```bash
+bash verify-release.sh whatsup-0.2.0.tar.gz whatsup-release.asc \
+  09674AFF392661238F4ACBD9F32B3A412CD5EFC5
+tar -xzf whatsup-0.2.0.tar.gz
+```
+
+The published fingerprint is `09674AFF392661238F4ACBD9F32B3A412CD5EFC5`, also in
+[RELEASE_SIGNING_FINGERPRINT](RELEASE_SIGNING_FINGERPRINT). The verifier requires
+a signature by that primary key and an archive matching the signed checksum.
+Then install from the extracted `whatsup/` directory as a checkout, below, and
+keep it available. Replace the version consistently for a later release.
 
 ## Install from a checkout
 

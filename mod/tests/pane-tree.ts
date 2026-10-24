@@ -9,3 +9,17 @@ export async function paneTree(ui: Mounted<any, 'Pane'>): Promise<any> {
   }
   return expand(await ui.drawn())
 }
+
+/** Client-local controls are addressed in their native region. */
+export function desktopPane(ui: Mounted<any, 'Pane'>): Mounted<any, 'Pane'> {
+  return {
+    ...ui,
+    find: query => ui.find({ ...query, in: 'desktop-pane' }),
+    findAll: query => ui.findAll({ ...query, in: 'desktop-pane' }),
+    press: async query => {
+      const result = await ui.press({ ...query, in: 'desktop-pane' })
+      await ui.advance(32)
+      return result
+    },
+  }
+}

@@ -77,7 +77,7 @@ describe('live session box', () => {
       const rows = nodes(tree).filter(n => String(n.props?.key ?? '').startsWith('session-row-'))
       expect(rows.length).toBeGreaterThan(0)
       for (const row of rows) expect(cells(text(row)) <= columns).toBe(true)
-      expect(nodes(tree).some(n => n.props?.color === '#f2c79b' && text(n) === 'PR:#12')).toBe(pr)
+      expect(nodes(tree).some(n => n.props?.color === '#9fd3e8' && text(n) === 'PR:#12')).toBe(pr)
       await ui.press({ key: 'session-open-repository' })
       await ui.press({ key: 'session-open-folder' })
       await ui.press({ key: 'session-copy-folder' })

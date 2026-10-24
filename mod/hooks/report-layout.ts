@@ -1,7 +1,7 @@
 import type { AnswerStates } from './decision-input'
 import { decisionVersion } from './report'
-import { clip, wrap } from './layout'
-import { CHOSEN, SECTION_STYLES, gradient } from './chosen-style'
+import { clip as terminalClip, wrap as terminalWrap } from './layout'
+import { CHOSEN, SECTION_STYLES, DONE_GRADIENT, gradient } from './chosen-style'
 import { TEMPLATES } from './templates'
 import type { Template } from './templates'
 import { cells } from './session-facts'
@@ -20,7 +20,9 @@ export function sectionCounts(section: EnrichedSection) {
   const active = items.filter(item => item.state === 'active').length
   return { done, active, total: items.length, percent: items.length ? Math.round(100 * done / items.length) : 0 }
 }
-export function reportLines(report: EnrichedReport | null, columns: number, expanded: number[] = [], offReason?: string | null, config: Template = TEMPLATES.github!, expandedDecision?: string | null, answers: AnswerStates = {}, inputAvailable = true): ReportLine[] {
+export function reportLines(report: EnrichedReport | null, columns: number, expanded: number[] = [], offReason?: string | null, config: Template = TEMPLATES.github!, expandedDecision?: string | null, answers: AnswerStates = {}, inputAvailable = true, native = false): ReportLine[] {
+  const clip = native ? (text: string, _width: number) => text : terminalClip
+  const wrap = native ? (text: string, _width: number) => [text] : terminalWrap
   const lines: ReportLine[] = []
   const text = (key: string, value: string, dim = false) => lines.push({ key, parts: [{ text: clip(value, columns), dim }] })
   if (!report) { text('empty', EMPTY_REPORT, true); return lines }
@@ -33,11 +35,11 @@ export function reportLines(report: EnrichedReport | null, columns: number, expa
     const receipt = state?.receipt
     const locked = receipt && receipt.status !== 'failed'
     const open = expandedDecision === version && !locked
-    const accent = '#ff7b86'
+    const accent = CHOSEN.decision
     const inner = Math.max(1, columns - 4)
     const heading = `${open ? '▾' : '▸'} Decision ${index + 1}`
     const status = receipt?.status === 'sent' ? 'SENT' : receipt?.status === 'unconfirmed' ? 'UNCONFIRMED' : receipt?.status === 'sending' ? 'SENDING' : 'ANSWER NEEDED'
-    const compact = columns < 24
+    const compact = !native && columns < 24
     const hotkey = !compact && index === 0 ? 'd' : undefined
     const shortcutCells = hotkey ? 3 : 0
     const compactStatus = receipt?.status === 'sent' ? 'Sent' : receipt?.status === 'unconfirmed' ? 'Unsure' : receipt?.status === 'sending' ? 'Wait' : receipt?.status === 'failed' ? 'Retry' : 'Answer'
@@ -97,8 +99,7 @@ export function reportLines(report: EnrichedReport | null, columns: number, expa
     const key = `section-${index}`
     const definitionKey = Object.keys(config.sections).find(key => config.sections[key]!.label === section.label)
     const definition = definitionKey ? config.sections[definitionKey] : undefined
-    const role = ['project', 'milestone', 'epic', 'queue'].indexOf(definitionKey ?? section.label.toLowerCase())
-    const style = SECTION_STYLES[role < 0 ? 3 : role]!
+    const style = SECTION_STYLES[index % SECTION_STYLES.length]!
     const inner = Math.max(1, columns - 4)
     const failure = section.enrichment?.state === 'unavailable' ? section.enrichment.reason : (section.items ?? []).find(item => item.enrichment?.state === 'unavailable')?.enrichment?.reason
     const failed = failure !== undefined
@@ -109,7 +110,7 @@ export function reportLines(report: EnrichedReport | null, columns: number, expa
     const name = clip((!failed && definition?.emoji ? `${definition.emoji} ` : '') + section.label + (section.name && columns >= 56 ? ` · ${section.name}` : ''), Math.max(1, columns - cells(marker) - cells(badge) - cells(party) - 11))
     const tail = (badge ? ` [${badge}]${party}` : '') + ' ─┐'
     const rule = '─'.repeat(Math.max(0, columns - 3 - cells(marker) - cells(name) - cells(tail)))
-    lines.push({ key, prefix: '┌─ ', marker, expand: index, parts: [{ text: name, bold: true, color: style.accent, ...(failed ? { dim: true, color: '#808080' } : {}) }], suffix: ' ' + rule.slice(1) + tail,
+    lines.push({ key, prefix: '┌─ ', marker, expand: index, parts: [{ text: name, bold: true, color: style.accent, ...(failed ? { dim: true, color: CHOSEN.grey } : {}) }], suffix: ' ' + rule.slice(1) + tail,
       badge, accent: style.accent, item: { key, page: section.link ?? null, details: [section.label + (section.name ? `: ${section.name}` : ''), ...(section.description ? [section.description] : []), ...(failed ? [`Couldn't load: ${failure}`] : total ? [`${done}/${total} ${section.verb}`] : [])] } })
     const boxed = (row: string, parts: Part[], item?: Item) => {
       const length = parts.reduce((n, part) => n + cells(part.text), 0)
@@ -117,12 +118,12 @@ export function reportLines(report: EnrichedReport | null, columns: number, expa
     }
     boxed(`${key}-top-space`, [])
     if (failed) boxed(`${key}-track`, [{ text: '┄'.repeat(inner), dim: true }])
-    if (failed) boxed(`${key}-failure`, [{ text: clip(`⚠️ Couldn't load: ${failure}`, inner), dim: true, color: '#808080' }])
+    if (failed) boxed(`${key}-failure`, [{ text: clip(`⚠️ Couldn't load: ${failure}`, inner), dim: true, color: CHOSEN.grey }])
     if (total && !failed) {
       const width = Math.max(1, inner - 5)
       const filled = done === total ? width : Math.min(width - 1, Math.max(done ? 1 : 0, Math.round(done / total * width)))
       const working = Math.min(width - filled, Math.max(active ? 1 : 0, Math.round((done + active) / total * width) - filled))
-      const stops = done === total ? ['#5fbf74', '#c4f2b8'] : style.gradient
+      const stops = done === total ? DONE_GRADIENT : style.gradient
       boxed(`${key}-bar`, [...Array.from({ length: filled }, (_, i) => ({ text: '█', color: gradient(stops[0]!, stops[1]!, i, filled) })), { text: '░'.repeat(working), color: style.accent }, { text: '·'.repeat(width - filled - working), color: CHOSEN.faint }, { text: `${percent}%`.padStart(5), color: style.accent, bold: true }])
     }
     if (expanded.includes(index)) {
@@ -139,9 +140,9 @@ export function reportLines(report: EnrichedReport | null, columns: number, expa
           remaining -= cells(number)
           if (remaining > 0) { parts.push({ text: ' ' }); remaining-- }
         }
-        if (!itemFailed) { parts[0]!.color = item.state === 'done' ? CHOSEN.success : item.state === 'active' ? '#ff9ecb' : CHOSEN.muted; if (item.state !== 'active') parts.forEach(p => { p.dim = true }) }
+        if (!itemFailed) { parts[0]!.color = item.state === 'done' ? CHOSEN.success : item.state === 'active' ? style.accent : CHOSEN.muted; if (item.state !== 'active') parts.forEach(p => { p.dim = true }) }
         parts.push({ dim: item.state !== 'active', text: clip(itemFailed ? `Couldn't load: ${item.enrichment?.reason}` : item.title, Math.max(0, remaining)) })
-        if (itemFailed) parts.forEach(part => { part.dim = true; part.color = '#808080' })
+        if (itemFailed) parts.forEach(part => { part.dim = true; part.color = CHOSEN.grey })
         const facts = item.enrichment?.state === 'present' ? item.enrichment.value : undefined
         const details = facts ? [`Status: ${facts.status}`, ...(facts.labels ? [`Labels: ${facts.labels.join(', ') || 'none'}`] : []), ...(facts.blockers ? [`Blockers: ${facts.blockers.join(', ') || 'none'}`] : []), ...(facts.total !== undefined ? [`Members: ${facts.total}`, `Closed: ${facts.closed}`] : [])] : itemFailed ? [`Couldn't load: ${item.enrichment?.reason}`] : []
         boxed(itemKey, parts, { key: itemKey, page: item.link ?? null, details: [item.title, ...details, `State: ${item.state}`, ...(item.number !== undefined ? [`Number: ${item.number}`] : []), ...(item.identity ? [`Identity: ${item.identity}`] : [])] })
@@ -155,7 +156,7 @@ export function reportLines(report: EnrichedReport | null, columns: number, expa
     }
     if (failed) for (const line of lines.filter(line => line.key === key || line.key.startsWith(`${key}-`))) {
       line.unavailable = true
-      line.parts.forEach(part => { part.dim = true; part.color = '#808080' })
+      line.parts.forEach(part => { part.dim = true; part.color = CHOSEN.grey })
     }
   }
   return lines

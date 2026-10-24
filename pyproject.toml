@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "session-status"
-version = "0.2.0"
+version = "0.2.1"
 description = "Read-only, source-attributed session context snapshots"
 requires-python = ">=3.10"
 

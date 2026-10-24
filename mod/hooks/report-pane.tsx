@@ -1,7 +1,7 @@
 import { answerStates, discussDecision, inputUnavailableKey, selectAnswer, sendAnswer } from './decision-input'
 import { CHOSEN } from './chosen-style'
 import { atom, read, update } from 'claude-code'
-import type { On, SessionUsage } from 'claude-code'
+import type { On, SessionUsage, ButtonProps, ElementChildren, RenderElement } from 'claude-code'
 import { placeCard, OPEN_LABEL, clip } from './layout'
 import { reportLines } from './report-layout'
 import { decisionVersion, reportKey } from './report'
@@ -19,6 +19,19 @@ export const reportViews = atom({ plugin: 'whatsup', key: 'reportViews' } as con
 
 export function registerReportPane(on: On, recorded: boolean) {
   if (recorded) return
+  const desktop = new Map<string, { revision: number; input: string; sequence?: number; actions: Map<string, () => unknown> }>()
+  let revision = 0
+  on('ui.message', { component: 'Pane', requestId: 'session-status' }, async ($, e, next) => {
+    if (!['./desktop-pane.tsx', 'hooks/desktop-pane.tsx'].includes(e.module) || e.surface !== 'desktop' || !e.data || typeof e.data !== 'object') return next(e)
+    const session = await $.session.id(), active = desktop.get(session)
+    const data = e.data as { action?: string; revision?: number; sequence?: number; dismiss?: boolean }
+    if (active && data.revision === active.revision && Number.isSafeInteger(data.sequence) && data.sequence! > (active.sequence ?? 0)) {
+      active.sequence = data.sequence
+      if (typeof data.action === 'string') await active.actions.get(data.action)?.()
+      else if (data.dismiss === true) await update($, reportViews, all => ({ ...all, [session]: { ...(all[session] ?? { expanded: [] }), shown: null } }))
+    }
+    return {}
+  })
   on('ui.message', { component: 'Pane', requestId: 'session-status' }, async ($, e, next) => {
     if (!['./dismiss.tsx', 'hooks/dismiss.tsx'].includes(e.module) || !(e.data && typeof e.data === 'object' && 'dismiss' in e.data && e.data.dismiss === true)) return next(e)
     const session = await $.session.id()
@@ -43,7 +56,8 @@ export function registerReportPane(on: On, recorded: boolean) {
     let usage: SessionUsage | undefined
     try { usage = await $.session.usage() } catch { /* Unknown measurements render as unavailable. */ }
     const sessionBox = sessionRows(report?.scope ?? 'No scope yet', session, facts ?? { started: now, folder: await $.session.cwd() }, usage, now, columns, config?.session.density ?? 'compact', current?.off_reason)
-    const lines = [...reportLines(current?.report ?? report, columns, view.expanded, undefined, config, view.decision, await answerStates($, session), !await $.store.get(inputUnavailableKey(session))).filter(line => line.key !== 'scope'), ...workerLines(await paneWorkers($, now), columns, now, config?.motion === false || await reducedMotion($), config?.status_emoji)]
+    const workers = await paneWorkers($, now)
+    const lines = [...reportLines(current?.report ?? report, columns, view.expanded, undefined, config, view.decision, await answerStates($, session), !await $.store.get(inputUnavailableKey(session)), e.surface === 'desktop').filter(line => line.key !== 'scope'), ...workerLines(workers, columns, now, config?.motion === false || await reducedMotion($), config?.status_emoji, e.surface === 'desktop')]
     const rowKeys = ['hide-session-top', 'hide-session-top-space', ...sessionBox.map(row => `session-row-${row.key}`), 'hide-session-bottom',
       ...lines.map(line => (line.item || line.decision || line.action) ? `line-${line.key}` : `hide-${line.key}`)]
     const overflowing = rows > 1 && rowKeys.length > rows
@@ -111,11 +125,102 @@ export function registerReportPane(on: On, recorded: boolean) {
       const title = clip(label, Math.max(1, width - (shortcut ? 3 : 0) - gap.length)) + gap
       return <Button key={key} label={title} plain hotkey={shortcut} onPress={() => scrollPage(direction)}><Text backgroundColor={CHOSEN.ink}>{title}</Text></Button>
     }
+    if (e.surface === 'desktop') {
+      const actions = new Map<string, () => unknown>()
+      const NativeButton = ({ onPress, children, ...props }: Omit<ButtonProps, 'onPress'> & ElementChildren & { onPress: () => unknown }) => {
+        const key = props.key ?? props.label!
+        actions.set(key, onPress)
+        return { type: 'Button', props: { ...props, key }, children: Array.isArray(children) ? children.flat(Infinity) : children === undefined ? [] : [children] } as RenderElement
+      }
+      // Keep semantic rows and their handlers; the surface owns frame geometry.
+      const clean = (text: string) => text.replace(/[─│┌┐└┘╭╮╰╯]/g, '').replace(/ {2,}/g, ' ').trim()
+      const nativeText = (key: string, text: string, color = CHOSEN.text, dimColor = false, bold = false) =>
+        <Text key={key} color={color} dimColor={dimColor} bold={bold}>{clean(text)}</Text>
+      const nativeParts = (line: typeof lines[number]) => line.parts.map((part, i) =>
+        <Text key={String(i)} color={part.color ?? CHOSEN.text} bold={part.bold} dimColor={part.dim || line.dim || line.unavailable} underline={part.underline}>{(i && !line.key.endsWith('-bar') && clean(part.text) ? ' ' : '') + clean(part.text)}</Text>)
+      const action = (line: typeof lines[number]) => {
+        const a = line.action!
+        return a.kind === 'discuss' ? discussDecision($, session, a.identity, a.version)
+          : a.kind === 'send' ? sendAnswer($, session, a.identity, a.version, a.option!)
+          : selectAnswer($, session, a.identity, a.version, a.kind === 'clear' ? undefined : a.option)
+      }
+      const nativeCard = (line: typeof lines[number]) => {
+        return shown ? <Box key={`card-${shown.key}`} flexDirection="column" borderStyle="round" borderColor={line.accent ?? CHOSEN.text} backgroundColor={line.background ?? CHOSEN.ink} paddingX={1}>
+          {shown.page && <NativeButton key={`open-${shown.key}`} label={OPEN_LABEL} plain onPress={() => activate('open', shown.page!)}>{OPEN_LABEL}</NativeButton>}
+          {shown.details.map((detail, i) => nativeText(`card-detail-${i}`, detail))}
+          <NativeButton key={`close-${shown.key}`} label="Back" plain onPress={hide}>Back</NativeButton>
+        </Box> : null
+      }
+      const nativeRow = (line: typeof lines[number]) => {
+        const key = (line.item || line.decision || line.action) ? `line-${line.key}` : `hide-${line.key}`
+        if (!line.item && !line.decision && !line.action && line.parts.every(part => !clean(part.text))) {
+          return <Box key={key} height={1} />
+        }
+        const separated = /^section-\d+-(description|kind|item-0)$/.test(line.key)
+        let content = nativeParts(line)
+        const workerIndex = /^worker-(\d+)$/.exec(line.key)?.[1]
+        if (workerIndex !== undefined) content = [nativeText('title', `▾ ${workers[Number(workerIndex)]!.role} · ${workers[Number(workerIndex)]!.name}`, line.accent, line.dim, true)]
+        if (line.decision && columns >= 24) content = [nativeText('title', `${view.decision === line.decision.version ? '▾' : '▸'} Decision ${Number(line.key.split('-')[1]) + 1}`, line.accent, false, true)]
+        let body
+        if (line.action) {
+          const a = line.action
+          const base = a.kind === 'select' ? `select-decision-${line.key.split('-')[1]}-${line.key.split('-')[3]}` : `${a.kind}-decision-${line.key.split('-')[1]}`
+          const buttonKey = actionKeys.has(base) ? `${base}-${line.key}` : base
+          actionKeys.add(base)
+          body = <NativeButton key={buttonKey} label={clean(line.parts.map(p => p.text).join(''))} plain hotkey={a.hotkey} onPress={() => action(line)}>{content}</NativeButton>
+        } else if (line.decision) body = <NativeButton key={`expand-${line.key}`} label={clean(line.parts.map(p => p.text).join(''))} plain hotkey={line.decision.hotkey} onPress={() => expandDecision(line.decision!.identity, line.decision!.version)}>{content}</NativeButton>
+        else if (line.item) body = <Box flexDirection="row" flexWrap="wrap" gap={1}>
+          {line.expand !== undefined && <NativeButton key={`expand-${line.key}`} label={line.marker!.trim()} plain onPress={() => expand(line.expand!)}>{line.marker!.trim()}</NativeButton>}
+          <NativeButton key={`show-${line.item.key}`} label={clean(line.parts.map(p => p.text).join(''))} plain onPress={() => show(line.item!.key)}>{content}</NativeButton>
+        </Box>
+        else body = <Box flexDirection="row" flexWrap="wrap" gap={line.key.endsWith('-bar') ? 0 : 1}>{content}</Box>
+        const badge = workerIndex !== undefined ? workers[Number(workerIndex)]!.model ?? '—' : line.badge
+        const row = <Box flexDirection="row" flexWrap="wrap" justifyContent="space-between" gap={1}>
+          {line.item ? <Box key={line.badge ? `native-content-${line.key}` : `hide-${line.key}-rest`}>{body}</Box> : body}
+          {badge ? <Text key={`hide-${line.key}-rest`} bold dimColor={line.dim || line.unavailable} color={workerIndex !== undefined ? CHOSEN.muted : line.dim || line.unavailable ? CHOSEN.grey : CHOSEN.ink} backgroundColor={workerIndex !== undefined || line.dim || line.unavailable ? CHOSEN.badgeBackground : line.accent}>{clean(badge)}</Text>
+            : line.decision ? nativeText(`hide-${line.key}-rest`, line.suffix ?? '', line.accent)
+            : null}
+        </Box>
+        return <Box key={key} flexDirection="column" {...(separated ? { marginTop: 1 } : {})}>{row}{line.item && shown?.key === line.item.key && nativeCard(line)}</Box>
+      }
+      const groups: typeof lines[] = []
+      for (const line of lines) {
+        if (/^(decision|section|worker)-\d+$/.test(line.key)) groups.push([line])
+        else if (/^(decision|section|worker)-\d+-/.test(line.key)) groups[groups.length - 1]!.push(line)
+        else groups.push([line])
+      }
+      const renderInput = JSON.stringify([columns, rows, sessionBox, lines, report?.scope, workers.map(w => [w.name, w.model]), view.shown])
+      const previous = desktop.get(session)
+      const tree = <Box flexDirection="column" width="100%" minHeight={rows} paddingBottom={1} gap={1}>
+        <Box key="desktop-session" flexDirection="column" borderStyle="single" borderColor={CHOSEN.session} backgroundColor={CHOSEN.sessionTint} paddingX={1}>
+          {nativeText('desktop-session-title', 'Session', CHOSEN.session, false, true)}
+          {sessionBox.map(row => <Box key={`session-row-${row.key}`} flexDirection="row" flexWrap="wrap" gap={1}>
+            {row.parts.map((part, i) => {
+              if (!part.action) return nativeText(`hide-session-${row.key}-${i}`, row.key === 'scope' ? report?.scope ?? 'No scope yet' : part.text, CHOSEN.text, row.dim)
+              const base = `session-${part.action}`
+              const key = actionKeys.has(base) ? `${base}-${row.key}-${i}` : base
+              actionKeys.add(base)
+              return <NativeButton key={key} label={clean(part.text)} plain onPress={() => activate(part.action!, part.target!)}><Text color={part.accent ? CHOSEN.session : CHOSEN.text} bold={part.accent} dimColor={row.dim && !part.accent}>{clean(part.text)}</Text></NativeButton>
+            })}
+          </Box>)}
+        </Box>
+        {groups.map(group => {
+          const first = group[0]!
+          const boxed = /^(decision|section|worker)-\d+$/.test(first.key)
+          return boxed ? <Box key={`desktop-${first.key}`} flexDirection="column" borderStyle="single" borderColor={first.accent ?? CHOSEN.text} backgroundColor={group.find(line => line.background)?.background ?? CHOSEN.ink} paddingX={1}>
+            {group.filter(line => !line.key.endsWith('-bottom')).map(nativeRow)}
+          </Box> : nativeRow(first)
+        })}
+      </Box>
+      const currentRevision = previous?.input === renderInput ? previous.revision : ++revision
+      desktop.set(session, { revision: currentRevision, input: renderInput, actions, ...(previous?.revision === currentRevision ? { sequence: previous.sequence } : {}) })
+      return <Client key="desktop-pane" module="./desktop-pane.tsx" width="100%" props={JSON.parse(JSON.stringify({ tree, revision: currentRevision, sequence: desktop.get(session)!.sequence ?? 0 }))} />
+    }
     return <Box flexDirection="column" width={columns} minHeight={rows}>
       {quiet('hide-session-top', [{ text: '┌─ ', color: CHOSEN.session }, { text: 'Session', color: CHOSEN.session, bold: true }, { text: ' ' + '─'.repeat(Math.max(0, columns - 12)) + '┐', color: CHOSEN.session }])}
-      {quiet('hide-session-top-space', [{ text: '│', color: CHOSEN.session }, { text: ' '.repeat(Math.max(0, columns - 2)), backgroundColor: '#2f2a22' }, { text: '│', color: CHOSEN.session }])}
+      {quiet('hide-session-top-space', [{ text: '│', color: CHOSEN.session }, { text: ' '.repeat(Math.max(0, columns - 2)), backgroundColor: CHOSEN.sessionTint }, { text: '│', color: CHOSEN.session }])}
       {sessionBox.map(row => <Box key={`session-row-${row.key}`} flexDirection="row">
-        {quiet(`hide-session-${row.key}-before`, [{ text: '│', color: CHOSEN.session }, { text: ' ', backgroundColor: '#2f2a22' }])}
+        {quiet(`hide-session-${row.key}-before`, [{ text: '│', color: CHOSEN.session }, { text: ' ', backgroundColor: CHOSEN.sessionTint }])}
         {row.parts.map((part, index) => {
           let key = row.key === 'scope' ? 'hide-scope' : `hide-session-${row.key}-${index}`
           if (part.action) {
@@ -123,12 +228,12 @@ export function registerReportPane(on: On, recorded: boolean) {
             key = actionKeys.has(base) ? `${base}-${row.key}-${index}` : base
             actionKeys.add(base)
           }
-          if (!part.action) return quiet(key, [{ text: part.text, dimColor: row.dim, color: CHOSEN.text, backgroundColor: '#2f2a22' }])
+          if (!part.action) return quiet(key, [{ text: part.text, dimColor: row.dim, color: CHOSEN.text, backgroundColor: CHOSEN.sessionTint }])
           return <Button key={key} label={part.text} plain onPress={part.action ? () => activate(part.action!, part.target!) : hide}>
-            <Text bold={part.accent} dimColor={row.dim && !part.accent} color={part.accent ? CHOSEN.session : CHOSEN.text} backgroundColor="#2f2a22">{part.text}</Text>
+            <Text bold={part.accent} dimColor={row.dim && !part.accent} color={part.accent ? CHOSEN.session : CHOSEN.text} backgroundColor={CHOSEN.sessionTint}>{part.text}</Text>
           </Button>
         })}
-        {quiet(`hide-session-${row.key}-after`, [{ text: ' '.repeat(Math.max(0, inner - row.parts.reduce((n, part) => n + cells(part.text), 0)) + 1), backgroundColor: '#2f2a22' }, { text: '│', color: CHOSEN.session }])}
+        {quiet(`hide-session-${row.key}-after`, [{ text: ' '.repeat(Math.max(0, inner - row.parts.reduce((n, part) => n + cells(part.text), 0)) + 1), backgroundColor: CHOSEN.sessionTint }, { text: '│', color: CHOSEN.session }])}
       </Box>)}
       {blank('hide-session-bottom', '└' + '─'.repeat(Math.max(0, columns - 2)) + '┘', false, CHOSEN.session)}
       {lines.map(line => {
@@ -139,7 +244,7 @@ export function registerReportPane(on: On, recorded: boolean) {
         const suffix = () => {
           if (!line.badge) return [edge(line.suffix ?? '')]
           const [before, after] = line.suffix!.split(`[${line.badge}]`)
-          return [edge(before!), { text: ` ${line.badge} `, backgroundColor: line.unavailable || line.dim ? '#3a3a3a' : color, color: line.unavailable || line.dim ? CHOSEN.grey : CHOSEN.ink, dimColor, bold: true }, edge(after!)]
+          return [edge(before!), { text: ` ${line.badge} `, backgroundColor: line.key.startsWith('worker-') || line.unavailable || line.dim ? CHOSEN.badgeBackground : color, color: line.key.startsWith('worker-') ? CHOSEN.muted : line.unavailable || line.dim ? CHOSEN.grey : CHOSEN.ink, dimColor, bold: true }, edge(after!)]
         }
         if (line.action) {
           const a = line.action

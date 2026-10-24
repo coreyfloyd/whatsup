@@ -8,7 +8,7 @@ Replace this session’s entire context report: scope text; optional ordered sec
 
 ## Decision cards
 
-Optional ordered decisions appear after Session and before progress and workers. Each pending card uses a red accent and the text ANSWER NEEDED. Cards start collapsed; use the triangle to expand or collapse one card at a time. Questions and full context wrap and remain reachable through normal scrolling and More/Back navigation. Refreshing a report, reopening the pane or resuming a session collapses decisions. Reading and expansion send no input and grant no authorization. No option starts selected. Selecting an option changes only the selection;
+Optional ordered decisions appear after Session and before progress and workers. Each pending card uses a red accent and the text ANSWER NEEDED. Cards start collapsed; use the triangle to expand or collapse one card at a time. Questions and full context wrap and remain reachable through normal scrolling, and in the terminal also through More/Back navigation. Refreshing a report, reopening the pane or resuming a session collapses decisions. Reading and expansion send no input and grant no authorization. No option starts selected. Selecting an option changes only the selection;
 Clear selection removes it. Send answer appears only with a selection and submits
 the displayed decision identity, question and complete selected option (identity,
 label, benefit and cost) to this pane's own main conversation, retaining whatsup
