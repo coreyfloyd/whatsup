@@ -4,7 +4,7 @@ import type { Worker } from './report'
 export const CHOSEN = {
   text: '#d8d8d8', muted: '#a0a0a0', faint: '#5e5e5e', grey: '#808080', ink: '#1a1a1a',
   session: '#9fd3e8', sessionTint: '#1f2a30', success: '#7ddc8a', warning: '#ffcf5a',
-  agents: '#f2b84b', decision: '#ff7b86', badgeBackground: '#3a3a3a',
+  agents: '#e39b3a', decision: '#ff7b86', badgeBackground: '#3a3a3a',
 }
 export const DONE_GRADIENT = ['#5fbf74', '#c4f2b8']
 export const SECTION_STYLES = [
@@ -14,7 +14,7 @@ export const SECTION_STYLES = [
   { accent: '#58c8d8', tint: '#1b2c30', gradient: ['#2ea2b5', '#b8ecf3'] },
 ]
 const WORKER_STYLES = {
-  running: { accent: CHOSEN.agents, tint: '#302a1a' },
+  running: { accent: CHOSEN.agents, tint: '#302518' },
   waiting: { accent: '#ececec', tint: undefined },
   failed: { accent: CHOSEN.decision, tint: '#33222a' },
   done: { accent: CHOSEN.grey, tint: undefined },

@@ -316,7 +316,7 @@ for (const surface of ['terminal', 'desktop'] as const) test(`cool palette and w
   const accents = ['#6ad4a8', '#5aa9ff', '#b6e05a', '#58c8d8', '#6ad4a8', '#5aa9ff']
   const tints = ['#1b2e27', '#1c2636', '#262e1c', '#1b2c30']
   const gradients = [['#2fa87a', '#b8f0d8'], ['#2f7fe0', '#b8d6ff'], ['#86b832', '#e2f5b8'], ['#2ea2b5', '#b8ecf3']]
-  const palette = { running: ['#f2b84b', '#302a1a'], waiting: ['#ececec', undefined], failed: ['#ff7b86', '#33222a'], done: ['#808080', undefined] }
+  const palette = { running: ['#e39b3a', '#302518'], waiting: ['#ececec', undefined], failed: ['#ff7b86', '#33222a'], done: ['#808080', undefined] }
   const sections = accents.map(() => section)
   const roles = ['main', 'gen-runtime', 'eval-web', 'testing']
   const input = (state: keyof typeof palette, warning = false) => ({ scope: 'Public release', sections, decisions: [decision],
@@ -334,7 +334,7 @@ for (const surface of ['terminal', 'desktop'] as const) test(`cool palette and w
     expect(colors).toContain('#9fd3e8')
     expect(all.map(n => n.props?.backgroundColor)).toContain('#1f2a30')
     expect(colors).toContain('#ff7b86')
-    expect(colors).toContain('#f2b84b') // Agents header
+    expect(colors).toContain('#e39b3a') // Agents header
     for (let i = 0; i < accents.length; i++) {
       const header = drawnNode(`line-section-${i}`)
       expect(nodes(header).map(n => n.props?.color)).toContain(accents[i])

@@ -35,6 +35,7 @@ export const inputUnavailableKey = (session: string) => `decision-input-unavaila
 export function answerText(decision: Decision, option: DecisionOption): string {
   return JSON.stringify({ action: 'Answer selected in the whatsup pane. Apply the receiving session’s normal authorization rules.', decision: { identity: decision.identity, question: decision.question }, answer: option })
 }
+export const REFRESH_TEXT = JSON.stringify({ action: 'The whatsup pane was opened. Send one complete mcp__whatsup__report with the current scope, sections, workers and outstanding decisions; remove decisions already resolved, including answers given in chat. This is display state only, not a new task or an authorization.' })
 export async function selectAnswer($: CoreEngineInterface, session: string, identity: string, version: string, option?: string) {
   await decisionLane(session, async () => {
     if (await $.session.id() !== session) return

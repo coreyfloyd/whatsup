@@ -3,7 +3,7 @@ import states from './fixtures/chosen-states'
 import { paneTree } from './pane-tree'
 import { describe, expect, test, mock } from 'claude-code/testing'
 import { reportLines } from '../hooks/report-layout'
-import { workerLines } from '../hooks/workers'
+import { brailleCell as cell, workerLines } from '../hooks/workers'
 import { cells, sessionRows } from '../hooks/session-facts'
 import { TEMPLATES } from '../hooks/templates'
 
@@ -52,7 +52,7 @@ describe('chosen design', () => {
       const rows = workerLines([{ name: 'orchestrator', role: 'main', status, state: status === 'done' ? 'done' : status === 'waiting' ? 'waiting' : status === 'failed' ? 'failed' : 'running', started: 0, changed: 60000, minutes: { 0: 4000 }, total: 128000, context: { tokens: 83000, window: 100000 }, model: 'claude-opus-5-5' }], columns, 60000, true)
       expect(output(rows[0])).toContain('   🤖 Agents')
       expect(rows[0].parts.some(p => p.dim)).toBe(true)
-      expect(rows[1].accent).toBe(({ done: '#808080', waiting: '#ececec', failed: '#ff7b86' }[status] ?? '#f2b84b'))
+      expect(rows[1].accent).toBe(({ done: '#808080', waiting: '#ececec', failed: '#ff7b86' }[status] ?? '#e39b3a'))
       expect(rows.map(output).join('\n')).toContain(`${emoji} ${status}`)
       expect(rows.some(l => l.parts.some(p => p.color === '#ffcf5a'))).toBe(true)
       for (const l of rows.slice(1)) expect(cells(output(l))).toBe(columns)
@@ -160,7 +160,7 @@ function compareChosenState(still: string, columns: number) {
   expect(output(rows[0])).toContain(`🤖 Agents · ${workers.filter(w => w.state === 'running').length} running`)
   workers.forEach((worker, i) => {
     const a = source.agents[i]
-    const palette = { running: ['#f2b84b', '#302a1a'], waiting: ['#ececec', undefined], failed: ['#ff7b86', '#33222a'], done: ['#808080', undefined] }
+    const palette = { running: ['#e39b3a', '#302518'], waiting: ['#ececec', undefined], failed: ['#ff7b86', '#33222a'], done: ['#808080', undefined] }
     const [accent, tint] = palette[worker.state as keyof typeof palette]
     const done = a.status === 'done'
     const box = rows.filter(r => r.key === `worker-${i}` || r.key.startsWith(`worker-${i}-`))
@@ -182,11 +182,12 @@ function compareChosenState(still: string, columns: number) {
     else expect(output(box[3])).not.toContain('tokens')
     if ('spark_text' in a) {
       const available = columns - 4 - 13
-      // The stills predate relative scaling: normalize their visible heights.
-      const glyphs = ' ▁▂▃▄▅▆▇█'
-      const levels = [...a.spark_text.slice(-available)].map(c => glyphs.indexOf(c))
-      const peak = Math.max(0, ...levels)
-      const expected = levels.map(level => glyphs[peak ? Math.ceil(8 * level / peak) : 0]).join('')
+      // The stills predate relative scaling and braille: rescale their heights to four steps, two minutes per cell.
+      const heights = [...a.spark_text].slice(-2 * available).map(c => '▁▂▃▄▅▆▇█'.indexOf(c) + 1)
+      const peak = Math.max(0, ...heights)
+      const levels = heights.map(height => Math.max(1, Math.ceil(4 * height / peak)))
+      if (levels.length % 2) levels.unshift(0)
+      const expected = Array.from({ length: levels.length / 2 }, (_, i) => cell(levels[2 * i]!, levels[2 * i + 1]!)).join('')
       expect(box[3].parts[0].text.trimStart().startsWith(expected)).toBe(true)
     }
   })
@@ -228,7 +229,7 @@ function compareChosenState(still: string, columns: number) {
 for (const columns of [40, 58, 80]) test(`worker execution transitions change state colors at ${columns}`, () => {
   const sample = states['agents-states-80.png'].agents
   for (const a of [...sample, ...states['agents-status-a-80.png'].agents]) {
-    const palette = { running: '#f2b84b', waiting: '#ececec', failed: '#ff7b86', done: '#808080' }
+    const palette = { running: '#e39b3a', waiting: '#ececec', failed: '#ff7b86', done: '#808080' }
     // A free-text status does not own execution state or completion styling.
     for (const state of ['running', 'failed', 'running', 'waiting', 'done'] as const) {
       const worker = { name: a.name, role: a.role, model: a.model, status: 'reviewing', state,

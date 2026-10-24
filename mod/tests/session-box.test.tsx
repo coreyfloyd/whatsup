@@ -122,7 +122,7 @@ describe('live session box', () => {
     const output = text(await paneTree(ui))
     expect(output).toContain('Session')
     expect(output).toContain('No scope yet')
-    expect(output).toContain('mcp__whatsup__report')
+    expect(output).toContain('Waiting for the agent’s first report')
     expect(output).not.toContain('Context')
     expect(output).not.toContain('resets')
   })

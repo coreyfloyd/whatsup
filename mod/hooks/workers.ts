@@ -35,19 +35,30 @@ export function mergeWorkers(observed: LiveWorker[], reported: Worker[], previou
   }).filter((w, index) => retainExpired || index === 0 && w.id === 'main' || !terminal(w) || now - w.changed < 600000)
 }
 
-/** One cell per minute; eight height steps relative to the busiest visible minute. */
+// Braille columns fill bottom-up: dots 7, 3, 2, 1 on the left and 8, 6, 5, 4 on the right.
+const LEFT_DOTS = [0, 0x40, 0x44, 0x46, 0x47], RIGHT_DOTS = [0, 0x80, 0xa0, 0xb0, 0xb8]
+/** One braille cell holding two minutes; each level is 0 (no minute) to 4. */
+export function brailleCell(left: number, right: number): string {
+  return String.fromCharCode(0x2800 + LEFT_DOTS[left]! + RIGHT_DOTS[right]!)
+}
+
+/** Two minutes per cell; four height steps relative to the busiest visible minute; idle minutes draw the baseline. */
 export function tokenGraph(worker: LiveWorker, width: number, now: number, reduced: boolean): string {
   const keys = Object.keys(worker.minutes).map(Number)
   if (!keys.length || width <= 0) return ''
   const end = Math.floor((terminal(worker) || worker.state === 'waiting' ? worker.changed : reduced ? Math.max(...keys) * 60000 : now) / 60000)
-  const start = Math.max(Math.min(...keys), end - width + 1)
+  const start = Math.max(Math.min(...keys), end - 2 * width + 1)
   const peak = Math.max(0, ...keys.filter(minute => minute >= start && minute <= end).map(minute => worker.minutes[minute]!))
-  let graph = ''
+  const levels: number[] = []
   for (let minute = start; minute <= end; minute++) {
-    let level = peak > 0 ? Math.ceil(8 * (worker.minutes[minute] ?? 0) / peak) : 0
-    if (!reduced && worker.inFlight && worker.state === 'running' && minute === end) level = Math.max(0, level - 1)
-    graph += ' ▁▂▃▄▅▆▇█'[level]
+    let level = Math.max(1, peak > 0 ? Math.ceil(4 * (worker.minutes[minute] ?? 0) / peak) : 0)
+    if (!reduced && worker.inFlight && worker.state === 'running' && minute === end) level = Math.max(1, level - 1)
+    levels.push(level)
   }
+  // The newest minute always takes a cell's right column.
+  if (levels.length % 2) levels.unshift(0)
+  let graph = ''
+  for (let index = 0; index < levels.length; index += 2) graph += brailleCell(levels[index]!, levels[index + 1]!)
   return graph
 }
 const compact = (n: number) => n >= 1000 ? `${Math.round(n / 100) / 10}k` : String(n)

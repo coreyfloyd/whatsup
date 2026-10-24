@@ -1,6 +1,6 @@
 {
   "name": "whatsup",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Agent-reported session scope and progress sections",
   "types": "./types/index.d.ts",
   "userConfig": {

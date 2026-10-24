@@ -9,7 +9,7 @@ import type { Item, Part } from './layout'
 import type { EnrichedReport, EnrichedSection } from './enrichment'
 
 export type ReportLine = { key: string; parts: Part[]; item?: Item; marker?: string; expand?: number; decision?: { identity: string; version: string; hotkey?: string }; action?: { identity: string; version: string; kind: 'select' | 'clear' | 'send' | 'discuss'; option?: string; hotkey?: string }; prefix?: string; suffix?: string; badge?: string; unavailable?: boolean; dim?: boolean; accent?: string; background?: string }
-export const EMPTY_REPORT = 'mcp__whatsup__report({"scope":"work"})'
+export const EMPTY_REPORT = 'Waiting for the agent’s first report'
 const glyph = { done: '✓', active: '◐', queued: '○' }
 
 /** Derive counts only from the section’s ordered items. No section labels are special. */

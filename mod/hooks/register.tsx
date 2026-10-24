@@ -1,4 +1,4 @@
-import { decisionLane, reconcileAnswers } from './decision-input'
+import { REFRESH_TEXT, decisionLane, inputUnavailableKey, reconcileAnswers } from './decision-input'
 import { atom, read, update } from 'claude-code'
 import type { Register } from 'claude-code'
 
@@ -87,7 +87,12 @@ export const register: Register = (on, options) => {
     const report = recorded ? null : await $.store.get(reportKey(session)) as ContextReport | null
     await update($, { plugin: 'whatsup', key: 'reportViews' } as const, all => ({ ...all, [session]: { shown: null, expanded: initialExpanded(config ?? resolveConfig(), report) } }))
     await $.ui.open({ id: PANE, title: TITLE })
-    return { text: recorded ? `Session Status opened with recorded snapshot "${chosen}".` : 'whatsup opened for this session.' }
+    if (recorded) return { text: `Session Status opened with recorded snapshot "${chosen}".` }
+    if (await $.store.get(inputUnavailableKey(session))) return { text: 'whatsup opened for this session.' }
+    // The engine refuses prompt.submit inside command.run, whose turn it would wait on.
+    // Submit once the command returns; a plugin's prompt runs when the session is idle.
+    $.clock.after(0, () => { void $.prompt.submit({ text: REFRESH_TEXT }).catch(() => {}) })
+    return { text: 'whatsup opened; asked the agent for a fresh report.' }
   })
 
   if (recorded) on('ui.render', { component: 'Pane', requestId: PANE }, async ($, e) => {

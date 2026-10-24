@@ -5,7 +5,7 @@ import type { Engine, Mounted } from 'claude-code/testing'
 import { cells } from '../hooks/session-facts'
 import { resolveConfig } from '../hooks/templates'
 import { decisionVersion, reportArguments } from '../hooks/report'
-import { answersKey } from '../hooks/decision-input'
+import { REFRESH_TEXT, answersKey, inputUnavailableKey } from '../hooks/decision-input'
 import type { On, RenderSurface } from 'claude-code'
 
 const TOOL = 'mcp__whatsup__report'
@@ -460,7 +460,7 @@ describe('context report', () => {
   test('scope only, replacement and session isolation persist in plugin store', async ($, on) => {
     const h = host(on); await start($)
     let ui = await mount($)
-    expect(await drawn(ui)).toContain('mcp__whatsup__report')
+    expect(await drawn(ui)).toContain('Waiting for the agent’s first report')
     await report($, { scope: 'Public release', sections: [section], workers: [{ name: 'generator', role: 'main', status: 'generating', state: 'running' }] })
     expect(await drawn(ui)).toContain('Public release')
     await report($, { scope: 'Read the brief' })
@@ -473,7 +473,7 @@ describe('context report', () => {
     await ui.unmount()
     h.session('fresh-session')
     ui = await mount($)
-    expect(await drawn(ui)).toContain('mcp__whatsup__report')
+    expect(await drawn(ui)).toContain('Waiting for the agent’s first report')
     await report($, { scope: 'Fresh scope' })
     await ui.unmount()
     h.session('report-session')
@@ -497,10 +497,25 @@ describe('context report', () => {
       expect(await drawn(ui)).toContain('Keep this')
     }
   })
+  test('opening the pane asks the agent for a fresh report unless input is unavailable', async ($, on) => {
+    const h = host(on); const inputs: any[] = []
+    on('prompt.submit', (_$, e) => { inputs.push(e); return { text: e.text, origin: e.origin } })
+    await start($)
+    // The submission waits for the command to return, so the clock must move before counting.
+    const run = async () => { const result = await $.command.run({ command: 'whatsup', args: '', origin: { kind: 'composer' }, presentation: { isFullscreen: true, columns: 140 } }); await h.clock.advance(0); return result }
+    expect(JSON.stringify(await run())).toContain('asked the agent for a fresh report')
+    expect(inputs).toHaveLength(1)
+    expect(inputs[0].text).toBe(REFRESH_TEXT)
+    expect(inputs[0].origin).toEqual({ kind: 'plugin', name: 'whatsup' })
+    expect(JSON.parse(inputs[0].text).action).toContain('including answers given in chat')
+    h.store.set(inputUnavailableKey('report-session'), true)
+    expect(JSON.stringify(await run())).toContain('whatsup opened for this session.')
+    expect(inputs).toHaveLength(1)
+  })
   test('empty help fits 40 columns, section names can open links, and replacement clears UI state', async ($, on) => {
     const h = host(on); await start($)
     const ui = await mount($, 'terminal', 40)
-    expect(await drawn(ui)).toContain('{"scope":')
+    expect(await drawn(ui)).toContain('Waiting for the agent’s first report')
     await report($, { scope: 'Public release', sections: [{ ...section, link: 'https://github.com/example/project/issues/10' }] })
     await ui.press({ key: 'show-section-0' })
     expect(await drawn(ui)).toContain('open ↗')

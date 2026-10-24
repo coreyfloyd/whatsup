@@ -8,7 +8,7 @@ history. Do not rename its remote, make it public, or push its branches or tags
 to the public repository. Publication is a separate, human-confirmed action;
 preparing a candidate does not authorize running the publication commands below.
 
-The marketplace entry and plugin manifest both carry version `0.2.1`. Keep them
+The marketplace entry and plugin manifest both carry version `0.2.2`. Keep them
 in sync for later releases. The plugin payload is `mod/`; the reader ships inside
 it. A GitHub marketplace install requires no release archive or pip dependency.
 

@@ -3,7 +3,7 @@ import { describe, expect, test, mock } from 'claude-code/testing'
 import { reportError } from '../hooks/report'
 import { cells } from '../hooks/session-facts'
 import type { On } from 'claude-code'
-import { mergeWorkers, tokenGraph, workerLines } from '../hooks/workers'
+import { brailleCell as cell, mergeWorkers, tokenGraph, workerLines } from '../hooks/workers'
 import type { LiveWorker } from '../hooks/workers'
 
 // Derived scenarios for S3 of the approved public-release spec, not live telemetry.
@@ -71,35 +71,39 @@ describe('workers', () => {
     expect(merged[0]!.minutes).toEqual(worker.minutes)
     expect(output(workerLines(merged, 40, 60000, false))).toContain('▱▱▱▱▱▱ 0%')
   })
-  test('relative scale, minute window, gaps, in-flight dip and reduced-motion still', () => {
+  test('braille cells fill bottom-up, two minutes per cell', () => {
+    expect([cell(0, 0), cell(1, 1), cell(4, 4), cell(2, 4), cell(0, 3)]).toEqual(['\u2800', '⣀', '⣿', '⣼', '⢰'])
+  })
+  test('relative scale, two-minute cells, solid baseline, in-flight dip and reduced-motion still', () => {
     const active = { ...worker, minutes: Object.fromEntries(Array.from({ length: 40 }, (_, i) => [i, 4000])), inFlight: true }
     for (const width of [23, 63]) {
       const graph = tokenGraph(active, width, 39 * 60000, false)
-      expect(graph.length).toBe(Math.min(40, width))
-      expect(graph.endsWith('▇')).toBe(true)
-      expect(tokenGraph(active, width, 39 * 60000, true).endsWith('█')).toBe(true)
+      expect(graph.length).toBe(20)
+      expect(graph.endsWith(cell(4, 3))).toBe(true)
+      expect(tokenGraph(active, width, 39 * 60000, true).endsWith(cell(4, 4))).toBe(true)
     }
-    expect(tokenGraph({ ...worker, minutes: { 0: 1000, 2: 2000 } }, 23, 120000, false)).toBe('▄ █')
+    // An idle minute between bursts draws the baseline instead of a gap.
+    expect(tokenGraph({ ...worker, minutes: { 0: 1000, 2: 2000 } }, 23, 120000, false)).toBe(cell(0, 2) + cell(1, 4))
     expect(tokenGraph({ ...worker, minutes: {} }, 23, 60000, false)).toBe('')
   })
   test('scales low and very high minutes linearly within the visible window', () => {
     // Boundary scenarios required by the graph-scale acceptance criteria.
     const history = { ...worker, minutes: { 0: 1000, 1: 187500, 2: 375000, 3: 750000, 4: 1500000 } }
-    expect(tokenGraph(history, 5, 4 * 60000, true)).toBe('▁▁▂▄█')
-    expect(tokenGraph({ ...worker, minutes: { 0: 1500000, 1: 1000, 2: 2000 } }, 2, 2 * 60000, true)).toBe('▄█')
-    expect(tokenGraph({ ...worker, minutes: { 0: 1000, 1: 2000, 2: 1500000 } }, 2, 60000, false)).toBe('▄█')
+    expect(tokenGraph(history, 5, 4 * 60000, true)).toBe(cell(0, 1) + cell(1, 1) + cell(2, 4))
+    expect(tokenGraph({ ...worker, minutes: { 0: 1500000, 1: 1000, 2: 2000 } }, 1, 2 * 60000, true)).toBe(cell(2, 4))
+    expect(tokenGraph({ ...worker, minutes: { 0: 1000, 1: 2000, 2: 1500000 } }, 1, 60000, false)).toBe(cell(2, 4))
   })
-  test('equal nonzero minutes fill the scale and zero-only windows stay blank', () => {
+  test('equal nonzero minutes fill the scale and zero-only windows draw the baseline', () => {
     for (const tokens of [1000, 1500000]) {
-      expect(tokenGraph({ ...worker, minutes: { 0: tokens, 1: tokens, 2: tokens } }, 3, 120000, true)).toBe('███')
+      expect(tokenGraph({ ...worker, minutes: { 0: tokens, 1: tokens, 2: tokens } }, 2, 120000, true)).toBe(cell(0, 4) + cell(4, 4))
     }
-    expect(tokenGraph({ ...worker, minutes: { 0: 0, 1: 0 } }, 2, 60000, true)).toBe('  ')
-    expect(tokenGraph({ ...worker, minutes: { 0: 1500000 } }, 2, 120000, false)).toBe('  ')
+    expect(tokenGraph({ ...worker, minutes: { 0: 0, 1: 0 } }, 1, 60000, true)).toBe(cell(1, 1))
+    expect(tokenGraph({ ...worker, minutes: { 0: 1500000 } }, 1, 120000, false)).toBe(cell(1, 1))
     expect(tokenGraph(worker, 0, 60000, true)).toBe('')
   })
   test('waiting and terminal graphs scale only through their transition minute', () => {
     for (const state of ['waiting', 'done', 'failed'] as const) {
-      expect(tokenGraph({ ...worker, state, changed: 60000, minutes: { 0: 1000, 1: 2000, 2: 1500000 } }, 3, 120000, false)).toBe('▄█')
+      expect(tokenGraph({ ...worker, state, changed: 60000, minutes: { 0: 1000, 1: 2000, 2: 1500000 } }, 2, 120000, false)).toBe(cell(2, 4))
     }
   })
   for (const columns of [40, 80]) test(`expanded boxes fit ${columns} columns with task, usage and gauge`, () => {
@@ -130,12 +134,13 @@ describe('workers', () => {
     expect(tokenGraph(worker, 23, 120000, false)).not.toBe(tokenGraph(worker, 23, 60000, false))
   })
   for (const columns of [40, 80]) test(`graph uses the available window and scrolls at ${columns} columns`, () => {
-    const history = { ...worker, total: 128000, minutes: Object.fromEntries(Array.from({ length: 80 }, (_, i) => [i, (i % 8 + 1) * 1000])) }
-    const line = workerLines([history], columns, 79 * 60000, false).find(l => l.key === 'worker-0-graph')!
-    const expected = tokenGraph(history, columns - 17, 79 * 60000, false)
+    const history = { ...worker, total: 128000, minutes: Object.fromEntries(Array.from({ length: 160 }, (_, i) => [i, (i % 8 + 1) * 1000])) }
+    const line = workerLines([history], columns, 159 * 60000, false).find(l => l.key === 'worker-0-graph')!
+    const expected = tokenGraph(history, columns - 17, 159 * 60000, false)
     expect(line.parts[0]!.text.startsWith(expected)).toBe(true)
     expect(expected.length).toBe(columns - 17)
-    const next = tokenGraph(history, columns - 17, 80 * 60000, false)
+    // Two minutes later the window has moved by one whole cell.
+    const next = tokenGraph(history, columns - 17, 161 * 60000, false)
     expect(next.slice(0, -1)).toBe(expected.slice(1))
   })
   test('report-time retention, task cards, replacement and session-first order cross the pane seam', async ($, on) => {
