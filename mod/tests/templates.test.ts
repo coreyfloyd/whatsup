@@ -37,6 +37,8 @@ describe('templates and configuration', () => {
       expect(instruction.trim().split(/\s+/).length < 120).toBe(true)
       for (const term of ['scope', 'label', 'verb', 'item_kind', 'title', 'state', 'task starts', 'finishes', 'scope shifts', 'ticket, milestone or decision is created', 'any means', 'mcp__whatsup__report']) expect(instruction).toContain(term)
       expect(instruction).toContain('Queue')
+      expect(instruction).toContain('one item_kind each, never groups')
+      expect(instruction).toContain('Groups go in Queue.')
     }
     expect(templates.sessionInstruction(templates.resolveConfig(undefined, { instruction: false }))).toBe('')
   })
@@ -47,6 +49,9 @@ describe('templates and configuration', () => {
     }
     const instruction = templates.sessionInstruction(templates.resolveConfig({ section_order: ['project'] }))
     expect(instruction.includes('running work log')).toBe(false)
+    // Without a queue the generic item rule stays and the queue pointer goes.
+    expect(instruction).toContain('never groups')
+    expect(instruction.includes('Groups go in Queue')).toBe(false)
   })
   test('report requests copy exact configured section field values', () => {
     for (const config of [

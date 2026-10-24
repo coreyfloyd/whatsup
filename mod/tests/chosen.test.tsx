@@ -20,7 +20,7 @@ describe('chosen design', () => {
   for (const columns of [40, 80]) test(`section states, palette, hatching, expansion and celebration at ${columns}`, () => {
     const lines = reportLines({ scope: 'Build Session Status initial slices', sections: [section] }, columns, [0], undefined, TEMPLATES.github)
     expect(output(lines[1])).toContain('▾ 🎯 Project')
-    expect(output(lines[1])).toContain(columns === 40 ? '[2/4]' : '[2/4 achieved]')
+    expect(output(lines[1])).toContain(columns === 40 ? '[2/4]' : '[2/4 milestones achieved]')
     expect(lines[1].accent).toBe('#6ad4a8')
     const bar = lines.find(l => l.key.endsWith('-bar'))!
     expect(output(bar)).toContain('░')

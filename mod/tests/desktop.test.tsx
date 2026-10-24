@@ -236,7 +236,7 @@ describe('Desktop native pane', () => {
         expect(await ui.find({ key: `hide-section-${index}-kind` })).toBeDefined()
       }
       expect(await drawn(ui)).toContain(section.description)
-      expect(await drawn(ui)).toContain(columns < 56 ? '1/3' : '1/3 closed')
+      expect(await drawn(ui)).toContain(columns < 56 ? '1/3' : '1/3 tickets closed')
       const bar = text(await ui.find({ key: 'hide-section-3-bar' }))
       for (const segment of ['33%', '█', '░', '·']) expect(bar).toContain(segment)
       await ui.press({ key: 'expand-section-3' })

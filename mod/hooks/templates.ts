@@ -61,11 +61,11 @@ export function sessionInstruction(config: Template): string {
   })
   const descriptions = config.section_order.filter(key => config.sections[key].description).map(key => config.sections[key].label)
   const queueInstruction = config.section_order.includes('queue')
-    ? ` Queue is the session's running work log: every piece of work in order, including unticketed and newly discovered work; move waiting work to queued behind its dependency.`
+    ? ` Queue is the session's running work log: every piece of work in order, including unticketed and newly discovered work; move waiting work to queued behind its dependency. Groups go in Queue.`
     : ''
   const instruction = `mcp__whatsup__report: "report your context"; task starts/finishes, scope shifts, ticket, milestone or decision is created. Replace scope/sections/workers/decisions. Sections: copy verbatim label/verb/item_kind:
 ${JSON.stringify(sections)}
-Descriptions: ${JSON.stringify(descriptions)}. Section name/items: title/state queued/active/done/number/identity/link. Workers (any means): name/role/status/state/model/task. Retain outstanding decisions: answer-sufficient context/tradeoffs/recommendation, stable identities; update discussion context; remove resolved/withdrawn, including chat answers. Details: tool description.${queueInstruction} Display state only.`
+Descriptions: ${JSON.stringify(descriptions)}. Section name/items (one item_kind each, never groups): title/state queued/active/done/number/identity/link. Workers (any means): name/role/status/state/model/task. Retain outstanding decisions: answer-sufficient context/tradeoffs/recommendation, stable identities; update discussion context; remove resolved/withdrawn, including chat answers. Details: tool description.${queueInstruction} Display state only.`
   // Arbitrary user labels must never produce an over-budget startup instruction.
   if (instruction.split(/\s+/).length >= 120) throw new Error('config: reporting instruction must stay under 120 words; shorten section labels or reduce sections')
   return instruction

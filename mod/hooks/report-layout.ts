@@ -104,14 +104,14 @@ export function reportLines(report: EnrichedReport | null, columns: number, expa
     const failure = section.enrichment?.state === 'unavailable' ? section.enrichment.reason : (section.items ?? []).find(item => item.enrichment?.state === 'unavailable')?.enrichment?.reason
     const failed = failure !== undefined
     const { done, active, total, percent } = sectionCounts(section)
-    const badge = failed ? "⚠️ Couldn't load" : total ? clip(`${done}/${total}` + (columns >= 56 ? ` ${section.verb}` : ''), Math.max(1, columns - 16)) : ''
+    const badge = failed ? "⚠️ Couldn't load" : total ? clip(`${done}/${total}` + (columns >= 56 ? ` ${section.item_kind} ${section.verb}` : ''), Math.max(1, columns - 16)) : ''
     const marker = expanded.includes(index) ? '▾ ' : '▸ '
     const party = total > 0 && done === total && !failed ? ' 🎉' : ''
     const name = clip((!failed && definition?.emoji ? `${definition.emoji} ` : '') + section.label + (section.name && columns >= 56 ? ` · ${section.name}` : ''), Math.max(1, columns - cells(marker) - cells(badge) - cells(party) - 11))
     const tail = (badge ? ` [${badge}]${party}` : '') + ' ─┐'
     const rule = '─'.repeat(Math.max(0, columns - 3 - cells(marker) - cells(name) - cells(tail)))
     lines.push({ key, prefix: '┌─ ', marker, expand: index, parts: [{ text: name, bold: true, color: style.accent, ...(failed ? { dim: true, color: CHOSEN.grey } : {}) }], suffix: ' ' + rule.slice(1) + tail,
-      badge, accent: style.accent, item: { key, page: section.link ?? null, details: [section.label + (section.name ? `: ${section.name}` : ''), ...(section.description ? [section.description] : []), ...(failed ? [`Couldn't load: ${failure}`] : total ? [`${done}/${total} ${section.verb}`] : [])] } })
+      badge, accent: style.accent, item: { key, page: section.link ?? null, details: [section.label + (section.name ? `: ${section.name}` : ''), ...(section.description ? [section.description] : []), ...(failed ? [`Couldn't load: ${failure}`] : total ? [`${done}/${total} ${section.item_kind} ${section.verb}`] : [])] } })
     const boxed = (row: string, parts: Part[], item?: Item) => {
       const length = parts.reduce((n, part) => n + cells(part.text), 0)
       lines.push({ key: row, prefix: '│ ', parts, suffix: ' '.repeat(Math.max(0, inner - length)) + ' │', item })

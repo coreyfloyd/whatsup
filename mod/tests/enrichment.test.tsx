@@ -88,7 +88,7 @@ describe('GitHub reader bridge', () => {
     const drawn = text(await paneTree(ui))
     expect(drawn.split('enrichment is off')).toHaveLength(2)
     expect(drawn).toContain('old')
-    expect(drawn).toContain('0/1 closed')
+    expect(drawn).toContain('0/1 tickets closed')
   })
   test('configured item kinds select GitHub counting without depending on section labels', { options: { githubIssueKinds: 'work items' } }, async ($, on) => {
     mock.clock(on)

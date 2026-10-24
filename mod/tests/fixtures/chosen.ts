@@ -368,10 +368,10 @@ export default {
       "agents_only": false,
       "mode": "mid",
       "headers": [
-        "┌─ ▸ 🎯 Project · session-status ───────  2/4 achieved  ─┐",
-        "┌─ ▸ ⛰️ Milestone · Initial build ───────  1/2 shipped  ─┐",
-        "┌─ ▸ 🚀 Epic · #2 ────────────────────────  2/3 closed  ─┐",
-        "┌─ ▾ 📋 Queue ──────────────────────────  2/5 finished  ─┐"
+        "┌─ ▸ 🎯 Project · session-… ─  2/4 milestones achieved  ─┐",
+        "┌─ ▸ ⛰️ Milestone · Initial build ─  1/2 epics shipped  ─┐",
+        "┌─ ▸ 🚀 Epic · #2 ────────────────  2/3 tickets closed  ─┐",
+        "┌─ ▾ 📋 Queue ────────────────────  2/5 tasks finished  ─┐"
       ]
     },
     {
@@ -389,10 +389,10 @@ export default {
       "agents_only": true,
       "mode": "mid",
       "headers": [
-        "┌─ ▸ 🎯 Project · session-status ─────────────────────────────  2/4 achieved  ─┐",
-        "┌─ ▸ ⛰️ Milestone · Initial build ─────────────────────────────  1/2 shipped  ─┐",
-        "┌─ ▸ 🚀 Epic · #2 ──────────────────────────────────────────────  2/3 closed  ─┐",
-        "┌─ ▾ 📋 Queue ────────────────────────────────────────────────  2/5 finished  ─┐"
+        "┌─ ▸ 🎯 Project · session-status ──────────────────  2/4 milestones achieved  ─┐",
+        "┌─ ▸ ⛰️ Milestone · Initial build ───────────────────────  1/2 epics shipped  ─┐",
+        "┌─ ▸ 🚀 Epic · #2 ──────────────────────────────────────  2/3 tickets closed  ─┐",
+        "┌─ ▾ 📋 Queue ──────────────────────────────────────────  2/5 tasks finished  ─┐"
       ]
     },
     {
@@ -410,10 +410,10 @@ export default {
       "agents_only": false,
       "mode": "mid",
       "headers": [
-        "┌─ ▸ 🎯 Project · session-status ─────────────────────────────  2/4 achieved  ─┐",
-        "┌─ ▸ ⛰️ Milestone · Initial build ─────────────────────────────  1/2 shipped  ─┐",
-        "┌─ ▸ 🚀 Epic · #2 ──────────────────────────────────────────────  2/3 closed  ─┐",
-        "┌─ ▾ 📋 Queue ────────────────────────────────────────────────  2/5 finished  ─┐"
+        "┌─ ▸ 🎯 Project · session-status ──────────────────  2/4 milestones achieved  ─┐",
+        "┌─ ▸ ⛰️ Milestone · Initial build ───────────────────────  1/2 epics shipped  ─┐",
+        "┌─ ▸ 🚀 Epic · #2 ──────────────────────────────────────  2/3 tickets closed  ─┐",
+        "┌─ ▾ 📋 Queue ──────────────────────────────────────────  2/5 tasks finished  ─┐"
       ]
     },
     {
@@ -431,10 +431,10 @@ export default {
       "agents_only": false,
       "mode": "celebrate",
       "headers": [
-        "┌─ ▸ 🎯 Project · session-status ─────────────────────────────  2/4 achieved  ─┐",
-        "┌─ ▸ ⛰️ Milestone · Initial build ─────────────────────────────  1/2 shipped  ─┐",
-        "┌─ ▸ 🚀 Epic · #2 ───────────────────────────────────────────  3/3 closed  🎉 ─┐",
-        "┌─ ▾ 📋 Queue ────────────────────────────────────────────────  4/5 finished  ─┐"
+        "┌─ ▸ 🎯 Project · session-status ──────────────────  2/4 milestones achieved  ─┐",
+        "┌─ ▸ ⛰️ Milestone · Initial build ───────────────────────  1/2 epics shipped  ─┐",
+        "┌─ ▸ 🚀 Epic · #2 ───────────────────────────────────  3/3 tickets closed  🎉 ─┐",
+        "┌─ ▾ 📋 Queue ──────────────────────────────────────────  4/5 tasks finished  ─┐"
       ]
     },
     {
@@ -451,10 +451,10 @@ export default {
       "agents_only": false,
       "mode": "failed",
       "headers": [
-        "┌─ ▸ 🎯 Project · session-status ─────────────────────────────  2/4 achieved  ─┐",
-        "┌─ ▸ ⛰️ Milestone · Initial build ─────────────────────────────  1/2 shipped  ─┐",
+        "┌─ ▸ 🎯 Project · session-status ──────────────────  2/4 milestones achieved  ─┐",
+        "┌─ ▸ ⛰️ Milestone · Initial build ───────────────────────  1/2 epics shipped  ─┐",
         "┌─ ▸ 🚀 Epic · #2 ──────────────────────────────────────── ⚠️  Couldn't load  ─┐",
-        "┌─ ▾ 📋 Queue ────────────────────────────────────────────────  2/5 finished  ─┐"
+        "┌─ ▾ 📋 Queue ──────────────────────────────────────────  2/5 tasks finished  ─┐"
       ]
     },
     {
@@ -493,10 +493,10 @@ export default {
       "agents_only": false,
       "mode": "mid",
       "headers": [
-        "┌─ ▸ 🎯 Project · session-status ─────────────────────────────  2/4 achieved  ─┐",
-        "┌─ ▸ ⛰️ Milestone · Initial build ─────────────────────────────  1/2 shipped  ─┐",
-        "┌─ ▸ 🚀 Epic · #2 ──────────────────────────────────────────────  2/3 closed  ─┐",
-        "┌─ ▾ 📋 Queue ────────────────────────────────────────────────  2/5 finished  ─┐"
+        "┌─ ▸ 🎯 Project · session-status ──────────────────  2/4 milestones achieved  ─┐",
+        "┌─ ▸ ⛰️ Milestone · Initial build ───────────────────────  1/2 epics shipped  ─┐",
+        "┌─ ▸ 🚀 Epic · #2 ──────────────────────────────────────  2/3 tickets closed  ─┐",
+        "┌─ ▾ 📋 Queue ──────────────────────────────────────────  2/5 tasks finished  ─┐"
       ]
     },
     {
@@ -514,10 +514,10 @@ export default {
       "agents_only": false,
       "mode": "mid",
       "headers": [
-        "┌─ ▾ 🎯 Project · session-status ─────────────────────────────  2/4 achieved  ─┐",
-        "┌─ ▸ ⛰️ Milestone · Initial build ─────────────────────────────  1/2 shipped  ─┐",
-        "┌─ ▸ 🚀 Epic · #2 ──────────────────────────────────────────────  2/3 closed  ─┐",
-        "┌─ ▸ 📋 Queue ────────────────────────────────────────────────  2/5 finished  ─┐"
+        "┌─ ▾ 🎯 Project · session-status ──────────────────  2/4 milestones achieved  ─┐",
+        "┌─ ▸ ⛰️ Milestone · Initial build ───────────────────────  1/2 epics shipped  ─┐",
+        "┌─ ▸ 🚀 Epic · #2 ──────────────────────────────────────  2/3 tickets closed  ─┐",
+        "┌─ ▸ 📋 Queue ──────────────────────────────────────────  2/5 tasks finished  ─┐"
       ]
     },
     {
@@ -536,10 +536,10 @@ export default {
       "agents_only": false,
       "mode": "mid",
       "headers": [
-        "┌─ ▸ 🎯 Project · session-status ─────────────────────────────  2/4 achieved  ─┐",
-        "┌─ ▾ ⛰️ Milestone · Initial build ─────────────────────────────  1/2 shipped  ─┐",
-        "┌─ ▾ 🚀 Epic · #2 ──────────────────────────────────────────────  2/3 closed  ─┐",
-        "┌─ ▸ 📋 Queue ────────────────────────────────────────────────  2/5 finished  ─┐"
+        "┌─ ▸ 🎯 Project · session-status ──────────────────  2/4 milestones achieved  ─┐",
+        "┌─ ▾ ⛰️ Milestone · Initial build ───────────────────────  1/2 epics shipped  ─┐",
+        "┌─ ▾ 🚀 Epic · #2 ──────────────────────────────────────  2/3 tickets closed  ─┐",
+        "┌─ ▸ 📋 Queue ──────────────────────────────────────────  2/5 tasks finished  ─┐"
       ]
     },
     {
@@ -578,10 +578,10 @@ export default {
       "agents_only": false,
       "mode": "mid",
       "headers": [
-        "┌─ ▸ 🎯 Project · session-status ─────────────────────────────  2/4 achieved  ─┐",
-        "┌─ ▸ ⛰️ Milestone · Initial build ─────────────────────────────  1/2 shipped  ─┐",
-        "┌─ ▸ 🚀 Epic · #2 ──────────────────────────────────────────────  2/3 closed  ─┐",
-        "┌─ ▾ 📋 Queue ────────────────────────────────────────────────  2/5 finished  ─┐"
+        "┌─ ▸ 🎯 Project · session-status ──────────────────  2/4 milestones achieved  ─┐",
+        "┌─ ▸ ⛰️ Milestone · Initial build ───────────────────────  1/2 epics shipped  ─┐",
+        "┌─ ▸ 🚀 Epic · #2 ──────────────────────────────────────  2/3 tickets closed  ─┐",
+        "┌─ ▾ 📋 Queue ──────────────────────────────────────────  2/5 tasks finished  ─┐"
       ]
     },
     {
@@ -599,10 +599,10 @@ export default {
       "agents_only": false,
       "mode": "mid",
       "headers": [
-        "┌─ ▸ 🎯 Project · session-status ─────────────────────────────  2/4 achieved  ─┐",
-        "┌─ ▸ ⛰️ Milestone · Initial build ─────────────────────────────  1/2 shipped  ─┐",
-        "┌─ ▸ 🚀 Epic · #2 ──────────────────────────────────────────────  2/3 closed  ─┐",
-        "┌─ ▾ 📋 Queue ────────────────────────────────────────────────  2/5 finished  ─┐"
+        "┌─ ▸ 🎯 Project · session-status ──────────────────  2/4 milestones achieved  ─┐",
+        "┌─ ▸ ⛰️ Milestone · Initial build ───────────────────────  1/2 epics shipped  ─┐",
+        "┌─ ▸ 🚀 Epic · #2 ──────────────────────────────────────  2/3 tickets closed  ─┐",
+        "┌─ ▾ 📋 Queue ──────────────────────────────────────────  2/5 tasks finished  ─┐"
       ]
     },
     {
@@ -620,10 +620,10 @@ export default {
       "agents_only": false,
       "mode": "mid",
       "headers": [
-        "┌─ ▸ 🎯 Project · session-status ─────────────────────────────  2/4 achieved  ─┐",
-        "┌─ ▸ ⛰️ Milestone · Initial build ─────────────────────────────  1/2 shipped  ─┐",
-        "┌─ ▸ 🚀 Epic · #2 ──────────────────────────────────────────────  2/3 closed  ─┐",
-        "┌─ ▾ 📋 Queue ────────────────────────────────────────────────  2/5 finished  ─┐"
+        "┌─ ▸ 🎯 Project · session-status ──────────────────  2/4 milestones achieved  ─┐",
+        "┌─ ▸ ⛰️ Milestone · Initial build ───────────────────────  1/2 epics shipped  ─┐",
+        "┌─ ▸ 🚀 Epic · #2 ──────────────────────────────────────  2/3 tickets closed  ─┐",
+        "┌─ ▾ 📋 Queue ──────────────────────────────────────────  2/5 tasks finished  ─┐"
       ]
     },
     {
@@ -662,10 +662,10 @@ export default {
       "agents_only": false,
       "mode": "mid",
       "headers": [
-        "┌─ ▸ 🎯 Project · session-status ─────────────────────────────  2/4 achieved  ─┐",
-        "┌─ ▸ ⛰️ Milestone · Initial build ─────────────────────────────  1/2 shipped  ─┐",
-        "┌─ ▸ 🚀 Epic · #2 ──────────────────────────────────────────────  2/3 closed  ─┐",
-        "┌─ ▾ 📋 Queue ────────────────────────────────────────────────  2/5 finished  ─┐"
+        "┌─ ▸ 🎯 Project · session-status ──────────────────  2/4 milestones achieved  ─┐",
+        "┌─ ▸ ⛰️ Milestone · Initial build ───────────────────────  1/2 epics shipped  ─┐",
+        "┌─ ▸ 🚀 Epic · #2 ──────────────────────────────────────  2/3 tickets closed  ─┐",
+        "┌─ ▾ 📋 Queue ──────────────────────────────────────────  2/5 tasks finished  ─┐"
       ]
     }
   ]
