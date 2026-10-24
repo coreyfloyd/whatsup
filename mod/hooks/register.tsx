@@ -1,3 +1,4 @@
+import { decisionLane, reconcileAnswers } from './decision-input'
 import { atom, read, update } from 'claude-code'
 import type { Register } from 'claude-code'
 
@@ -40,7 +41,12 @@ export const register: Register = (on, options) => {
     const repository = await $.fs.exists(repoPath) ? JSON.parse(await $.fs.read(repoPath)) : undefined
     const config = resolveConfig(user, repository)
     sessionInstruction(config) // Validate the instruction budget at startup.
-    await $.store.set(configKey(await $.session.id()), config)
+    const session = await $.session.id()
+    await $.store.set(configKey(session), config)
+    const report = recorded ? null : await $.store.get(reportKey(session)) as ContextReport | null
+    if (!recorded) await decisionLane(session, () => reconcileAnswers($, session, report, true))
+    await update($, { plugin: 'whatsup', key: 'reportViews' } as const, all => ({ ...all, [session]: { shown: null, expanded: initialExpanded(config, report) } }))
+    $.ui.invalidate('ui.render')
     // Core may cache prompt.context before this async startup handler finishes.
     $.ui.invalidate('prompt.context')
     await $.command.register({ name: 'whatsup', description: 'Show this session’s scope, progress and workers' })
@@ -61,7 +67,10 @@ export const register: Register = (on, options) => {
     const error = reportError(input)
     if (error) return { deny: error }
     const session = await $.session.id()
-    await $.store.set(reportKey(session), input as ContextReport)
+    await decisionLane(session, async () => {
+      await $.store.set(reportKey(session), input as ContextReport)
+      await reconcileAnswers($, session, input as ContextReport)
+    })
     if (!recorded) await paneWorkers($, await $.clock.now())
     const config = await $.store.get(configKey(session)) as Template | undefined
     await update($, { plugin: 'whatsup', key: 'reportViews' } as const, all => ({ ...all, [session]: { shown: null, expanded: initialExpanded(config ?? resolveConfig(), input as ContextReport) } }))

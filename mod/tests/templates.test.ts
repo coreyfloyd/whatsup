@@ -35,10 +35,18 @@ describe('templates and configuration', () => {
     for (const template of ['github', 'task-list', 'bare']) {
       const instruction = templates.sessionInstruction(templates.resolveConfig(undefined, { template }))
       expect(instruction.trim().split(/\s+/).length < 120).toBe(true)
-      for (const term of ['scope', 'label', 'verb', 'item_kind', 'title', 'state', 'starts', 'changes', 'finishes', 'any means', 'mcp__whatsup__report']) expect(instruction).toContain(term)
+      for (const term of ['scope', 'label', 'verb', 'item_kind', 'title', 'state', 'task starts', 'finishes', 'scope shifts', 'ticket, milestone or decision is created', 'any means', 'mcp__whatsup__report']) expect(instruction).toContain(term)
       expect(instruction).toContain('Queue')
     }
     expect(templates.sessionInstruction(templates.resolveConfig(undefined, { instruction: false }))).toBe('')
+  })
+  test('queue guidance follows the configured queue and records discovered work', () => {
+    for (const template of ['github', 'task-list', 'bare']) {
+      const instruction = templates.sessionInstruction(templates.resolveConfig({ template, sections: { queue: { label: 'Work log' } } }))
+      for (const term of ['Queue is the session', 'running work log', 'every piece of work in order', 'unticketed', 'newly discovered', 'queued behind']) expect(instruction).toContain(term)
+    }
+    const instruction = templates.sessionInstruction(templates.resolveConfig({ section_order: ['project'] }))
+    expect(instruction.includes('running work log')).toBe(false)
   })
   test('report requests copy exact configured section field values', () => {
     for (const config of [
@@ -55,6 +63,25 @@ describe('templates and configuration', () => {
         return { label, verb, item_kind }
       }))
     }
+  })
+  test('preserves previously valid label budgets without repeating the queue label', () => {
+    const label = 'one two three four five six seven eight nine ten'
+    const instruction = templates.sessionInstruction(templates.resolveConfig({ sections: { queue: { label } } }))
+    expect(instruction.split(label).length).toBe(2)
+    expect(instruction.trim().split(/\s+/).length <= 97).toBe(true)
+    for (const template of ['github', 'task-list', 'bare']) {
+      expect(templates.sessionInstruction(templates.resolveConfig({ template })).trim().split(/\s+/).length <= 88).toBe(true)
+      // Main accepts a 32-word queue label (119 words total).
+      const boundary = templates.resolveConfig({ template, sections: { queue: { label: 'word '.repeat(31) + 'last' } } })
+      expect(templates.sessionInstruction(boundary).trim().split(/\s+/).length < 120).toBe(true)
+      // Description-enabled labels occur twice on main, once in each JSON list.
+      const described = templates.resolveConfig({ template, sections: { queue: { label: 'word '.repeat(15) + 'last', description: true } } })
+      expect(templates.sessionInstruction(described).trim().split(/\s+/).length < 120).toBe(true)
+    }
+  })
+  test('startup guidance retains outstanding decisions with sufficient context and stable identity', () => {
+    const instruction = templates.sessionInstruction(templates.resolveConfig())
+    for (const term of ['decisions', 'answer-sufficient', 'stable identities', 'resolved/withdrawn']) expect(instruction).toContain(term)
   })
   test('keeps custom startup instructions under budget', () => {
     expect(() => templates.sessionInstruction(templates.resolveConfig(undefined, { sections: { queue: { label: 'queue '.repeat(120) } } }))).toThrow()

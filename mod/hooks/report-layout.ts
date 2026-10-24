@@ -1,3 +1,5 @@
+import type { AnswerStates } from './decision-input'
+import { decisionVersion } from './report'
 import { clip, wrap } from './layout'
 import { CHOSEN, SECTION_STYLES, gradient } from './chosen-style'
 import { TEMPLATES } from './templates'
@@ -6,7 +8,7 @@ import { cells } from './session-facts'
 import type { Item, Part } from './layout'
 import type { EnrichedReport, EnrichedSection } from './enrichment'
 
-export type ReportLine = { key: string; parts: Part[]; item?: Item; marker?: string; expand?: number; prefix?: string; suffix?: string; badge?: string; unavailable?: boolean; dim?: boolean; accent?: string; background?: string }
+export type ReportLine = { key: string; parts: Part[]; item?: Item; marker?: string; expand?: number; decision?: { identity: string; version: string; hotkey?: string }; action?: { identity: string; version: string; kind: 'select' | 'clear' | 'send' | 'discuss'; option?: string; hotkey?: string }; prefix?: string; suffix?: string; badge?: string; unavailable?: boolean; dim?: boolean; accent?: string; background?: string }
 export const EMPTY_REPORT = 'mcp__whatsup__report({"scope":"work"})'
 const glyph = { done: '✓', active: '◐', queued: '○' }
 
@@ -18,13 +20,80 @@ export function sectionCounts(section: EnrichedSection) {
   const active = items.filter(item => item.state === 'active').length
   return { done, active, total: items.length, percent: items.length ? Math.round(100 * done / items.length) : 0 }
 }
-export function reportLines(report: EnrichedReport | null, columns: number, expanded: number[] = [], offReason?: string | null, config: Template = TEMPLATES.github!): ReportLine[] {
+export function reportLines(report: EnrichedReport | null, columns: number, expanded: number[] = [], offReason?: string | null, config: Template = TEMPLATES.github!, expandedDecision?: string | null, answers: AnswerStates = {}, inputAvailable = true): ReportLine[] {
   const lines: ReportLine[] = []
   const text = (key: string, value: string, dim = false) => lines.push({ key, parts: [{ text: clip(value, columns), dim }] })
   if (!report) { text('empty', EMPTY_REPORT, true); return lines }
   text('scope', report.scope)
   if (offReason) text('enrichment-off', offReason, true)
+  for (const [index, decision] of (report.decisions ?? []).entries()) {
+    const key = `decision-${index}`
+    const version = decisionVersion(decision)
+    const state = Object.hasOwn(answers, decision.identity) && answers[decision.identity]?.version === version ? answers[decision.identity] : undefined
+    const receipt = state?.receipt
+    const locked = receipt && receipt.status !== 'failed'
+    const open = expandedDecision === version && !locked
+    const accent = '#ff7b86'
+    const inner = Math.max(1, columns - 4)
+    const heading = `${open ? '▾' : '▸'} Decision ${index + 1}`
+    const status = receipt?.status === 'sent' ? 'SENT' : receipt?.status === 'unconfirmed' ? 'UNCONFIRMED' : receipt?.status === 'sending' ? 'SENDING' : 'ANSWER NEEDED'
+    const compact = columns < 24
+    const hotkey = !compact && index === 0 ? 'd' : undefined
+    const shortcutCells = hotkey ? 3 : 0
+    const compactStatus = receipt?.status === 'sent' ? 'Sent' : receipt?.status === 'unconfirmed' ? 'Unsure' : receipt?.status === 'sending' ? 'Wait' : receipt?.status === 'failed' ? 'Retry' : 'Answer'
+    // Narrow headers keep a complete textual status instead of forcing the
+    // title, frame and long status into a width smaller than their fixed cost.
+    const title = compact ? compactStatus : clip(heading, Math.max(1, columns - cells(status) - 7 - shortcutCells))
+    lines.push({ key, prefix: compact ? '' : '┌─ ', parts: [{ text: title, bold: true, color: accent }], suffix: compact ? '' : ' ' + '─'.repeat(Math.max(0, columns - cells(title) - cells(status) - 7 - shortcutCells)) + ` ${status} ┐`, accent, decision: { identity: decision.identity, version, hotkey } })
+    const row = (name: string, value = '', color?: string, bold = false) => wrap(value, inner).forEach((text, i) => lines.push({
+      key: `${key}-${name}-${i}`, prefix: '│ ', parts: [{ text, color, bold }], suffix: ' '.repeat(Math.max(0, inner - cells(text))) + ' │', accent,
+    }))
+    row('space')
+    row('question', decision.question, undefined, true)
+    if (locked) {
+      row('answer', `Answer: ${receipt.option.label}`)
+      row('receipt', receipt.status === 'sent' ? 'Sent — awaiting agent' : receipt.status === 'sending' ? 'Sending answer…' : 'Delivery unconfirmed')
+      if (receipt.status === 'unconfirmed') row('recovery', 'Check the main conversation and continue there manually. Do not send this answer again from the pane.')
+    }
+    const discussion = state?.discussion
+    if (discussion) {
+      row('discussion-status', discussion.status === 'sent' ? 'Discussion requested — answer still needed' : discussion.status === 'sending' ? 'Requesting discussion…' : discussion.status === 'failed' ? `Discussion not sent: ${discussion.reason}` : 'Discussion unconfirmed')
+      if (discussion.status === 'unconfirmed') row('discussion-recovery', 'Check the main conversation and continue manually there. Do not repeat this discussion request from the pane. You can still select and send an answer.')
+    }
+    if (open) {
+      const action = (name: string, label: string, kind: 'select' | 'clear' | 'send' | 'discuss', option?: string, hotkey?: string) => {
+        // Native hotkey prefixes consume three cells in addition to the label.
+        if (columns < 24) hotkey = undefined
+        const wrapped = wrap(label, Math.max(1, inner - (hotkey ? 3 : 0)))
+        wrapped.forEach((text, i) => lines.push({ key: `${key}-${name}-${i}`, prefix: '│ ', parts: [{ text }], suffix: ' '.repeat(Math.max(0, inner - cells(text) - (i === 0 && hotkey ? 3 : 0))) + ' │', accent,
+          action: { identity: decision.identity, version, kind, option, hotkey: i === 0 ? hotkey : undefined } }))
+      }
+
+      row('why-space'); row('why-label', 'WHY THIS MATTERS', accent); row('why', decision.why_now)
+      row('context-space'); row('context-label', 'CONTEXT', accent); row('context', decision.context)
+      const recommended = decision.options.find(option => option.identity === decision.recommendation.option)!
+      row('recommendation-space'); row('recommendation-label', 'RECOMMENDATION', accent)
+      row('recommended', `Recommended: ${recommended.label}`, accent)
+      row('reason', decision.recommendation.reason)
+      for (const [optionIndex, option] of decision.options.entries()) {
+        row(`option-${optionIndex}-space`)
+        action(`option-${optionIndex}-label`, `${state?.selected === option.identity ? '●' : '○'} ${option.label}`, 'select', option.identity, expandedDecision === version && optionIndex < 9 ? String(optionIndex + 1) : undefined)
+        row(`option-${optionIndex}-benefit`, `Benefit: ${option.benefit}`)
+        row(`option-${optionIndex}-cost`, `Cost: ${option.cost}`)
+      }
+      row('end-space')
+      if (receipt?.status === 'failed') row('failure', `Not sent: ${receipt.reason}`)
+      if (!inputAvailable) row('unavailable', 'Answer submission unavailable in this engine. Answer in the main conversation.')
+      else if (state?.selected) {
+        action('clear', 'Clear selection', 'clear', undefined, 'c')
+        action('send', 'Send answer', 'send', state.selected, 's')
+      } else row('select-first', 'Select an option to enable Send answer.')
+      if (inputAvailable && (!discussion || discussion.status === 'failed' || discussion.status === 'sent')) action('discuss', 'Talk about this in chat', 'discuss', undefined, 't')
+    }
+    lines.push({ key: `${key}-bottom`, parts: [{ text: '└' + '─'.repeat(Math.max(0, columns - 2)) + '┘', color: accent }], accent })
+  }
   for (const [index, section] of (report.sections ?? []).entries()) {
+    if (!section.name && !section.description && !section.items?.length) continue
     const key = `section-${index}`
     const definitionKey = Object.keys(config.sections).find(key => config.sections[key]!.label === section.label)
     const definition = definitionKey ? config.sections[definitionKey] : undefined

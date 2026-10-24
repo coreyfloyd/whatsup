@@ -1,3 +1,6 @@
+import type { AnswerStates } from '../hooks/decision-input'
+import { decision } from './fixtures/decision'
+import { decisionVersion } from '../hooks/report'
 import { describe, expect, test } from 'claude-code/testing'
 import { reportLines } from '../hooks/report-layout'
 import { cells } from '../hooks/session-facts'
@@ -7,10 +10,65 @@ const section = { label: 'Work', verb: 'finished', item_kind: 'tasks' }
 const text = (line: ReturnType<typeof reportLines>[number]) => (line.prefix ?? '') + (line.marker ?? '') + line.parts.map(p => p.text).join('') + (line.suffix ?? '')
 
 describe('report boundaries', () => {
-  for (const columns of [40, 80]) test(`one top spacer in populated, empty and unavailable sections at ${columns}`, () => {
-    for (const variant of [section, { ...section, description: 'Read the supplied brief' },
+  test('decision prose remains complete at supported widths, including long Unicode questions', () => {
+    for (const columns of [80, 58, 40]) {
+      const value = { ...decision, question: decision.question.repeat(8) + '文🌿', context: decision.context.repeat(12) }
+      for (const expanded of [undefined, decisionVersion(value)]) {
+        const rows = reportLines({ scope: 'Design pending decisions', decisions: [value] }, columns, [], undefined, undefined, expanded).slice(1)
+        for (const row of rows) expect(cells(text(row)) + (row.action?.hotkey || row.key === 'decision-0' ? 3 : 0), row.key).toBe(columns)
+        const prose = rows.map(text).join('').replace(/[│ ]/g, '')
+        expect(prose).toContain(value.question.replace(/ /g, ''))
+        if (expanded) {
+          expect(prose).toContain(value.context.replace(/ /g, ''))
+          for (const option of value.options) for (const field of ['label', 'benefit', 'cost'] as const) expect(prose).toContain(option[field].replace(/ /g, ''))
+        } else expect(prose).not.toContain('CONTEXT')
+      }
+    }
+  })
+  test('decision buttons reserve the engine-rendered hotkey cells', () => {
+    for (const columns of [40, 58, 80]) {
+      const rows = reportLines({ scope: 'Design pending decisions', decisions: [decision] }, columns, [], undefined, undefined, decisionVersion(decision))
+      for (const row of rows.filter(row => row.action?.hotkey || row.key === 'decision-0')) expect(cells(text(row)) + 3).toBe(columns)
+    }
+  })
+  // Keep each test well below the runner's default timeout while retaining
+  // all 75 widths and the full expansion/capability matrix for every state.
+  for (const status of ['pending', 'sending', 'sent', 'unconfirmed', 'failed'] as const) for (let firstColumn = 6; firstColumn <= 80; firstColumn += 5) {
+    test(`every decision row fits ${firstColumn}–${firstColumn + 4} columns in ${status} state`, () => {
+      const decisions = [decision, { ...decision, identity: 'second' }]
+      const answers: AnswerStates = Object.fromEntries(decisions.map(d => [d.identity, {
+        version: decisionVersion(d), selected: d.options[0]!.identity,
+        ...(status === 'pending' ? {} : { receipt: { attempt: 'width-check', option: d.options[0]!, status, reason: 'Policy refused this input' }, discussion: { attempt: 'discussion-width', status, reason: 'Policy refused this input' } }),
+      }]))
+      for (let columns = firstColumn; columns < firstColumn + 5; columns++) for (const expanded of [undefined, decisionVersion(decision), decisionVersion(decisions[1]!)]) for (const inputAvailable of [true, false]) {
+        const rows = reportLines({ scope: 'Design pending decisions', decisions }, columns, [], undefined, undefined, expanded, answers, inputAvailable).slice(1)
+        for (const row of rows) {
+          const hotkey = row.action?.hotkey || row.decision?.hotkey
+          // Native Buttons add "k: " outside the model's text children.
+          const width = cells(text(row)) + (hotkey ? 3 : 0)
+          expect(width <= columns, `${columns} columns, ${row.key}: ${text(row)}`).toBe(true)
+        }
+        const heading = text(rows.find(row => row.key === 'decision-0')!)
+        const expectedStatus = { pending: /ANSWER NEEDED|Answer/, sending: /SENDING|Wait/, sent: /SENT|Sent/, unconfirmed: /UNCONFIRMED|Unsure/, failed: /ANSWER NEEDED|Retry/ }[status]
+        expect(expectedStatus.test(heading), heading).toBe(true)
+        // Full prose remains in wrapped rows rather than being clipped away.
+        const prose = rows.map(row => row.parts.map(p => p.text).join('')).join('').replace(/\s/g, '')
+        expect(prose).toContain(decision.question.replace(/\s/g, ''))
+        if (status === 'sent' || status === 'sending' || status === 'unconfirmed') expect(prose).toContain(decision.options[0]!.label.replace(/\s/g, ''))
+        if (expanded && (status === 'pending' || status === 'failed')) for (const option of decision.options) for (const field of ['label', 'benefit', 'cost'] as const) expect(prose).toContain(option[field].replace(/\s/g, ''))
+      }
+    })
+  }
+  test('decision version covers answer-relevant content, independent of object field order', () => {
+    expect(decisionVersion({ recommendation: decision.recommendation, options: decision.options, context: decision.context, why_now: decision.why_now, question: decision.question, identity: decision.identity })).toBe(decisionVersion(decision))
+    for (const field of ['question', 'why_now', 'context'] as const) expect(decisionVersion({ ...decision, [field]: decision[field] + ' ' })).not.toBe(decisionVersion(decision))
+    expect(decisionVersion({ ...decision, options: [...decision.options].reverse() })).not.toBe(decisionVersion(decision))
+    expect(decisionVersion({ ...decision, recommendation: { ...decision.recommendation, reason: 'Changed' } })).not.toBe(decisionVersion(decision))
+  })
+  for (const columns of [40, 80]) test(`one top spacer in populated, named and unavailable sections at ${columns}`, () => {
+    for (const variant of [{ ...section, name: 'Public release' }, { ...section, description: 'Read the supplied brief' },
       { ...section, items: [{ title: 'Read the brief', state: 'active' as const }] },
-      { ...section, enrichment: { state: 'unavailable' as const, reason: 'GitHub read timed out' } }]) {
+      { ...section, name: 'Public release', enrichment: { state: 'unavailable' as const, reason: 'GitHub read timed out' } }]) {
       for (const expanded of [[], [0]]) {
         const rows = reportLines({ scope: 'Read the brief', sections: [variant] }, columns, expanded).slice(1)
         expect(rows[1].key).toBe('section-0-top-space')
@@ -20,6 +78,16 @@ describe('report boundaries', () => {
           expect(rows.map(row => row.key)).toEqual(['section-0', 'section-0-top-space', 'section-0-bottom'])
         }
       }
+    }
+  })
+  test('sections without a name, description or items produce no rows, even when expanded', () => {
+    for (const columns of [58, 80]) for (const expanded of [[], [0, 1, 2]]) {
+      const lines = reportLines({ scope: 'Read the brief', sections: [
+        section,
+        { ...section, name: '', description: '', items: [] },
+        { ...section, enrichment: { state: 'unavailable', reason: 'GitHub read timed out' } },
+      ] }, columns, expanded)
+      expect(lines.map(line => line.key)).toEqual(['scope'])
     }
   })
   test('empty sections retain boxes and expanded content without counts or bars', () => {

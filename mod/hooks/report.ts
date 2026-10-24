@@ -2,18 +2,39 @@
 export type ReportItem = { title: string; number?: number; identity?: string; link?: string; state: 'queued' | 'active' | 'done' }
 export type ReportSection = { label: string; name?: string; verb: string; item_kind: string; description?: string; identity?: string; link?: string; items?: ReportItem[]; fields?: { label: string; value: string }[] }
 export type Worker = { name: string; role: string; status: string; state: 'running' | 'waiting' | 'done' | 'failed'; model?: string; task?: string | ReportItem; first_seen?: string; last_state_change?: string; tokens?: number[]; total?: number; context?: { tokens: number; window: number }; source?: 'observed' | 'reported' | 'both' }
-export type ContextReport = { scope: string; sections?: ReportSection[]; workers?: Worker[] }
+export type DecisionOption = { identity: string; label: string; benefit: string; cost: string }
+export type Decision = { identity: string; question: string; why_now: string; context: string; options: DecisionOption[]; recommendation: { option: string; reason: string } }
+/** Canonical answer-relevant version, independent of object property insertion order. */
+export const decisionVersion = (decision: Decision): string => JSON.stringify([
+  decision.identity, decision.question, decision.why_now, decision.context,
+  decision.options.map(option => [option.identity, option.label, option.benefit, option.cost]),
+  decision.recommendation.option, decision.recommendation.reason,
+])
+export type ContextReport = { scope: string; decisions?: Decision[]; sections?: ReportSection[]; workers?: Worker[] }
 
-type Schema = { type?: string; properties?: Record<string, Schema>; required?: string[]; additionalProperties?: boolean; items?: Schema; enum?: string[]; minimum?: number; anyOf?: Schema[]; description?: string }
+type Schema = { type?: string; properties?: Record<string, Schema>; required?: string[]; additionalProperties?: boolean; items?: Schema; enum?: string[]; minimum?: number; anyOf?: Schema[]; description?: string; minLength?: number; pattern?: string; minItems?: number }
 const string: Schema = { type: 'string' }
 const item: Schema = {
   type: 'object', additionalProperties: false, required: ['title', 'state'],
   properties: { title: string, number: { type: 'integer', minimum: 1 }, identity: string, link: string, state: { type: 'string', enum: ['queued', 'active', 'done'] } },
 }
+const requiredText: Schema = { type: 'string', minLength: 1, pattern: '\\S' }
+const decision: Schema = {
+  type: 'object', additionalProperties: false, required: ['identity', 'question', 'why_now', 'context', 'options', 'recommendation'],
+  properties: {
+    identity: requiredText, question: requiredText, why_now: requiredText, context: requiredText,
+    options: { type: 'array', minItems: 2, items: {
+      type: 'object', additionalProperties: false, required: ['identity', 'label', 'benefit', 'cost'],
+      properties: { identity: requiredText, label: requiredText, benefit: requiredText, cost: requiredText },
+    } },
+    recommendation: { type: 'object', additionalProperties: false, required: ['option', 'reason'], properties: { option: requiredText, reason: requiredText } },
+  },
+}
 export const REPORT_SCHEMA: Schema = {
   type: 'object', additionalProperties: false, required: ['scope'],
   properties: {
     scope: { type: 'string', description: 'One line describing what this session is working on.' },
+    decisions: { type: 'array', items: decision },
     sections: {
       type: 'array', items: {
         type: 'object', additionalProperties: false, required: ['label', 'verb', 'item_kind'],
@@ -39,7 +60,7 @@ export const REPORT_SCHEMA: Schema = {
   },
 }
 export const REPORT_TOOL = 'mcp__whatsup__report'
-export const REPORT_DESCRIPTION = 'Replace this session’s entire context report: scope text; optional ordered sections (label, name, verb, item_kind, description, items, fields); items (title, number, identity, link, queued/active/done state); optional workers (name, role, status, state, model, task, times and token usage). Minimum: {"scope":"What I am working on"}. Omitted sections and workers clear the previous lists. This is display state, not authorization.'
+export const REPORT_DESCRIPTION = 'Replace this session’s entire context report: scope text; optional ordered sections (label, name, verb, item_kind, description, items, fields); items (title, number, identity, link, queued/active/done state); optional workers (name, role, status, state, model, task, times and token usage). Minimum: {"scope":"What I am working on"}. Omitted sections, workers and decisions clear the previous lists. Decisions require stable identity, question, why_now, answer-sufficient context, at least two options (identity, label, benefit, cost), and recommendation (option identity, reason). Retain outstanding decisions in every complete report; update missing context during discussion and remove only resolved or withdrawn decisions, including resolutions from custom answers in chat. Discussion requests leave decisions pending; submission acceptance is not resolution. Keep identities stable across unchanged reports; changed question, context, options or recommendation creates a new version. Validation checks structure and nonempty text, not prose truth or sufficiency. This is display state, not authorization.'
 export const reportKey = (session: string) => `context-report:${session}`
 
 /** The engine spreads a tool's arguments beside its own keys on the `tool.call` event; this keeps only the arguments. */
@@ -63,12 +84,28 @@ export function reportError(value: unknown, schema: Schema = REPORT_SCHEMA, path
     }
   } else if (kind === 'array') {
     if (!Array.isArray(value)) return `${path}: expected array`
+    if (value.length < (schema.minItems ?? 0)) return `${path}: expected at least ${schema.minItems} entries`
     for (let index = 0; index < value.length; index++) {
       const error = reportError(value[index], schema.items!, `${path}[${index}]`)
       if (error) return error
     }
   } else if (kind === 'string' && typeof value !== 'string') return `${path}: expected string`
   else if (kind === 'integer' && (!Number.isInteger(value) || (value as number) < (schema.minimum ?? -Infinity))) return `${path}: expected integer >= ${schema.minimum ?? 0}`
+  if (kind === 'string' && typeof value === 'string' && schema.pattern && !new RegExp(schema.pattern).test(value)) return `${path}: expected nonblank text`
+  if (schema === REPORT_SCHEMA) {
+    const identities = new Set<string>()
+    for (const [index, entry] of ((value as ContextReport).decisions ?? []).entries()) {
+      const at = `${path}.decisions[${index}]`
+      if (identities.has(entry.identity)) return `${at}.identity: duplicate decision identity`
+      identities.add(entry.identity)
+      const options = new Set<string>()
+      for (const [optionIndex, option] of entry.options.entries()) {
+        if (options.has(option.identity)) return `${at}.options[${optionIndex}].identity: duplicate option identity`
+        options.add(option.identity)
+      }
+      if (!options.has(entry.recommendation.option)) return `${at}.recommendation.option: absent option`
+    }
+  }
   if (schema.enum && !schema.enum.includes(value as string)) return `${path}: expected ${schema.enum.join(', ')}`
   return null
 }

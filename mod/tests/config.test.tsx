@@ -1,3 +1,4 @@
+import { decision } from './fixtures/decision'
 import { paneTree } from './pane-tree'
 import { describe, expect, test, mock } from 'claude-code/testing'
 import type { On } from 'claude-code'
@@ -75,6 +76,36 @@ describe('startup configuration', () => {
       viewport: { columns: 120, rows: 46, isFullscreen: true } })
     expect(JSON.stringify(await paneTree(ui))).toContain('Read the brief')
     expect(h.panes).toHaveLength(0)
+  })
+  test('resume, reopen and replacement honor section defaults while resetting decisions', async ($, on) => {
+    const h = host(on, undefined, { sections: { queue: { collapsed: false } } })
+    const start = () => $.session.start({ cwd: '/project', surface: 'terminal', isInteractive: true })
+    await start()
+    const report = { scope: 'Templates', decisions: [decision], sections: [
+      { label: 'Queue', verb: 'finished', item_kind: 'tasks', items: [{ title: 'Read the brief', state: 'done' }] },
+      { label: 'Epic', name: 'Public release', verb: 'closed', item_kind: 'tickets', items: [{ title: 'Review the report', state: 'queued' }] },
+    ] }
+    await $.tool.call({ tool: 'mcp__whatsup__report', ...report })
+    const ui = await $.ui.mount({ plugin: 'whatsup', surface: 'terminal', component: 'Pane', requestId: 'session-status',
+      props: { title: 'whatsup', bodyColumns: 80, isFocused: false, placement: 'dock', scroll: { offset: 0, bodyRows: 40 }, view: {} },
+      viewport: { columns: 120, rows: 46, isFullscreen: true } })
+    for (const transition of ['resume', 'reopen', 'replacement']) {
+      // Alter both section defaults and decision expansion before each transition.
+      await ui.press({ key: 'expand-section-0' })
+      await ui.press({ key: 'expand-section-1' })
+      await ui.press({ key: 'expand-decision-0' })
+      expect(await ui.find({ key: 'show-section-0-item-0' })).toBeUndefined()
+      expect(await ui.find({ key: 'show-section-1-item-0' })).toBeDefined()
+      expect(await ui.find({ key: 'hide-decision-0-context-0' })).toBeDefined()
+      if (transition === 'resume') await start()
+      else if (transition === 'reopen') await $.command.run({ command: 'whatsup', args: '', origin: { kind: 'composer' }, presentation: { isFullscreen: true, columns: 140 } })
+      else await $.tool.call({ tool: 'mcp__whatsup__report', ...report })
+      expect(await ui.find({ key: 'show-section-0-item-0' }), transition).toBeDefined()
+      expect(await ui.find({ key: 'show-section-1-item-0' }), transition).toBeUndefined()
+      expect(await ui.find({ key: 'hide-decision-0-context-0' }), transition).toBeUndefined()
+      expect(h.store.get('context-report:config-session')).toEqual(report)
+    }
+    await ui.unmount()
   })
   test('disabled instruction contributes no model context', async ($, on) => {
     host(on, undefined, { instruction: false })

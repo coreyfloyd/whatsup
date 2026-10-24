@@ -4,11 +4,58 @@ The plugin is named `whatsup`. At session start it registers exactly one model t
 
 ## Tool description
 
-Replace this session’s entire context report: scope text; optional ordered sections (label, name, verb, item_kind, description, items, fields); items (title, number, identity, link, queued/active/done state); optional workers (name, role, status, state, model, task, times and token usage). Minimum: {"scope":"What I am working on"}. Omitted sections and workers clear the previous lists. This is display state, not authorization.
+Replace this session’s entire context report: scope text; optional ordered sections (label, name, verb, item_kind, description, items, fields); items (title, number, identity, link, queued/active/done state); optional workers (name, role, status, state, model, task, times and token usage). Minimum: {"scope":"What I am working on"}. Omitted sections, workers and decisions clear the previous lists. Decisions require stable identity, question, why_now, answer-sufficient context, at least two options (identity, label, benefit, cost), and recommendation (option identity, reason). Retain outstanding decisions in every complete report; update missing context and remove only resolved or withdrawn decisions. Keep identities stable across unchanged reports; changed question, context, options or recommendation creates a new version. Validation checks structure and nonempty text, not prose truth or sufficiency. This is display state, not authorization.
+
+## Decision cards
+
+Optional ordered decisions appear after Session and before progress and workers. Each pending card uses a red accent and the text ANSWER NEEDED. Cards start collapsed; use the triangle to expand or collapse one card at a time. Questions and full context wrap and remain reachable through normal scrolling and More/Back navigation. Refreshing a report, reopening the pane or resuming a session collapses decisions. Reading and expansion send no input and grant no authorization. No option starts selected. Selecting an option changes only the selection;
+Clear selection removes it. Send answer appears only with a selection and submits
+the displayed decision identity, question and complete selected option (identity,
+label, benefit and cost) to this pane's own main conversation, retaining whatsup
+plugin provenance. There is no hidden execution payload. The expanded first card
+also supports d to expand/collapse, 1–9 for options, c to clear and s to send when
+the pane holds keyboard focus. Longer labels wrap into reachable action rows.
+Talk about this in chat (t) submits the displayed decision identity and question,
+never the selected option, to the same conversation as a discussion request; it
+neither answers nor resolves the decision. Discussion feedback is separate from
+answer receipts: Discussion requested — answer still needed after acceptance, which
+permits another request; Discussion not sent with a known refusal, which permits
+explicit retry; and Discussion unconfirmed otherwise, which blocks another
+discussion request across reopening and resume while selection and Send answer
+remain available.
+
+One attempt locks that answer against duplicate activation. Only the engine's
+matching accepted text with whatsup provenance produces Sent — awaiting agent;
+queue acceptance is distinct from processing and resolution. A known refusal
+shows its reason and permits explicit retry. Missing acceptance confirmation,
+transport exceptions or a 15-second wait produce Delivery unconfirmed. Its
+collapsed receipt retains the question and attempted answer, blocks editing and
+resubmission, and asks the user to check the main conversation and continue there
+manually. This recovery sends nothing. A late confirmed result updates that same
+attempt to Sent or known refusal. An interrupted in-flight attempt restores as
+unconfirmed, never as a fresh pending answer. Unsupported prompt submission
+explains unavailability and directs the user to the main conversation.
+
+Receipts are stored by immutable engine session and decision version. Unchanged
+complete reports, pane reopening and same-session resume retain Sent and
+unconfirmed receipts. A different session inherits none. Removing or omitting a
+decision clears its interaction state; a material revision starts collapsed and
+unselected, without the previous receipt. A stale card cannot submit after report
+replacement. The reporting agent alone removes resolved or withdrawn decisions;
+the pane does not infer resolution from model text or time.
+
+The pane provides session context with explicit user-input actions. Reporting,
+source enrichment, reading, expansion and selection remain display-only. Answer
+input never grants tool permissions, mutates tickets or bypasses authorization
+rules in the receiving session.
+
+Supply stable decision and option identities, a question, why_now, answer-sufficient context, two or more options with both benefit and cost, and a recommendation referencing an option identity with a reason. All decision text must be nonblank. Duplicate decision identities, duplicate option identities within a decision and absent recommended options reject the whole report before replacement. Errors identify the field; validation cannot judge truth or prose sufficiency. A changed question, why-now, context, ordered options or recommendation forms a new decision version. Object property order does not change the version.
+
+Every report completely replaces decisions: retain outstanding decisions, improve missing context, and remove resolved or withdrawn decisions. Omission clears the collection. Decisions have no hidden execution payload and do not affect progress counts or source enrichment.
 
 ## JSON input schema
 
-This is the schema passed to the engine verbatim. Property names use snake_case. Unknown properties are refused, including within sections, items and workers. Only scope is required at the report level. A section requires label, verb and item_kind; its omitted items list is empty. Workers require name, role, status and state. Custom fields are accepted and retained but not rendered in this release.
+This is the schema passed to the engine verbatim. Property names use snake_case. Unknown properties are refused, including within decisions, options, recommendations, sections, items and workers. Only scope is required at the report level. A section requires label, verb and item_kind; its omitted items list is empty. Workers require name, role, status and state. Custom fields are accepted and retained but not rendered in this release.
 
 ```json
 {
@@ -21,6 +68,99 @@ This is the schema passed to the engine verbatim. Property names use snake_case.
     "scope": {
       "type": "string",
       "description": "One line describing what this session is working on."
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "identity",
+          "question",
+          "why_now",
+          "context",
+          "options",
+          "recommendation"
+        ],
+        "properties": {
+          "identity": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "question": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "why_now": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "context": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "options": {
+            "type": "array",
+            "minItems": 2,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "identity",
+                "label",
+                "benefit",
+                "cost"
+              ],
+              "properties": {
+                "identity": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S"
+                },
+                "label": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S"
+                },
+                "benefit": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S"
+                },
+                "cost": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S"
+                }
+              }
+            }
+          },
+          "recommendation": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "option",
+              "reason"
+            ],
+            "properties": {
+              "option": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              }
+            }
+          }
+        }
+      }
     },
     "sections": {
       "type": "array",
@@ -233,7 +373,7 @@ This is the schema passed to the engine verbatim. Property names use snake_case.
 
 ## Replacement and isolation
 
-Each accepted call replaces the entire report under the sending engine session's immutable identity in the plugin store. An omitted sections or workers list clears the previous one. Validation happens before persistence; refusal names the nested field (for example, `report.sections[0].items[0].state`) and leaves the previous report and pane unchanged. Reports never write to the working directory, run GitHub mutations, or grant work authorization. Session identity is read from the engine, never accepted from the caller. A new session starts with no report; resuming the same session can recover its stored report.
+Each accepted call replaces the entire report under the sending engine session's immutable identity in the plugin store. Omitted sections, workers or decisions clear their previous lists. Validation happens before persistence; refusal names the nested field (for example, `report.sections[0].items[0].state`) and leaves the previous report and pane unchanged. Reports never write to the working directory, run GitHub mutations, or grant work authorization. Session identity is read from the engine, never accepted from the caller. A new session starts with no report; resuming the same session can recover its stored report.
 
 The minimum call is:
 
@@ -241,7 +381,7 @@ The minimum call is:
 {"scope":"Build the public release"}
 ```
 
-Sections have no fixed names or hierarchy. The count badge reads `done/total verb`; done and active counts are derived only from the supplied items, and the remaining stretch represents queued items. A section with no items retains its box, title, description and item-kind heading while hiding its badge and bar. Markers expand and collapse descriptions and item lists. Section names and item rows open floating cards, one at a time; the same target or any other pane space dismisses the card. Links open only through the card's `open ↗` action. Text-only items have cards without that action. A replacement report clears the prior expansion and card state.
+Sections have no fixed names or hierarchy. The count badge reads `done/total verb`; done and active counts are derived only from the supplied items, and the remaining stretch represents queued items. A section with no name, description or items renders no box, regardless of what the agent sends. A section with a name or description but no items retains its box, title, description and item-kind heading while hiding its badge and bar. Markers expand and collapse descriptions and item lists. Section names and item rows open floating cards, one at a time; the same target or any other pane space dismisses the card. Links open only through the card's `open ↗` action. Text-only items have cards without that action. A replacement report clears the prior expansion and card state.
 
 Optional section identity and link let a section name carry its own destination. Item number is a positive integer; identities remain opaque strings. Worker times are strings, tokens is an ordered per-minute series of nonnegative integer counts, and total is a nonnegative integer. Workers may supply `context: {tokens, window}` for their own gauge; the window must be positive. When only a token series is provided, its sum supplies the total. Templates guide reporting; engine session facts and GitHub enrichment are observed independently.
 
@@ -300,7 +440,7 @@ Malformed JSON, unknown fields or template names, wrong types, invalid density, 
 
 At session start, the plugin registers the tool and commands and stores the resolved template under `template-config:<session-id>` in the plugin store. This is the display preference seam for the session box, worker and pane renderers; it is separate from `context-report:<session-id>`, which holds the report. It contains the resolved fields above.
 
-The first model context receives one `whatsup` block of fewer than 120 words. It names the active sections in order with their labels, verbs, item kinds and description policy; requests scope, section fields and item title/state plus known identities and links; requests a complete replacement when work starts, changes or finishes; and requests workers launched by any means. `instruction: false` adds no block and leaves the report tool and `/whatsup` available. On organization-managed Claude installations, the engine permits this context hook only for plugins listed by that organization in managed settings.
+The first model context receives one `whatsup` block of fewer than 120 words. It names the active sections in order with their labels, verbs, item kinds and description policy; requests scope, section fields and item title/state plus known identities and links; requests a complete replacement when a task starts or finishes, the scope shifts, or a ticket, milestone or decision is created; and requests workers launched by any means. It requires retaining outstanding decisions with answer-sufficient context, tradeoffs and recommendation, stable identities, updating discussion context, and removal after resolution (including custom chat answers) or withdrawal; the tool description supplies the complete contract. When the configured section order includes a queue, it describes the queue as the session's running work log: every piece of work in order, including unticketed and newly discovered work. Work waiting on a dependency moves to queued behind that dependency. `instruction: false` adds no block and leaves the report tool and `/whatsup` available. On organization-managed Claude installations, the engine permits this context hook only for plugins listed by that organization in managed settings.
 
 Sections are reporting guidance, not required report fields: the tool still accepts scope alone and any ordered list of sections. A reported label matching a template section uses its configured initial collapsed state on replacement and reopening. Subsequent user expansion is local display state. Templates do not manufacture counts, scope or work items.
 

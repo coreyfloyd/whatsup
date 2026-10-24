@@ -1,7 +1,7 @@
 # whatsup
 
 A Claude Code pane showing what your agent session is doing: its scope, progress
-sections, session usage and environment, and the activity of its workers.
+sections, pending decisions, session usage and environment, and the activity of its workers.
 
 ![Chosen pane design with illustrative data](docs/images/whatsup.png)
 
@@ -38,6 +38,28 @@ active or done states; the pane derives each section's counts. A new session
 starts empty. Reports describe work; they grant no permission to do it.
 The `github`, `task-list` and `bare` templates guide reporting. An optional
 `.whatsup.json` at the repository root overrides the defaults.
+
+Expanded decision cards let you select, change or clear an option before explicitly
+choosing **Send answer**. The answer enters this same conversation as input from
+the whatsup plugin. **Sent — awaiting agent** confirms submission acceptance,
+including queueing during a busy turn; it does not mean the agent has processed or
+resolved the decision. Receipts survive reopening and same-session resume. An
+unconfirmed receipt stays locked: check the conversation and continue there
+manually. Known refusal allows an explicit retry. Engines without input support
+explain that you should answer in the conversation.
+
+**Talk about this in chat** requests explanation or discussion of that question
+without sending your selected option or resolving the decision. You can challenge
+the options or type a custom answer in the main conversation. Discussion feedback
+is separate from answer receipts. Unconfirmed discussion blocks another discussion
+request across reopening and same-session resume, while option selection and
+**Send answer** remain available. Continue manually in chat if delivery is uncertain.
+The agent updates missing context and removes a decision from its next complete
+report once resolved (including a custom chat answer) or withdrawn.
+
+Reports and source enrichment supply display context. Only explicit input actions
+send a message; they do not mutate tickets, grant tool permissions or bypass the
+receiving session's authorization rules.
 
 ## Architecture
 

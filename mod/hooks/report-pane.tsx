@@ -1,9 +1,10 @@
+import { answerStates, discussDecision, inputUnavailableKey, selectAnswer, sendAnswer } from './decision-input'
 import { CHOSEN } from './chosen-style'
 import { atom, read, update } from 'claude-code'
 import type { On, SessionUsage } from 'claude-code'
 import { placeCard, OPEN_LABEL, clip } from './layout'
 import { reportLines } from './report-layout'
-import { reportKey } from './report'
+import { decisionVersion, reportKey } from './report'
 import { enrichmentKey } from './enrichment'
 import type { EnrichedSnapshot } from './enrichment'
 import type { ContextReport } from './report'
@@ -13,7 +14,7 @@ import { paneWorkers, reducedMotion, workerLines } from './workers'
 import { configKey } from './templates'
 import type { Template } from './templates'
 
-export type ReportView = { shown: string | null; expanded: number[] }
+export type ReportView = { shown: string | null; expanded: number[]; decision?: string | null }
 export const reportViews = atom({ plugin: 'whatsup', key: 'reportViews' } as const, {} as Record<string, ReportView>)
 
 export function registerReportPane(on: On, recorded: boolean) {
@@ -42,14 +43,19 @@ export function registerReportPane(on: On, recorded: boolean) {
     let usage: SessionUsage | undefined
     try { usage = await $.session.usage() } catch { /* Unknown measurements render as unavailable. */ }
     const sessionBox = sessionRows(report?.scope ?? 'No scope yet', session, facts ?? { started: now, folder: await $.session.cwd() }, usage, now, columns, config?.session.density ?? 'compact', current?.off_reason)
-    const lines = [...reportLines(current?.report ?? report, columns, view.expanded, undefined, config).filter(line => line.key !== 'scope'), ...workerLines(await paneWorkers($, now), columns, now, config?.motion === false || await reducedMotion($), config?.status_emoji)]
+    const lines = [...reportLines(current?.report ?? report, columns, view.expanded, undefined, config, view.decision, await answerStates($, session), !await $.store.get(inputUnavailableKey(session))).filter(line => line.key !== 'scope'), ...workerLines(await paneWorkers($, now), columns, now, config?.motion === false || await reducedMotion($), config?.status_emoji)]
     const rowKeys = ['hide-session-top', 'hide-session-top-space', ...sessionBox.map(row => `session-row-${row.key}`), 'hide-session-bottom',
-      ...lines.map(line => line.item ? `line-${line.key}` : `hide-${line.key}`)]
+      ...lines.map(line => (line.item || line.decision || line.action) ? `line-${line.key}` : `hide-${line.key}`)]
     const overflowing = rows > 1 && rowKeys.length > rows
     const change = (next: (current: ReportView) => ReportView) => update($, reportViews, all => ({ ...all, [session]: next(all[session] ?? { shown: null, expanded: [] }) }))
     const hide = () => change(current => ({ ...current, shown: null }))
     const show = (key: string) => change(current => ({ ...current, shown: current.shown === key ? null : key }))
     const expand = (index: number) => change(current => ({ shown: null, expanded: current.expanded.includes(index) ? current.expanded.filter(n => n !== index) : [...current.expanded, index] }))
+    const expandDecision = async (identity: string, version: string) => {
+      const latest = await $.store.get(reportKey(session)) as ContextReport | undefined
+      if (!latest?.decisions?.some(decision => decision.identity === identity && decisionVersion(decision) === version)) return
+      await change(current => ({ ...current, shown: null, decision: current.decision === version ? null : version }))
+    }
     const quiet = (key: string, parts: { text: string; color?: string; backgroundColor?: string; dimColor?: boolean; bold?: boolean; underline?: boolean }[]) => <Client key={key} module="./dismiss.tsx" width={parts.reduce((n, p) => n + cells(p.text), 0)} height={1} props={{ parts: parts.map(part => Object.fromEntries(Object.entries(part).filter(([, value]) => value !== undefined))) }} />
     const blank = (key: string, text: string, unavailable = false, color = CHOSEN.text, backgroundColor?: string) => quiet(key, [{ text, dimColor: unavailable, color: unavailable ? CHOSEN.grey : color, ...(backgroundColor ? { backgroundColor } : {}) }])
     const shownRow = lines.findIndex(line => line.item?.key === view.shown)
@@ -135,6 +141,22 @@ export function registerReportPane(on: On, recorded: boolean) {
           const [before, after] = line.suffix!.split(`[${line.badge}]`)
           return [edge(before!), { text: ` ${line.badge} `, backgroundColor: line.unavailable || line.dim ? '#3a3a3a' : color, color: line.unavailable || line.dim ? CHOSEN.grey : CHOSEN.ink, dimColor, bold: true }, edge(after!)]
         }
+        if (line.action) {
+          const a = line.action
+          const base = a.kind === 'select' ? `select-decision-${line.key.split('-')[1]}-${line.key.split('-')[3]}` : `${a.kind}-decision-${line.key.split('-')[1]}`
+          const key = actionKeys.has(base) ? `${base}-${line.key}` : base
+          actionKeys.add(base)
+          return <Box key={`line-${line.key}`} flexDirection="row">
+            {quiet(`hide-${line.key}-before`, [edge(line.prefix ?? '')])}
+            <Button key={key} label={line.parts.map(p => p.text).join('')} plain hotkey={a.hotkey} onPress={() => a.kind === 'discuss' ? discussDecision($, session, a.identity, a.version) : a.kind === 'send' ? sendAnswer($, session, a.identity, a.version, a.option!) : selectAnswer($, session, a.identity, a.version, a.kind === 'clear' ? undefined : a.option)}>{parts.map(({ text, ...style }, i) => <Text key={String(i)} {...style}>{text}</Text>)}</Button>
+            {quiet(`hide-${line.key}-rest`, suffix())}
+          </Box>
+        }
+        if (line.decision) return <Box key={`line-${line.key}`} flexDirection="row">
+          {quiet(`hide-${line.key}-before`, [edge(line.prefix ?? '')])}
+          <Button key={`expand-${line.key}`} label={line.parts.map(p => p.text).join('')} plain hotkey={line.decision.hotkey} onPress={() => expandDecision(line.decision!.identity, line.decision!.version)}>{parts.map(({ text, ...style }, i) => <Text key={String(i)} {...style}>{text}</Text>)}</Button>
+          {quiet(`hide-${line.key}-rest`, suffix())}
+        </Box>
         if (line.item) return <Box key={`line-${line.key}`} flexDirection="row">
           {line.prefix && quiet(`hide-${line.key}-before`, [edge(line.prefix)])}
           {line.expand !== undefined && <Button key={`expand-${line.key}`} label={line.marker!} plain onPress={() => expand(line.expand!)}><Text dimColor={dimColor} color={color}>{line.marker}</Text></Button>}

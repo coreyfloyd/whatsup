@@ -60,9 +60,12 @@ export function sessionInstruction(config: Template): string {
     return { label, verb, item_kind }
   })
   const descriptions = config.section_order.filter(key => config.sections[key].description).map(key => config.sections[key].label)
-  const instruction = `When asked to "report your context", or when work starts, changes or finishes, call mcp__whatsup__report. Replace the whole report: scope; optional sections and workers. For sections, copy verbatim these exact label, verb and item_kind values in order, preserving case and plurals:
+  const queueInstruction = config.section_order.includes('queue')
+    ? ` Queue is the session's running work log: every piece of work in order, including unticketed and newly discovered work; move waiting work to queued behind its dependency.`
+    : ''
+  const instruction = `mcp__whatsup__report: "report your context"; task starts/finishes, scope shifts, ticket, milestone or decision is created. Replace scope/sections/workers/decisions. Sections: copy verbatim label/verb/item_kind:
 ${JSON.stringify(sections)}
-Include descriptions for labels ${JSON.stringify(descriptions)}. Each section may add name and items (title, state queued/active/done; number, identity, link when known). Report workers launched by any means: name, role, status, state; model and task when known. Report only known work; omit unavailable sections. Reports are display state.`
+Descriptions: ${JSON.stringify(descriptions)}. Section name/items: title/state queued/active/done/number/identity/link. Workers (any means): name/role/status/state/model/task. Retain outstanding decisions: answer-sufficient context/tradeoffs/recommendation, stable identities; update discussion context; remove resolved/withdrawn, including chat answers. Details: tool description.${queueInstruction} Display state only.`
   // Arbitrary user labels must never produce an over-budget startup instruction.
   if (instruction.split(/\s+/).length >= 120) throw new Error('config: reporting instruction must stay under 120 words; shorten section labels or reduce sections')
   return instruction
