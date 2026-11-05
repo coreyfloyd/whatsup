@@ -101,7 +101,8 @@ export function reportLines(report: EnrichedReport | null, columns: number, expa
     const definition = definitionKey ? config.sections[definitionKey] : undefined
     const style = SECTION_STYLES[index % SECTION_STYLES.length]!
     const inner = Math.max(1, columns - 4)
-    const failure = section.enrichment?.state === 'unavailable' ? section.enrichment.reason : (section.items ?? []).find(item => item.enrichment?.state === 'unavailable')?.enrichment?.reason
+    // Only a section-level failure replaces the badge and bar; an unavailable item marks its own row.
+    const failure = section.enrichment?.state === 'unavailable' ? section.enrichment.reason : undefined
     const failed = failure !== undefined
     const { done, active, total, percent } = sectionCounts(section)
     const badge = failed ? "⚠️ Couldn't load" : total ? clip(`${done}/${total}` + (columns >= 56 ? ` ${section.item_kind} ${section.verb}` : ''), Math.max(1, columns - 16)) : ''

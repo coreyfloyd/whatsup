@@ -14,6 +14,13 @@
     "changes": "Selected canonical project fields only; session identity replaced with a neutral stand-in."
   },
   {
+    "file": "pull-request-capture.json",
+    "kind": "capture",
+    "source": "Sanitized GitHub REST capture: issues-endpoint response for a merged pull request (GET /repos/{owner}/{repo}/issues/{n}).",
+    "captured_at": "2026-11-05T06:18:33.911995+00:00",
+    "changes": "Owner, repository and URLs replaced with example/project stand-ins; title and body prose replaced; number, state, state_reason, labels, milestone, draft, timestamps and pull_request.merged_at retained. Replay data, not live example repository facts."
+  },
+  {
     "file": "baseline.json",
     "kind": "derived",
     "parent": "github-capture.json",

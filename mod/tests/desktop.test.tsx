@@ -180,6 +180,17 @@ describe('Desktop native pane', () => {
     await ui.unmount()
   })
 
+  test('native text shows a long scope once, unclipped, without the terminal continuation rows', async ($, on) => {
+    host(on); await start($)
+    const scope = 'Plan and ship the review page kit color restore, then deploy the new planning release to every machine'
+    await report($, { scope })
+    const ui = await mount($, 'desktop', 40)
+    const output = await drawn(ui)
+    expect(output.split(scope).length).toBe(2)
+    expect(nodes(await paneTree(ui)).some(n => /^session-row-scope-\d+$/.test(String(n.props?.key ?? '')))).toBe(false)
+    await ui.unmount()
+  })
+
   test('native actions remain usable after remounting an unchanged pane', async ($, on) => {
     const h = host(on); await start($)
     await report($, { scope: 'Public release' })

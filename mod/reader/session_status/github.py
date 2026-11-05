@@ -76,7 +76,8 @@ class GitHubReader:
     @staticmethod
     def _identity(record):
         url = record.get('html_url', '')
-        match = re.fullmatch(r'https://github.com/([^/]+/[^/]+)/issues/([1-9][0-9]*)', url)
+        # The issues endpoint also returns pull requests, whose page is under /pull/.
+        match = re.fullmatch(r'https://github.com/([^/]+/[^/]+)/(?:issues|pull)/([1-9][0-9]*)', url)
         if not match: raise Unavailable('corrupt')
         return match[1] + '#' + match[2]
 
@@ -94,8 +95,13 @@ class GitHubReader:
             if source == 'issues' and kind == '#':
                 raw, _ = self.request(issue)
                 if self._identity(raw) != identity: raise Unavailable('corrupt')
-                value = {'id': identity, 'title': raw['title'], 'body': raw.get('body'),
-                    'state': raw['state'], 'url': raw.get('html_url'),
+                pull = raw.get('pull_request')
+                if pull is not None and not isinstance(pull, dict): raise Unavailable('corrupt')
+                # A merged pull request is closed whatever state the issues endpoint reports.
+                state = 'closed' if pull and pull.get('merged_at') else raw['state']
+                value = {'id': identity, 'kind': 'pull_request' if pull else 'issue',
+                    'title': raw['title'], 'body': raw.get('body'),
+                    'state': state, 'url': raw.get('html_url'),
                     'labels': [label['name'] for label in raw['labels']],
                     'milestone': repo + '@milestone/' + str(raw['milestone']['number']) if raw.get('milestone') else None}
             elif source in {'children','blockers'} and kind == '#':

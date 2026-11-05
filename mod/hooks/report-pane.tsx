@@ -194,7 +194,8 @@ export function registerReportPane(on: On, recorded: boolean) {
       const tree = <Box flexDirection="column" width="100%" minHeight={rows} paddingBottom={1} gap={1}>
         <Box key="desktop-session" flexDirection="column" borderStyle="single" borderColor={CHOSEN.session} backgroundColor={CHOSEN.sessionTint} paddingX={1}>
           {nativeText('desktop-session-title', 'Session', CHOSEN.session, false, true)}
-          {sessionBox.map(row => <Box key={`session-row-${row.key}`} flexDirection="row" flexWrap="wrap" gap={1}>
+          {/* Native text wraps the full scope itself, so the terminal's continuation rows are not repeated. */}
+          {sessionBox.filter(row => !/^scope-\d+$/.test(row.key)).map(row => <Box key={`session-row-${row.key}`} flexDirection="row" flexWrap="wrap" gap={1}>
             {row.parts.map((part, i) => {
               if (!part.action) return nativeText(`hide-session-${row.key}-${i}`, row.key === 'scope' ? report?.scope ?? 'No scope yet' : part.text, CHOSEN.text, row.dim)
               const base = `session-${part.action}`

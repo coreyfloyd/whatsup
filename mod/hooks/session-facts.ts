@@ -1,4 +1,5 @@
 import type { CoreEngineInterface, On, SessionUsage, Timer } from 'claude-code'
+import { wrap } from './layout'
 
 export type SessionFacts = {
   started: number; folder: string; branch?: string; worktree?: string;
@@ -75,6 +76,7 @@ export function fit(text: string, width: number) {
   }
   return result
 }
+export const SCOPE_ROWS = 3
 export function sessionRows(scope: string, id: string, facts: SessionFacts, usage: SessionUsage | undefined, now: number, columns: number, density: 'compact' | 'full', offReason?: string | null): SessionRow[] {
   if (!Number.isFinite(columns) || columns < 6) return []
   const width = columns - 4, rows: SessionRow[] = []
@@ -82,8 +84,10 @@ export function sessionRows(scope: string, id: string, facts: SessionFacts, usag
   const minutes = Math.max(0, Math.floor((now - facts.started) / 60000))
   const elapsed = minutes >= 60 ? `${Math.floor(minutes / 60)}h ${minutes % 60}m` : `${minutes}m`
   const five = usage?.rateLimits.find(r => r.kind === 'five_hour'), week = usage?.rateLimits.find(r => r.kind === 'seven_day')
-  const fittedScope = fit(scope, width)
-  add('scope', fittedScope.length < scope.length ? fit(scope, width - 1) + '…' : fittedScope)
+  // Scope wraps on word boundaries to at most three rows; only text left after the third ends it with an ellipsis.
+  const scopeRows = wrap(scope.replace(/[\r\n\t\x00-\x1f\x7f]/g, ' ').trim(), width, false)
+  if (scopeRows.length > SCOPE_ROWS) scopeRows.splice(SCOPE_ROWS - 1, Infinity, fit(scopeRows[SCOPE_ROWS - 1]!, width - 1).trimEnd() + '…')
+  scopeRows.forEach((text, index) => add(index ? `scope-${index}` : 'scope', text))
   const wide = columns >= 56
   const reset = (at: string | undefined) => {
     if (!at || !Number.isFinite(Date.parse(at))) return '—'

@@ -52,11 +52,23 @@ closed. Reported active state overrides an enriched closed issue; otherwise a
 closed issue becomes done. Reported done is retained. Unknown identity formats
 and text-only items remain useful without enrichment.
 
+An `owner/repo#n` identity may name an issue or a pull request; the enriched
+record carries which (`kind`: `issue` or `pull_request`). A merged pull request
+counts as closed, and a pull request otherwise follows its issue state.
+Milestone membership still counts issues only.
+
 ## Failures and destinations
 
 Absent credentials preserve the report and show enrichment off. Partial,
 unsupported, failed or corrupt reads make affected entities unavailable with a
-fixed reason and no misleading count. Errors stay local; exception text and
+fixed reason and no misleading count. A section counted from its reported
+items keeps its counts when an item is unavailable: that item counts by its
+reported state and only it is marked unavailable; the pane keeps the
+section's badge and bar and shows the warning on that row alone. A section
+counted from a membership identity becomes unavailable when any member read
+fails, since its total would mislead. When the whole read fails, every section
+holding a GitHub identity, its own or an item's, is unavailable. Only a
+section-level failure replaces the badge and bar. Errors stay local; exception text and
 credentials are never included. Adapters must read complete membership across
 all pages before publishing a total.
 

@@ -36,15 +36,47 @@ function text(n: any): string { return typeof n === 'string' ? n : (n?.children 
 function nodes(n: any): Node[] { return !n || typeof n !== 'object' ? [] : [n, ...(n.children ?? []).flatMap(nodes)] }
 
 describe('live session box', () => {
-  test('scope truncation reserves an ellipsis, including one character over the box width', () => {
-    const scope = 'Public release of Session Status (whatsup plugin): milestone 2, epic #9, 8 of 10 milestone issues closed'
-    for (const density of ['compact', 'full'] as const) for (let columns = 6; columns <= scope.length + 5; columns++) {
-      const width = columns - 4
-      const row = sessionRows(scope, 'report-session', { started: 0, folder }, undefined, 0, columns, density)
-        .find(row => row.key === 'scope')!
-      const shown = row.parts.map(part => part.text).join('')
-      expect(shown).toBe(scope.length > width ? scope.slice(0, width - 1) + '…' : scope)
-      expect(cells(shown) <= width).toBe(true)
+  const scopeLines = (scope: string, columns: number, density: 'compact' | 'full' = 'compact') =>
+    sessionRows(scope, 'report-session', { started: 0, folder }, undefined, 0, columns, density)
+      .filter(row => /^scope(-\d+)?$/.test(row.key)).map(row => row.parts.map(part => part.text).join(''))
+  const sketch = 'Plan and ship the review page kit color restore, then deploy the new planning release to every machine'
+  const overflow = sketch + ', then retire the old pane and publish the release notes for every team'
+  test('scope wraps on word boundaries across one, two and three rows at narrow and wide widths', () => {
+    expect(scopeLines('Fill the session box', 40)).toEqual(['Fill the session box'])
+    expect(scopeLines('Fill the session box', 80)).toEqual(['Fill the session box'])
+    expect(scopeLines('Plan and ship the review page kit color restore', 40)).toEqual(['Plan and ship the review page kit', 'color restore'])
+    expect(scopeLines('Plan and ship the review page kit color restore', 80)).toEqual(['Plan and ship the review page kit color restore'])
+    expect(scopeLines(sketch, 44)).toEqual(['Plan and ship the review page kit color', 'restore, then deploy the new planning', 'release to every machine'])
+    expect(scopeLines(sketch, 40)).toEqual(['Plan and ship the review page kit', 'color restore, then deploy the new', 'planning release to every machine'])
+    expect(scopeLines(sketch, 80)).toEqual(['Plan and ship the review page kit color restore, then deploy the new', 'planning release to every machine'])
+    const keys = sessionRows(sketch, 'report-session', { started: 0, folder }, undefined, 0, 40, 'compact').map(row => row.key)
+    expect(keys.slice(0, 4)).toEqual(['scope', 'scope-1', 'scope-2', 'usage'])
+  })
+  test('only scope remaining after the third row ends that row with an ellipsis', () => {
+    expect(scopeLines(overflow, 40)).toEqual(['Plan and ship the review page kit', 'color restore, then deploy the new', 'planning release to every machine,…'])
+    expect(scopeLines(overflow, 80)).toEqual(['Plan and ship the review page kit color restore, then deploy the new', 'planning release to every machine, then retire the old pane and publish the', 'release notes for every team'])
+    const wide = scopeLines(overflow + ' and close the epic after the final deploy is verified on each machine', 80)
+    expect(wide.length).toBe(3)
+    expect(wide[2]!.endsWith('…')).toBe(true)
+    expect(cells(wide[2]!)).toBeLessThan(77)
+    // A full third row gives up its last cell to the ellipsis.
+    expect(scopeLines('aaaa bbbb cccc dddd', 8)).toEqual(['aaaa', 'bbbb', 'ccc…'])
+  })
+  test('emoji take two cells and a word wider than the box hard-breaks', () => {
+    expect(scopeLines('🚀 Ship the release', 14)).toEqual(['🚀 Ship', 'the', 'release'])
+    expect(scopeLines('🚀 Ship the release 🎉 now', 14)).toEqual(['🚀 Ship', 'the', 'release…'])
+    expect(scopeLines('🚀 Ship the release 🎉 now', 80)).toEqual(['🚀 Ship the release 🎉 now'])
+    expect(scopeLines('Supercalifragilistic word', 14)).toEqual(['Supercalif', 'ragilistic', 'word'])
+  })
+  test('every scope row fits the box at every width and keeps the scope text in order', () => {
+    for (const scope of [overflow, '🚀 ' + sketch + ' 🎉', 'line\nbreaks\tand tabs']) for (const density of ['compact', 'full'] as const) for (let columns = 6; columns <= 120; columns++) {
+      const lines = scopeLines(scope, columns, density)
+      expect(lines.length >= 1 && lines.length <= 3).toBe(true)
+      for (const line of lines) expect(cells(line) <= columns - 4).toBe(true)
+      const words = scope.split(/\s+/).join('')
+      const shown = lines.join('').replace(/…$/, '')
+      expect(words.startsWith(shown.replace(/\s+/g, ''))).toBe(true)
+      expect(lines[lines.length - 1]!.endsWith('…')).toBe(shown.replace(/\s+/g, '') !== words)
     }
   })
 
@@ -111,6 +143,19 @@ describe('live session box', () => {
       expect(cells(row.parts.map(part => part.text).join('')) <= 76).toBe(true)
       for (const part of row.parts.filter(part => part.action === 'open-folder')) expect(part.target).toBe(path)
     }
+  })
+
+  test('the terminal box draws a wrapped scope as bordered rows in order', async ($, on) => {
+    host(on, undefined, false, false)
+    await $.session.start({ cwd: folder, surface: 'terminal', isInteractive: true })
+    await $.tool.call({ tool: 'mcp__whatsup__report', ...{ scope: sketch } })
+    const ui = await $.ui.mount({ plugin: 'whatsup', surface: 'terminal', component: 'Pane', requestId: 'session-status',
+      props: { title: 'whatsup', bodyColumns: 44, isFocused: false, placement: 'dock', scroll: { offset: 0, bodyRows: 40 }, view: {} },
+      viewport: { columns: 84, rows: 46, isFullscreen: true } })
+    const tree = await paneTree(ui)
+    const drawn = ['scope', 'scope-1', 'scope-2'].map(key => nodes(tree).find(n => n.props?.key === `session-row-${key}`)!)
+    expect(drawn.map(row => text(row).slice(2, -2).trim())).toEqual(['Plan and ship the review page kit color', 'restore, then deploy the new planning', 'release to every machine'])
+    for (const row of drawn) expect(cells(text(row))).toBe(44)
   })
 
   test('no report still draws the session box and default compact density', async ($, on) => {

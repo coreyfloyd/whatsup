@@ -8,7 +8,7 @@ import { cells, fit as terminalFit } from './session-facts'
 import type { ReportLine } from './report-layout'
 import type { Part } from './layout'
 
-export type LiveWorker = Omit<Worker, 'tokens' | 'context'> & { id?: string; started: number; changed: number; minutes: Record<number, number>; context?: { tokens: number; window?: number }; inFlight?: boolean }
+export type LiveWorker = Omit<Worker, 'tokens' | 'context'> & { id?: string; started: number; changed: number; minutes: Record<number, number>; context?: { tokens: number; window?: number }; inFlight?: boolean; listed?: string }
 type WorkerStore = { observed: LiveWorker[]; merged: LiveWorker[] }
 export const workersKey = (session: string) => `workers:${session}`
 const terminal = (w: Pick<Worker, 'state'>) => w.state === 'done' || w.state === 'failed'
@@ -135,8 +135,17 @@ export async function paneWorkers($: CoreEngineInterface, now: number): Promise<
     if (usage?.context.tokens !== undefined) main.context = { tokens: usage.context.tokens, window: usage.context.window }
     for (const agent of agents) {
       let w = data.observed.find(w => w.id === agent.id)
+      // Only a running agent is adopted unseen: the engine keeps the previous conversation's agents listed after /clear.
+      if (!w && agent.status !== 'running') continue
       if (!w) { w = { id: agent.id, name: agent.name ?? agent.id, role: agent.type, task: agent.description, status: 'generating', state: 'running', started: time, changed: time, minutes: {}, source: 'observed' }; data.observed.push(w) }
-      const state = agent.status === 'completed' ? 'done' : ['failed', 'killed'].includes(agent.status) ? 'failed' : agent.status === 'running' ? 'running' : 'waiting'
+      // The list can lag streamed events, so only a change in its status is news; an unchanged status keeps what events recorded.
+      const seen = w.listed
+      w.listed = agent.status
+      if (seen === agent.status) continue
+      const listed = agent.status === 'completed' ? 'done' : ['failed', 'killed'].includes(agent.status) ? 'failed' : agent.status === 'running' ? 'running' : 'waiting'
+      // A terminal state moves only to the list's own terminal state; turn.step reopens it when the agent runs again.
+      // A request in flight is running whatever the list says, unless the list reports it ended.
+      const state = (terminal(w) || w.inFlight) && !terminal({ state: listed }) ? w.state : listed
       if (w.state !== state) { w.state = state; w.changed = time; w.status = state === 'running' ? 'generating' : state }
     }
     // A measured model window is reusable only for the same resolved model id.

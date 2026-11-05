@@ -91,6 +91,8 @@ class Observation:
         value = self.get('issues', identity, evidence)
         if not isinstance(value, dict) or value.get('id') != identity or value.get('state') not in {'open','closed'}:
             raise Unavailable('corrupt')
+        if value.get('kind', 'issue') not in {'issue', 'pull_request'}:
+            raise Unavailable('corrupt')
         text_field(value, 'title')
         milestone = value.get('milestone')
         if milestone is not None and (not isinstance(milestone, str) or not MILESTONE_ID.fullmatch(milestone)):
@@ -176,7 +178,7 @@ def enrich_report(report: dict, readers: SourceReader | Callable | None, *, issu
                 labels = raw.get('labels')
                 if not isinstance(labels, list) or any(not isinstance(label, str) for label in labels):
                     raise Unavailable('corrupt')
-                return {'title': raw['title'], 'status': raw['state'], 'labels': labels,
+                return {'title': raw['title'], 'kind': raw.get('kind', 'issue'), 'status': raw['state'], 'labels': labels,
                         'blockers': observation.blockers(identity, evidence), 'page': source_page(raw.get('url'))}
             raw = observation.get('milestones', identity, evidence)
             if raw.get('id') != identity or raw.get('state') not in {'open','closed'}:
@@ -222,9 +224,8 @@ def enrich_report(report: dict, readers: SourceReader | Callable | None, *, issu
                     members = observation.epic_members(identity, evidence)
                 closed = sum(observation.issue(key, evidence)['state'] == 'closed' and key not in active for key in members)
                 return {'done': closed, 'active': len(set(members) & active), 'total': len(members)}
+            # An unavailable item keeps its reported state; only that item is marked.
             items = group.get('items', [])
-            if any(item.get('enrichment', {}).get('state') == 'unavailable' for item in items):
-                raise Unavailable('failed')
             return {'done': sum(item['state'] == 'done' for item in items),
                     'active': sum(item['state'] == 'active' for item in items), 'total': len(items)}
         counted = observation.attempt(evidence, count)

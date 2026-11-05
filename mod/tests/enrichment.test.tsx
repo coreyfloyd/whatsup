@@ -97,16 +97,32 @@ describe('GitHub reader bridge', () => {
     await open($)
     expect(JSON.parse(h.calls[0].init.stdin).issue_kinds).toEqual(['work items'])
   })
-  test('unavailable items suppress section zero counts and render grey warning and reason', () => {
-    const report: any = structuredClone(reported)
-    report.sections[0].items[0].enrichment = { state: 'unavailable', reason: 'partial' }
+  test('an unavailable item keeps section badge and bar; only its row is marked', () => {
+    // Derived display fixture: github-capture.json issues 3 and 4 and pull-request-capture.json #109,
+    // shaped as the reader returns them when issue 4 fails (tests/test_github.py reported-state case).
+    const page = (path: string) => 'https://github.com/example/project/' + path
+    const report: any = { scope: 'work', sections: [{ label: 'Queue', verb: 'finished', item_kind: 'tickets', counts: { done: 1, active: 1, total: 3 }, items: [
+      { identity: 'example/project#3', title: 'Build read module header and progress bars', state: 'active', number: 3, link: page('issues/3'),
+        enrichment: { state: 'present', value: { title: 'Build read module header and progress bars', kind: 'issue', status: 'open', labels: [], blockers: [], page: page('issues/3') } } },
+      { identity: 'example/project#4', title: 'old', state: 'queued', enrichment: { state: 'unavailable', reason: 'failed' } },
+      { identity: 'example/project#109', title: 'Add area tables to the context glossary', state: 'done', number: 109, link: page('pull/109'),
+        enrichment: { state: 'present', value: { title: 'Add area tables to the context glossary', kind: 'pull_request', status: 'closed', labels: [], blockers: [], page: page('pull/109') } } },
+    ] }] }
     const lines = reportLines(report, 80, [0])
-    const rendered = lines.map(line => line.parts.map(p => p.text).join('') + (line.suffix ?? '')).join('\n')
-    expect(rendered).toContain("Couldn't load")
-    expect(rendered).toContain('partial')
-    expect(rendered).not.toContain('0/1')
-    expect(rendered).not.toContain('0%')
-    expect(lines.find(line => line.key === 'section-0-item-0')?.parts.every(p => p.dim && p.color === '#808080')).toBe(true)
-    expect(lines.filter(line => line.key.startsWith('section-0')).every(line => line.unavailable)).toBe(true)
+    const header = lines.find(line => line.key === 'section-0')!
+    expect(header.badge).toContain('1/3')
+    expect(header.badge).not.toContain("Couldn't load")
+    expect(lines.some(line => line.key === 'section-0-bar')).toBe(true)
+    expect(lines.some(line => line.key === 'section-0-failure')).toBe(false)
+    expect(lines.some(line => line.unavailable)).toBe(false)
+    const row = (i: number) => lines.find(line => line.key === `section-0-item-${i}`)!
+    const grey = (i: number) => row(i).parts.every(p => p.dim && p.color === '#808080')
+    expect(grey(1)).toBe(true)
+    expect(row(1).parts.map(p => p.text).join('')).toContain("Couldn't load: failed")
+    expect(grey(0)).toBe(false)
+    expect(grey(2)).toBe(false)
+    expect(row(2).parts.map(p => p.text).join('')).toContain('Add area tables to the context glossary')
+    expect(row(2).parts[0]!.text).not.toContain('⚠️')
+    expect(row(2).item?.details).toContain('State: done')
   })
 })

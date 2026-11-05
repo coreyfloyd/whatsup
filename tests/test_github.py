@@ -7,6 +7,7 @@ from unittest.mock import patch
 import session_status
 
 CAPTURE = json.loads((Path(__file__).parent / 'fixtures/github-capture.json').read_text())
+PULL = json.loads((Path(__file__).parent / 'fixtures/pull-request-capture.json').read_text())
 ROOT = 'example/project'
 
 class GitHubContract(unittest.TestCase):
@@ -80,6 +81,60 @@ class GitHubContract(unittest.TestCase):
         self.assertNotIn('counts', section)
         self.assertEqual(section['items'][0]['enrichment']['state'], 'unavailable')
         self.assertEqual(section['items'][1]['enrichment']['state'], 'present')
+        self.assertNotIn('secret', json.dumps(result))
+
+    def pull_adapter(self, fail=None):
+        reader, calls = self.adapter(fail=fail)
+        request = reader.request
+        def with_pull(path):
+            if path == '/repos/' + ROOT + '/issues/109':
+                return copy.deepcopy(PULL[ROOT + '#109']), None
+            return request(path)
+        reader.request = with_pull
+        return reader, calls
+
+    def test_merged_pull_request_enriches_title_and_done(self):
+        reader, _ = self.pull_adapter()
+        envelope = reader.read('issues', ROOT+'#109')
+        self.assertEqual(envelope['availability'], 'complete')
+        self.assertEqual(envelope['value']['kind'], 'pull_request')
+        self.assertEqual(envelope['value']['state'], 'closed')
+        self.assertEqual(reader.read('issues', ROOT+'#3')['value']['kind'], 'issue')
+        report = {'scope':'work', 'sections':[{'label':'Epic','verb':'closed','item_kind':'tickets', 'items':[
+            {'identity':ROOT+'#109','title':'old','state':'queued'}]}]}
+        section = session_status.enrich_report(report, reader, issue_kinds=['tickets'])['report']['sections'][0]
+        item = section['items'][0]
+        self.assertEqual(item['enrichment']['state'], 'present')
+        self.assertEqual(item['title'], PULL[ROOT+'#109']['title'])
+        self.assertEqual(item['state'], 'done')
+        self.assertEqual(item['link'], PULL[ROOT+'#109']['html_url'])
+        self.assertEqual(item['enrichment']['value']['kind'], 'pull_request')
+        self.assertEqual(section['counts'], {'done': 1, 'active': 0, 'total': 1})
+
+    def test_merged_pull_request_is_closed_whatever_the_reported_state(self):
+        reader, _ = self.pull_adapter()
+        request = reader.request
+        def reopened(path):
+            raw, link = request(path)
+            # Derived variant: exact patch /state=open on the captured merged pull request.
+            if path.endswith('/issues/109'): raw['state'] = 'open'
+            return raw, link
+        reader.request = reopened
+        self.assertEqual(reader.read('issues', ROOT+'#109')['value']['state'], 'closed')
+
+    def test_unavailable_item_keeps_section_counts_from_reported_states(self):
+        reader, _ = self.pull_adapter(fail='/issues/4')
+        report = {'scope':'work', 'sections':[{'label':'Queue','verb':'finished','item_kind':'tickets', 'items':[
+            {'identity':ROOT+'#3','title':'old','state':'active'},
+            {'identity':ROOT+'#4','title':'old','state':'queued'},
+            {'identity':ROOT+'#109','title':'old','state':'queued'}]}]}
+        result = session_status.enrich_report(report, reader, issue_kinds=['tickets'])
+        section = result['report']['sections'][0]
+        self.assertNotIn('enrichment', section)
+        self.assertEqual(section['counts'], {'done': 1, 'active': 1, 'total': 3})
+        states = [item['enrichment']['state'] for item in section['items']]
+        self.assertEqual(states, ['present', 'unavailable', 'present'])
+        self.assertEqual(section['items'][1]['state'], 'queued')
         self.assertNotIn('secret', json.dumps(result))
 
     def test_pagination_partial_and_corrupt_never_claim_empty(self):

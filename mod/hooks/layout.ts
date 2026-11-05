@@ -174,13 +174,13 @@ export function paneLines(snapshot: Snapshot, snapshotName: string, columns: num
   return lines
 }
 
-/** Word-wraps one logical detail line to `width`, continuation lines indented under its text. */
-export function wrap(line: string, width: number): string[] {
+/** Word-wraps one logical detail line to `width`, continuation lines indented under its text unless `hanging` is false. */
+export function wrap(line: string, width: number, hanging = true): string[] {
   const out: string[] = []
   for (const paragraph of line.split('\n')) {
     const indent = paragraph.match(/^\s*/)?.[0] ?? ''
     const checklist = /^- \[[ xX]\] /.test(paragraph.slice(indent.length))
-    const hang = ' '.repeat(Math.min(indent.length + (checklist ? 6 : 2), Math.max(0, width - 8)))
+    const hang = hanging ? ' '.repeat(Math.min(indent.length + (checklist ? 6 : 2), Math.max(0, width - 8))) : ''
     let current = indent
     let fresh = true
     for (const word of paragraph.slice(indent.length).split(/\s+/).filter(Boolean)) {

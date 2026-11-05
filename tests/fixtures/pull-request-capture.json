@@ -1,0 +1,22 @@
+{
+ "example/project#109": {
+  "number": 109,
+  "title": "Add area tables to the context glossary",
+  "body": "Adds neutral area tables for replay.",
+  "state": "closed",
+  "state_reason": null,
+  "html_url": "https://github.com/example/project/pull/109",
+  "milestone": null,
+  "labels": [],
+  "draft": false,
+  "closed_at": "2026-10-29T23:56:58Z",
+  "updated_at": "2026-10-29T23:57:01Z",
+  "pull_request": {
+   "url": "https://api.github.com/repos/example/project/pulls/109",
+   "html_url": "https://github.com/example/project/pull/109",
+   "diff_url": "https://github.com/example/project/pull/109.diff",
+   "patch_url": "https://github.com/example/project/pull/109.patch",
+   "merged_at": "2026-10-29T23:56:58Z"
+  }
+ }
+}

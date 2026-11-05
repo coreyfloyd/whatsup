@@ -2,7 +2,7 @@ import type { CoreEngineInterface, On, Timer } from 'claude-code'
 import type { ContextReport, ReportItem, ReportSection } from './report'
 import { REPORT_TOOL, reportError, reportKey } from './report'
 
-export type Enrichment = { state: 'present' | 'unavailable'; reason?: string; value?: { title?: string; status: string; labels?: string[]; blockers?: string[]; page?: string | null; total?: number; closed?: number } }
+export type Enrichment = { state: 'present' | 'unavailable'; reason?: string; value?: { title?: string; kind?: 'issue' | 'pull_request'; status: string; labels?: string[]; blockers?: string[]; page?: string | null; total?: number; closed?: number } }
 export type EnrichedItem = ReportItem & { enrichment?: Enrichment }
 export type EnrichedSection = Omit<ReportSection, 'items'> & { items?: EnrichedItem[]; enrichment?: Enrichment; counts?: { done: number; active: number; total: number } }
 export type EnrichedReport = Omit<ContextReport, 'sections'> & { sections?: EnrichedSection[] }
@@ -12,7 +12,8 @@ export const enrichmentKey = (session: string) => `github-enrichment:${session}`
 const githubIdentity = (value?: string) => !!value && /^[^/\s]+\/[^/#@\s]+(?:#[1-9]\d*|@milestone\/[1-9]\d*)$/.test(value)
 function unavailable(report: ContextReport): EnrichedReport {
   return { ...report, sections: report.sections?.map(section => ({ ...section,
-    ...(githubIdentity(section.identity) ? { enrichment: { state: 'unavailable' as const, reason: 'reader failed' } } : {}),
+    // A failed read counted nothing: a section with any GitHub entity is unavailable as a whole.
+    ...(githubIdentity(section.identity) || section.items?.some(item => githubIdentity(item.identity)) ? { enrichment: { state: 'unavailable' as const, reason: 'reader failed' } } : {}),
     items: section.items?.map(item => ({ ...item, ...(githubIdentity(item.identity) ? { enrichment: { state: 'unavailable' as const, reason: 'reader failed' } } : {}) })),
   })) }
 }

@@ -10,13 +10,13 @@ import type { LiveWorker } from '../hooks/workers'
 const worker: LiveWorker = { name: 'generator', role: 'gen-runtime', status: 'generating', state: 'running', model: 'claude-sonnet-5-5', started: 0, changed: 0, minutes: { 0: 1000, 1: 2000 }, total: 3000, context: { tokens: 170000, window: 200000 }, source: 'observed' }
 const main: LiveWorker = { ...worker, name: 'session', role: 'main', minutes: {}, total: undefined }
 const output = (lines: ReturnType<typeof workerLines>) => lines.map(l => (l.prefix ?? '') + l.parts.map(p => p.text).join('') + (l.suffix ?? '')).join('\n')
-function host(on: On) {
+function host(on: On, agents: () => unknown[] = () => []) {
   const clock = mock.clock(on), store = new Map<string, unknown>()
   on('session.id', () => ({ value: 'report-session' }))
   on('session.cwd', () => ({ value: '/project' }))
   on('session.model', () => ({ value: worker.model! }))
   on('session.usage', () => ({ value: { context: { tokens: 1000, window: 200000 }, rateLimits: [] } }))
-  on('agent.list', () => ({ value: [] }))
+  on('agent.list', () => ({ value: agents() as any }))
   on('settings.read', () => ({ value: { prefersReducedMotion: true } }))
   on('store.get', (_$, e) => ({ value: store.get(e.key) }))
   on('store.set', (_$, e) => { store.set(e.key, e.value); return { value: undefined } })
@@ -182,5 +182,87 @@ describe('workers', () => {
     expect(rendered).toContain('▱▱▱▱▱▱ 1%')
     expect(rendered.indexOf('main ·')).toBeLessThan(rendered.indexOf('gen-runtime ·'))
     expect(JSON.stringify([...h.store.values()])).toContain('1600')
+  })
+  // Engine 2.1.318 lists a finished named subagent as `idle`; a teammate kept alive reads `waiting`.
+  const mount = ($: any) => $.ui.mount({ plugin: 'whatsup', surface: 'terminal', component: 'Pane', requestId: 'session-status', props: { title: 'whatsup', bodyColumns: 80, isFocused: false, placement: 'dock', scroll: { offset: 0, bodyRows: 40 }, view: {} }, viewport: { columns: 120, rows: 46, isFullscreen: true } })
+  test('listed agents this session never saw are not adopted unless running', async ($, on) => {
+    const previous = [{ id: 'old-1', name: 'rss', description: 'Old teammate', type: 'teammate', status: 'idle' }, { id: 'old-2', name: 'comms', description: 'Old teammate', type: 'teammate', status: 'waiting' }, { id: 'old-3', name: 'vqa', description: 'Old subagent', type: 'Explore', status: 'completed' }]
+    let listed = previous
+    const h = host(on, () => listed)
+    await $.session.start({ cwd: '/project', surface: 'terminal', isInteractive: true })
+    for (const next of [previous, [...previous, { id: 'live', name: 'harness1', description: 'Live teammate', type: 'teammate', status: 'running' }]]) {
+      listed = next
+      const ui = await mount($)
+      const rendered = text(await paneTree(ui))
+      expect(rendered).toContain('main · session')
+      for (const name of ['rss', 'comms', 'vqa']) expect(rendered).not.toContain(name)
+      expect(rendered.includes('teammate · harness1')).toBe(listed.length > previous.length)
+      expect(JSON.stringify([...h.store.values()])).not.toContain('old-')
+      if (listed === previous) await ui.unmount()
+    }
+  })
+  test('a completed turn stays done through list refreshes and retires after ten minutes', async ($, on) => {
+    let status = 'running'
+    const h = host(on, () => [{ id: 'worker-id', name: worker.name, description: 'Show workers', type: worker.role, status }])
+    on('agent.spawn', () => ({ agentId: 'worker-id', model: worker.model! }))
+    on('turn.complete', (_$, e) => ({ text: e.answer }))
+    await $.session.start({ cwd: '/project', surface: 'terminal', isInteractive: true })
+    await $.agent.spawn({ tool_use_id: 'spawn-workers', provider: { plugin: 'engine', tier: 'core' }, parentModel: worker.model!, background: true, fork: false, prompt: 'Show workers', description: 'Show workers', name: worker.name, subagentType: worker.role })
+    await h.clock.advance(60000)
+    // Each check mounts afresh so the render reruns the list refresh.
+    const render = async () => { const ui = await mount($); const rendered = text(await paneTree(ui)); await ui.unmount(); return rendered }
+    expect(await render()).toContain('🐝 generating')
+    await $.turn.complete({ answer: 'Done', durationMs: 1, isAborted: false, turnId: 'turn', agentId: 'worker-id', reason: 'answer' })
+    for (const word of ['idle', 'waiting']) {
+      status = word
+      const rendered = await render()
+      expect(rendered).toContain('gen-runtime · generator')
+      expect(rendered.slice(rendered.indexOf('gen-runtime · generator'))).toContain('✅ done')
+      expect(rendered.slice(rendered.indexOf('gen-runtime · generator'))).not.toContain('🪑 waiting')
+    }
+    await h.clock.advance(599999)
+    expect(await render()).toContain('✅ done')
+    await h.clock.advance(1)
+    expect(await render()).not.toContain('gen-runtime · generator')
+  })
+  test('a request in flight stays running when the list snapshot says idle', async ($, on) => {
+    let status = 'running', release = () => {}, started = () => {}
+    const h = host(on, () => [{ id: 'worker-id', name: worker.name, description: 'Show workers', type: worker.role, status }])
+    const render = async () => { const ui = await mount($); const rendered = text(await paneTree(ui)); await ui.unmount(); const box = rendered.indexOf('gen-runtime · generator'); return box < 0 ? '' : rendered.slice(box) }
+    on('agent.spawn', () => ({ agentId: 'worker-id', model: worker.model! }))
+    on('turn.complete', (_$, e) => ({ text: e.answer }))
+    on('turn.step', async function* (_$, e) {
+      started()
+      await new Promise<void>(resolve => { release = resolve })
+      return ({ turnId: e.turnId, index: e.index, answer: '', toolUses: [], stopReason: 'end_turn', usage: { model: worker.model!, input_tokens: 1000, output_tokens: 100, cache_read_input_tokens: 0, cache_creation_input_tokens: 0 } })
+    })
+    // Starts a request and returns once it streams; the returned promise ends it.
+    const request = async (turnId: string) => {
+      const streaming = new Promise<void>(resolve => { started = resolve })
+      const done = (async () => { for await (const _ of $.turn.step({ turnId, index: 0, model: worker.model!, messageCount: 1, agentId: 'worker-id' })) {} })()
+      await streaming
+      return async () => { release(); await done }
+    }
+    await $.session.start({ cwd: '/project', surface: 'terminal', isInteractive: true })
+    await $.agent.spawn({ tool_use_id: 'spawn-workers', provider: { plugin: 'engine', tier: 'core' }, parentModel: worker.model!, background: true, fork: false, prompt: 'Show workers', description: 'Show workers', name: worker.name, subagentType: worker.role })
+    expect(await render()).toContain('🐝 generating')
+    // A running worker whose list status turns idle mid-request stays running.
+    let end = await request('turn')
+    status = 'idle'
+    expect(await render()).toContain('🐝 generating')
+    await end()
+    // A done worker reopened by a new request stays running against the stale idle snapshot, during and after the request.
+    await $.turn.complete({ answer: 'Done', durationMs: 1, isAborted: false, turnId: 'turn', agentId: 'worker-id', reason: 'answer' })
+    expect(await render()).toContain('✅ done')
+    await h.clock.advance(60000)
+    end = await request('turn-2')
+    expect(await render()).toContain('🐝 generating')
+    await end()
+    expect(await render()).toContain('🐝 generating')
+    // A later change in the list's own status still applies.
+    status = 'running'
+    await render()
+    status = 'idle'
+    expect(await render()).toContain('🪑 waiting')
   })
 })

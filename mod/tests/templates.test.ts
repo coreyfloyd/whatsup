@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'claude-code/testing'
 import * as templates from '../hooks/templates'
+import { REPORT_DESCRIPTION, REPORT_SCHEMA } from '../hooks/report'
 
 describe('templates and configuration', () => {
   test('ships the three section vocabularies and presentation preferences', () => {
@@ -83,6 +84,15 @@ describe('templates and configuration', () => {
       const described = templates.resolveConfig({ template, sections: { queue: { label: 'word '.repeat(15) + 'last', description: true } } })
       expect(templates.sessionInstruction(described).trim().split(/\s+/).length < 120).toBe(true)
     }
+  })
+  test('scope is directed as the overall work or outcome, without ticket numbers and stable across tasks', () => {
+    for (const template of ['github', 'task-list', 'bare']) {
+      const instruction = templates.sessionInstruction(templates.resolveConfig({ template }))
+      for (const term of ['overall work/outcome', 'no ticket numbers', 'stable across tasks']) expect(instruction).toContain(term)
+    }
+    const schema = (REPORT_SCHEMA as any).properties.scope.description as string
+    for (const text of [schema, REPORT_DESCRIPTION]) for (const term of ['outcome', 'no ticket numbers', 'stable across tasks']) expect(text.toLowerCase()).toContain(term)
+    expect(schema).toContain('change it only when')
   })
   test('startup guidance retains outstanding decisions with sufficient context and stable identity', () => {
     const instruction = templates.sessionInstruction(templates.resolveConfig())

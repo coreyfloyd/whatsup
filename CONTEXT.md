@@ -46,7 +46,7 @@ A recorded choice requested from the user, or the resulting recorded answer, att
 One agent's complete description of its session's scope, ordered progress sections and workers. A new report replaces the previous report for that session.
 
 **Scope**:
-One line of agent-supplied text describing what the session is working on. Before the agent reports, no scope has been supplied.
+A short agent-supplied statement of the whole work the session is doing or the outcome it is trying to achieve. It names no ticket numbers, which belong in sections, and stays stable across tasks until that work or outcome changes. Before the agent reports, no scope has been supplied.
 _Avoid_: goal, which names the `/goal` command in Claude and Codex.
 
 **Section**:
