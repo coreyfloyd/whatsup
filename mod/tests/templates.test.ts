@@ -70,19 +70,23 @@ describe('templates and configuration', () => {
       }))
     }
   })
-  test('preserves previously valid label budgets without repeating the queue label', () => {
+  test('holds the default instruction at 91 words and the exact custom-label boundary without repeating the queue label', () => {
     const label = 'one two three four five six seven eight nine ten'
     const instruction = templates.sessionInstruction(templates.resolveConfig({ sections: { queue: { label } } }))
     expect(instruction.split(label).length).toBe(2)
-    expect(instruction.trim().split(/\s+/).length <= 97).toBe(true)
+    expect(instruction.trim().split(/\s+/).length <= 100).toBe(true)
     for (const template of ['github', 'task-list', 'bare']) {
-      expect(templates.sessionInstruction(templates.resolveConfig({ template })).trim().split(/\s+/).length <= 88).toBe(true)
-      // Main accepts a 32-word queue label (119 words total).
-      const boundary = templates.resolveConfig({ template, sections: { queue: { label: 'word '.repeat(31) + 'last' } } })
-      expect(templates.sessionInstruction(boundary).trim().split(/\s+/).length < 120).toBe(true)
-      // Description-enabled labels occur twice on main, once in each JSON list.
-      const described = templates.resolveConfig({ template, sections: { queue: { label: 'word '.repeat(15) + 'last', description: true } } })
-      expect(templates.sessionInstruction(described).trim().split(/\s+/).length < 120).toBe(true)
+      expect(templates.sessionInstruction(templates.resolveConfig({ template })).trim().split(/\s+/).length <= 91).toBe(true)
+      // A 29-word queue label is the longest accepted (119 words total); 30 words is rejected.
+      const boundary = templates.resolveConfig({ template, sections: { queue: { label: 'word '.repeat(28) + 'last' } } })
+      expect(templates.sessionInstruction(boundary).trim().split(/\s+/).length).toBe(119)
+      const over = templates.resolveConfig({ template, sections: { queue: { label: 'word '.repeat(29) + 'last' } } })
+      expect(() => templates.sessionInstruction(over)).toThrow()
+      // Description-enabled labels occur twice, once in each JSON list: 15 words is the longest accepted, 16 is rejected.
+      const described = templates.resolveConfig({ template, sections: { queue: { label: 'word '.repeat(14) + 'last', description: true } } })
+      expect(templates.sessionInstruction(described).trim().split(/\s+/).length).toBe(119)
+      const describedOver = templates.resolveConfig({ template, sections: { queue: { label: 'word '.repeat(15) + 'last', description: true } } })
+      expect(() => templates.sessionInstruction(describedOver)).toThrow()
     }
   })
   test('scope is directed as the overall work or outcome, without ticket numbers and stable across tasks', () => {
