@@ -33,16 +33,19 @@ export function reportLines(report: EnrichedReport | null, columns: number, expa
     const version = decisionVersion(decision)
     const state = Object.hasOwn(answers, decision.identity) && answers[decision.identity]?.version === version ? answers[decision.identity] : undefined
     const receipt = state?.receipt
+    // Accepted answers stay hidden for this version, even if the agent keeps
+    // reporting it. Remaining cards keep their report index as their number.
+    if (receipt?.status === 'sent') continue
     const locked = receipt && receipt.status !== 'failed'
     const open = expandedDecision === version && !locked
     const accent = CHOSEN.decision
     const inner = Math.max(1, columns - 4)
     const heading = `${open ? '▾' : '▸'} Decision ${index + 1}`
-    const status = receipt?.status === 'sent' ? 'SENT' : receipt?.status === 'unconfirmed' ? 'UNCONFIRMED' : receipt?.status === 'sending' ? 'SENDING' : 'ANSWER NEEDED'
+    const status = receipt?.status === 'unconfirmed' ? 'UNCONFIRMED' : receipt?.status === 'sending' ? 'SENDING' : 'ANSWER NEEDED'
     const compact = !native && columns < 24
-    const hotkey = !compact && index === 0 ? 'd' : undefined
+    const hotkey = !compact && !lines.some(line => line.decision) ? 'd' : undefined
     const shortcutCells = hotkey ? 3 : 0
-    const compactStatus = receipt?.status === 'sent' ? 'Sent' : receipt?.status === 'unconfirmed' ? 'Unsure' : receipt?.status === 'sending' ? 'Wait' : receipt?.status === 'failed' ? 'Retry' : 'Answer'
+    const compactStatus = receipt?.status === 'unconfirmed' ? 'Unsure' : receipt?.status === 'sending' ? 'Wait' : receipt?.status === 'failed' ? 'Retry' : 'Answer'
     // Narrow headers keep a complete textual status instead of forcing the
     // title, frame and long status into a width smaller than their fixed cost.
     const title = compact ? compactStatus : clip(heading, Math.max(1, columns - cells(status) - 7 - shortcutCells))
@@ -54,7 +57,7 @@ export function reportLines(report: EnrichedReport | null, columns: number, expa
     row('question', decision.question, undefined, true)
     if (locked) {
       row('answer', `Answer: ${receipt.option.label}`)
-      row('receipt', receipt.status === 'sent' ? 'Sent — awaiting agent' : receipt.status === 'sending' ? 'Sending answer…' : 'Delivery unconfirmed')
+      row('receipt', receipt.status === 'sending' ? 'Sending answer…' : 'Delivery unconfirmed')
       if (receipt.status === 'unconfirmed') row('recovery', 'Check the main conversation and continue there manually. Do not send this answer again from the pane.')
     }
     const discussion = state?.discussion

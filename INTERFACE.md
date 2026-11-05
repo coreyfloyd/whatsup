@@ -12,9 +12,9 @@ Optional ordered decisions appear after Session and before progress and workers.
 Clear selection removes it. Send answer appears only with a selection and submits
 the displayed decision identity, question and complete selected option (identity,
 label, benefit and cost) to this pane's own main conversation, retaining whatsup
-plugin provenance. There is no hidden execution payload. The expanded first card
-also supports d to expand/collapse, 1–9 for options, c to clear and s to send when
-the pane holds keyboard focus. Longer labels wrap into reachable action rows.
+plugin provenance. There is no hidden execution payload. The first visible card
+also supports d to expand/collapse and, once expanded, 1–9 for options, c to clear
+and s to send when the pane holds keyboard focus. Longer labels wrap into reachable action rows.
 Talk about this in chat (t) submits the displayed decision identity and question,
 never the selected option, to the same conversation as a discussion request; it
 neither answers nor resolves the decision. Discussion feedback is separate from
@@ -25,24 +25,28 @@ discussion request across reopening and resume while selection and Send answer
 remain available.
 
 One attempt locks that answer against duplicate activation. Only the engine's
-matching accepted text with whatsup provenance produces Sent — awaiting agent;
-queue acceptance is distinct from processing and resolution. A known refusal
+matching accepted text with whatsup provenance confirms the answer, and that
+confirmation removes the card from the pane; queue acceptance is distinct from
+processing and resolution. Remaining cards keep their numbers, and the first
+visible card takes the keys above. A known refusal
 shows its reason and permits explicit retry. Missing acceptance confirmation,
 transport exceptions or a 15-second wait produce Delivery unconfirmed. Its
 collapsed receipt retains the question and attempted answer, blocks editing and
 resubmission, and asks the user to check the main conversation and continue there
 manually. This recovery sends nothing. A late confirmed result updates that same
-attempt to Sent or known refusal. An interrupted in-flight attempt restores as
+attempt: acceptance removes the card, and a known refusal permits retry. An interrupted in-flight attempt restores as
 unconfirmed, never as a fresh pending answer. Unsupported prompt submission
 explains unavailability and directs the user to the main conversation.
 
 Receipts are stored by immutable engine session and decision version. Unchanged
-complete reports, pane reopening and same-session resume retain Sent and
-unconfirmed receipts. A different session inherits none. Removing or omitting a
-decision clears its interaction state; a material revision starts collapsed and
-unselected, without the previous receipt. A stale card cannot submit after report
-replacement. The reporting agent alone removes resolved or withdrawn decisions;
-the pane does not infer resolution from model text or time.
+complete reports, pane reopening and same-session resume retain confirmed and
+unconfirmed receipts, so a removed card stays removed while the agent keeps
+reporting the same version. A different session inherits none. Removing or omitting
+a decision clears its interaction state; a material revision appears as a new
+pending card, collapsed and unselected, without the previous receipt. A stale card
+cannot submit after report replacement. A confirmed card answer is the only thing
+the pane acts on; the reporting agent still owns removing decisions answered any
+other way or withdrawn, and the pane infers nothing from model text or time.
 
 The pane provides session context with explicit user-input actions. Reporting,
 source enrichment, reading, expansion and selection remain display-only. Answer

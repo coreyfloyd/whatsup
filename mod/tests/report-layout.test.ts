@@ -33,7 +33,7 @@ describe('report boundaries', () => {
   })
   // Keep each test well below the runner's default timeout while retaining
   // all 75 widths and the full expansion/capability matrix for every state.
-  for (const status of ['pending', 'sending', 'sent', 'unconfirmed', 'failed'] as const) for (let firstColumn = 6; firstColumn <= 80; firstColumn += 5) {
+  for (const status of ['pending', 'sending', 'unconfirmed', 'failed'] as const) for (let firstColumn = 6; firstColumn <= 80; firstColumn += 5) {
     test(`every decision row fits ${firstColumn}–${firstColumn + 4} columns in ${status} state`, () => {
       const decisions = [decision, { ...decision, identity: 'second' }]
       const answers: AnswerStates = Object.fromEntries(decisions.map(d => [d.identity, {
@@ -49,16 +49,34 @@ describe('report boundaries', () => {
           expect(width <= columns, `${columns} columns, ${row.key}: ${text(row)}`).toBe(true)
         }
         const heading = text(rows.find(row => row.key === 'decision-0')!)
-        const expectedStatus = { pending: /ANSWER NEEDED|Answer/, sending: /SENDING|Wait/, sent: /SENT|Sent/, unconfirmed: /UNCONFIRMED|Unsure/, failed: /ANSWER NEEDED|Retry/ }[status]
+        const expectedStatus = { pending: /ANSWER NEEDED|Answer/, sending: /SENDING|Wait/, unconfirmed: /UNCONFIRMED|Unsure/, failed: /ANSWER NEEDED|Retry/ }[status]
         expect(expectedStatus.test(heading), heading).toBe(true)
         // Full prose remains in wrapped rows rather than being clipped away.
         const prose = rows.map(row => row.parts.map(p => p.text).join('')).join('').replace(/\s/g, '')
         expect(prose).toContain(decision.question.replace(/\s/g, ''))
-        if (status === 'sent' || status === 'sending' || status === 'unconfirmed') expect(prose).toContain(decision.options[0]!.label.replace(/\s/g, ''))
+        if (status === 'sending' || status === 'unconfirmed') expect(prose).toContain(decision.options[0]!.label.replace(/\s/g, ''))
         if (expanded && (status === 'pending' || status === 'failed')) for (const option of decision.options) for (const field of ['label', 'benefit', 'cost'] as const) expect(prose).toContain(option[field].replace(/\s/g, ''))
       }
     })
   }
+  for (const removed of [0, 1]) test(`a sent answer removes only decision ${removed + 1}; the rest keep numbers and fit`, () => {
+    const decisions = [decision, { ...decision, identity: 'second' }, { ...decision, identity: 'third' }]
+    const sent = decisions[removed]!
+    const answers: AnswerStates = { [sent.identity]: { version: decisionVersion(sent), selected: sent.options[0]!.identity, receipt: { attempt: 'sent', option: sent.options[0]!, status: 'sent' } } }
+    for (let columns = 6; columns <= 80; columns++) {
+      const rows = reportLines({ scope: 'Design pending decisions', decisions }, columns, [], undefined, undefined, undefined, answers).slice(1)
+      expect(rows.some(row => row.key.startsWith(`decision-${removed}`))).toBe(false)
+      const cards = rows.filter(row => row.decision)
+      expect(cards.map(row => row.key)).toEqual([0, 1, 2].filter(index => index !== removed).map(index => `decision-${index}`))
+      expect(cards.map(row => row.decision!.hotkey)).toEqual([columns < 24 ? undefined : 'd', undefined])
+      for (const row of rows) expect(cells(text(row)) + (row.decision?.hotkey ? 3 : 0) <= columns, `${columns}, ${row.key}`).toBe(true)
+      if (columns >= 40) expect(text(cards[1]!)).toContain('Decision 3')
+    }
+  })
+  test('a stale receipt from another version does not hide its card', () => {
+    const answers: AnswerStates = { [decision.identity]: { version: 'previous', receipt: { attempt: 'sent', option: decision.options[0]!, status: 'sent' } } }
+    expect(reportLines({ scope: 'Design pending decisions', decisions: [decision] }, 80, [], undefined, undefined, undefined, answers).some(row => row.decision)).toBe(true)
+  })
   test('decision version covers answer-relevant content, independent of object field order', () => {
     expect(decisionVersion({ recommendation: decision.recommendation, options: decision.options, context: decision.context, why_now: decision.why_now, question: decision.question, identity: decision.identity })).toBe(decisionVersion(decision))
     for (const field of ['question', 'why_now', 'context'] as const) expect(decisionVersion({ ...decision, [field]: decision[field] + ' ' })).not.toBe(decisionVersion(decision))

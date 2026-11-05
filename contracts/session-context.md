@@ -124,11 +124,14 @@ decision identity and version and records a durable attempt that blocks duplicat
 
 An attempt is sent only when the engine confirms the submitted text with whatsup
 plugin provenance, including acceptance queued during a busy turn; sent does not
-mean the agent processed or resolved the decision. A known refusal fails and allows
+mean the agent processed or resolved the decision. A sent answer hides that decision
+version's card without changing the stored report; a later report with the same
+version keeps it hidden and a new version appears as a new pending card. A known refusal fails and allows
 an explicit retry. A missing or mismatched confirmation, or an attempt still
 sending at same-session resume, is unconfirmed: it never displays as sent, is never
 retried automatically, and blocks resubmission of that kind across reopening and
-resume. Answer receipts and discussion feedback are tracked separately. The agent
+resume. Answer receipts and discussion feedback are tracked separately, and
+discussion feedback never hides a card. The agent
 removes a decision from its next complete report once resolved, including by a
 custom answer in chat, or withdrawn. Submitted input confers no authorization; the
 receiving session applies its normal authorization rules.

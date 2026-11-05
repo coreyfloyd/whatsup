@@ -41,9 +41,11 @@ The `github`, `task-list` and `bare` templates guide reporting. An optional
 
 Expanded decision cards let you select, change or clear an option before explicitly
 choosing **Send answer**. The answer enters this same conversation as input from
-the whatsup plugin. **Sent — awaiting agent** confirms submission acceptance,
-including queueing during a busy turn; it does not mean the agent has processed or
-resolved the decision. Receipts survive reopening and same-session resume. An
+the whatsup plugin. The card leaves the pane once the engine confirms submission
+acceptance, including queueing during a busy turn; that does not mean the agent has
+processed or resolved the decision. Remaining cards keep their numbers. Receipts
+survive reopening and same-session resume, so the card stays gone while the agent
+reports the same decision; a materially revised decision returns as a new card. An
 unconfirmed receipt stays locked: check the conversation and continue there
 manually. Known refusal allows an explicit retry. Engines without input support
 explain that you should answer in the conversation.
